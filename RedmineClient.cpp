@@ -7,7 +7,7 @@
 #include <QtNetwork/QNetworkRequest>
 
 RedmineClient::RedmineClient(QUrl url, QString apiKey, bool checkSsl, QObject* parent) : QObject(parent), _url(url) {
-	_authenticator = new KeyAuthenticator(apiKey.toAscii());
+    _authenticator = new KeyAuthenticator(apiKey.toLatin1());
 	init();
 }
 

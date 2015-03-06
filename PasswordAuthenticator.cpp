@@ -6,5 +6,5 @@ PasswordAuthenticator::PasswordAuthenticator(QString login, QString password) : 
 }
 
 void PasswordAuthenticator::addAuthentication(QNetworkRequest* request) {
-	request->setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg(_login).arg(_password).toAscii().toBase64()));
+    request->setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg(_login).arg(_password).toLatin1().toBase64()));
 }

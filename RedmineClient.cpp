@@ -6,19 +6,34 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 
+RedmineClient::RedmineClient() {
+    return;
+}
+
 RedmineClient::RedmineClient(QUrl url, QString apiKey, bool checkSsl, QObject* parent) : QObject(parent), _url(url) {
-    _authenticator = new KeyAuthenticator(apiKey.toLatin1());
-	init();
+    setAuth(apiKey);
 }
 
 RedmineClient::RedmineClient(QUrl url, QString login, QString password, bool checkSsl, QObject* parent) : QObject(parent), _url(url) {
-	_authenticator = new PasswordAuthenticator(login, password);
-	init();
+    setAuth(login, password);
+}
+
+void RedmineClient::setAuth(QString apiKey) {
+    _authenticator = new KeyAuthenticator(apiKey.toLatin1());
+    init();
+}
+
+void RedmineClient::setAuth(QString login, QString password) {
+    _authenticator = new PasswordAuthenticator(login, password);
+    init();
 }
 
 RedmineClient::~RedmineClient() {
-	delete _nma;
-	delete _authenticator;
+    if (_nma != NULL)
+        delete _nma;
+
+    if (_authenticator != NULL)
+        delete _authenticator;
 }
 
 void RedmineClient::init() {

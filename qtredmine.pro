@@ -1,6 +1,8 @@
 QT       += network xml
 QT       -= gui
 
+QMAKE_CXXFLAGS += -std=c++11
+
 TARGET = qtredmine
 TEMPLATE = lib
 

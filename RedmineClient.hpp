@@ -26,6 +26,15 @@ public:
 		DELETE
 	};
 
+    /* Creates a non-configured client.
+     */
+    RedmineClient();
+
+    /* Set authentification parameters in case of non-configured client
+     */
+    void setAuth(QString apiKey);
+    void setAuth(QString login, QString password);
+
 	/* Creates a client using an API key authenticator.
 	 */
 	RedmineClient(QUrl url, QString apiKey, bool checkSsl = true, QObject* parent = NULL);
@@ -39,6 +48,11 @@ public:
 	 */
 	void setUserAgent(QByteArray ua);
 
+protected:
+    /* Sends a request to the Redmine endpoint.
+     */
+    void					sendRequest(QUrl url, EMode mode = GET, const QByteArray& requestData = "");
+
 private:
 	/* Commont initialization steps.
 	 *
@@ -46,13 +60,9 @@ private:
 	 */
 	void					init();
 
-	/* Sends a request to the Redmine endpoint.
-	 */
-	void					sendRequest(QUrl url, EMode mode = GET, const QByteArray& requestData = "");
-
 	QUrl					_url;
-	IAuthenticator*			_authenticator;
-	QNetworkAccessManager*	_nma;
+    IAuthenticator*			_authenticator = NULL;
+    QNetworkAccessManager*	_nma           = NULL;
 	QByteArray				_ua;
 };
 

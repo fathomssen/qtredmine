@@ -9,6 +9,16 @@ class QNetworkAccessManager;
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QUrl>
+#include <QHash>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+
+typedef void (*funct_arg_voidptr_QNetworkReply_ret_void)(void *, QNetworkReply *);
+
+struct callback {
+    funct_arg_voidptr_QNetworkReply_ret_void     funct;
+    void                                        *arg;
+};
 
 /* Base management class.
  *
@@ -51,7 +61,15 @@ public:
 protected:
     /* Sends a request to the Redmine endpoint.
      */
-    void					sendRequest(QUrl url, EMode mode = GET, const QByteArray& requestData = "");
+    QNetworkReply *sendRequest(
+            QUrl url,
+            EMode mode = GET,
+            funct_arg_voidptr_QNetworkReply_ret_void callback = NULL,
+            void *callback_arg = NULL,
+            const QByteArray& requestData = "");
+
+private slots:
+    void requestFinished(QNetworkReply *reply);
 
 private:
 	/* Commont initialization steps.
@@ -59,10 +77,12 @@ private:
 	 * Creates the network access manager.
 	 */
 	void					init();
+    bool                    checkUrl(const QUrl &url);
 
 	QUrl					_url;
     IAuthenticator*			_authenticator = NULL;
     QNetworkAccessManager*	_nma           = NULL;
+    QHash<QNetworkReply *, struct callback> _callbacks;
 	QByteArray				_ua;
 };
 

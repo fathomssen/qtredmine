@@ -6,18 +6,29 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 
-RedmineClient::RedmineClient() {
-    return;
+RedmineClient::RedmineClient() {}
+
+RedmineClient::RedmineClient(QString base_url) {
+    this->setBaseUrl(base_url);
 }
 
-RedmineClient::RedmineClient(QUrl url, QString apiKey, bool checkSsl, QObject* parent) : QObject(parent), _url(url) {
+RedmineClient::RedmineClient(QString base_url, QString apiKey, bool checkSsl, QObject* parent) : QObject(parent) {
     (void)checkSsl;
+    this->setBaseUrl(base_url);
     this->setAuth(apiKey);
 }
 
-RedmineClient::RedmineClient(QUrl url, QString login, QString password, bool checkSsl, QObject* parent) : QObject(parent), _url(url) {
+RedmineClient::RedmineClient(QString base_url, QString login, QString password, bool checkSsl, QObject* parent) : QObject(parent) {
     (void)checkSsl;
+    this->setBaseUrl(base_url);
     this->setAuth(login, password);
+}
+
+void RedmineClient::setBaseUrl(QString base_url) {
+    this->_base_url = base_url;
+}
+void RedmineClient::setBaseUrl(const char *base_url) {
+    this->_base_url = QString::fromUtf8(base_url);
 }
 
 void RedmineClient::setAuth(QString apiKey) {
@@ -41,13 +52,23 @@ RedmineClient::~RedmineClient() {
 void RedmineClient::requestFinished(QNetworkReply *reply) {
     if (this->_callbacks.contains(reply)) {
         struct callback *cb;
-
         cb = &this->_callbacks[reply];
-        cb->funct(cb->arg, reply);
+
+        QByteArray    data_raw  = reply->readAll();
+#ifdef DEBUG
+        qDebug("Raw data: %s", data_raw.data());
+#endif
+
+        if (cb->format != JSON)
+            qFatal("The only supported format it JSON");
+
+        QJsonDocument data_json = QJsonDocument::fromJson(((QString)data_raw).toUtf8());
+        ((funct_callback_json)cb->funct)(cb->arg, reply, &data_json);
 
         this->_callbacks.remove(reply);
     }
 
+    free(reply);
     return;
 }
 
@@ -66,20 +87,25 @@ void RedmineClient::setUserAgent(QByteArray ua) {
     return;
 }
 
-bool RedmineClient::checkUrl(const QUrl &url) {
-    if (!url.isValid()) {
-        qDebug(QString("Invalid URL: %1").arg(url.toString()).toLatin1());
-        return false;
-    }
-
-    return true;
-}
-
-QNetworkReply *RedmineClient::sendRequest(QUrl url, EMode mode, funct_arg_voidptr_QNetworkReply_ret_void callback, void *callback_arg, const QByteArray& requestData) {
+QNetworkReply *RedmineClient::sendRequest(QString uri,
+        EFormat format,
+        EMode   mode,
+        void *callback,
+        void *callback_arg,
+        const QByteArray& requestData
+) {
 	QByteArray postDataSize = QByteArray::number(requestData.size());
 
-    if (!this->checkUrl(url))
+    QString url_str = this->_base_url + "/" + uri + "." + (format == JSON ? "json" : "xml");
+    QUrl    url     = url_str;
+
+#ifdef DEBUG
+    qDebug("URL: %s", url_str.toLatin1().data());
+#endif
+    if (!url.isValid()) {
+        qDebug("Invalid URL: %s", url_str.toLatin1().data());
         return NULL;
+    }
 
     QNetworkRequest request(url);
     request.setRawHeader("User-Agent",          _ua);
@@ -109,8 +135,9 @@ QNetworkReply *RedmineClient::sendRequest(QUrl url, EMode mode, funct_arg_voidpt
 	}
 
     if ((reply != NULL) && (callback != NULL)) {
-        this->_callbacks[reply].arg   = callback_arg;
-        this->_callbacks[reply].funct = callback;
+        this->_callbacks[reply].arg    = callback_arg;
+        this->_callbacks[reply].format = format;
+        this->_callbacks[reply].funct  = callback;
     }
 
     return reply;

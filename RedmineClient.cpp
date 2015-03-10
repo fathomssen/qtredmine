@@ -42,11 +42,18 @@ void RedmineClient::setAuth(QString login, QString password) {
 }
 
 RedmineClient::~RedmineClient() {
-    if (this->_nma != NULL)
-        delete _nma;
+    // TODO: Fixme! Segfaults on exit!
+    /*
+    if (this->_nma != NULL) {
+        delete this->_nma;
+        this->_nma = NULL;
+    }
 
-    if (this->_authenticator != NULL)
+    if (this->_authenticator != NULL) {
         delete this->_authenticator;
+        this->_authenticator = NULL;
+    }
+    */
 }
 
 void RedmineClient::requestFinished(QNetworkReply *reply) {

@@ -75,7 +75,7 @@ void RedmineClient::requestFinished(QNetworkReply *reply) {
         this->_callbacks.remove(reply);
     }
 
-    free(reply);
+    delete reply;
     return;
 }
 

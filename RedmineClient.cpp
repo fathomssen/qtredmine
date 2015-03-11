@@ -99,11 +99,12 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
         EMode   mode,
         void *callback,
         void *callback_arg,
-        const QByteArray& requestData
+        QString getParams,
+        const QByteArray &requestData
 ) {
 	QByteArray postDataSize = QByteArray::number(requestData.size());
 
-    QString url_str = this->_base_url + "/" + uri + "." + (format == JSON ? "json" : "xml");
+    QString url_str = this->_base_url + "/" + uri + "." + (format == JSON ? "json" : "xml") + "?" + getParams;
     QUrl    url     = url_str;
 
 #ifdef DEBUG

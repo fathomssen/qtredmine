@@ -84,6 +84,7 @@ protected:
             EMode   mode   = GET,
             void *callback     = NULL,
             void *callback_arg = NULL,
+            QString getParams = "",
             const QByteArray& requestData = "");
 
 private slots:

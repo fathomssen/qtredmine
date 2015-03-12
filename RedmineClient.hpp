@@ -85,7 +85,7 @@ protected:
             EMode   mode   = GET,
             void *callback     = NULL,
             void *callback_arg = NULL,
-            bool  free_arg = FALSE,
+            bool  free_arg     = false,
             QString getParams = "",
             const QByteArray& requestData = "");
 
@@ -110,6 +110,7 @@ private:
 struct callback {
     void                   *funct;
     void                   *arg;
+    bool                    free_arg;
     RedmineClient::EFormat  format;
 };
 

@@ -69,6 +69,9 @@ void RedmineClient::requestFinished(QNetworkReply *reply) {
         QJsonDocument data_json = QJsonDocument::fromJson(((QString)data_raw).toUtf8());
         ((funct_callback_json)cb->funct)(cb->arg, reply, &data_json);
 
+        if (cb->free_arg)
+            if (cb->arg != NULL)
+                free(cb->arg);
         this->_callbacks.remove(reply);
     }
 
@@ -96,6 +99,7 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
         EMode   mode,
         void *callback,
         void *callback_arg,
+        bool  free_arg,
         QString getParams,
         const QByteArray &requestData
 ) {
@@ -140,9 +144,13 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
 	}
 
     if ((reply != NULL) && (callback != NULL)) {
-        this->_callbacks[reply].arg    = callback_arg;
-        this->_callbacks[reply].format = format;
-        this->_callbacks[reply].funct  = callback;
+        this->_callbacks[reply].free_arg = free_arg;
+        this->_callbacks[reply].arg      = callback_arg;
+        this->_callbacks[reply].format   = format;
+        this->_callbacks[reply].funct    = callback;
+    } else {
+        if ((callback_arg != NULL) && free_arg)
+            free(callback_arg);
     }
 
     return reply;

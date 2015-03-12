@@ -73,6 +73,7 @@ public:
             QUrl url,
             void *callback     = NULL,
             void *callback_arg = NULL,
+
             QString filters = "");
 
 protected:
@@ -84,6 +85,7 @@ protected:
             EMode   mode   = GET,
             void *callback     = NULL,
             void *callback_arg = NULL,
+            bool  free_arg = FALSE,
             QString getParams = "",
             const QByteArray& requestData = "");
 

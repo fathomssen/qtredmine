@@ -53,7 +53,7 @@ RedmineClient::~RedmineClient() {
     }
 }
 
-void RedmineClient::requestFinished(QNetworkReply *reply) {
+void RedmineClient::requestFinished_wrapper(QNetworkReply *reply) {
     if (this->_callbacks.contains(reply)) {
         struct callback *cb;
         cb = &this->_callbacks[reply];
@@ -67,7 +67,8 @@ void RedmineClient::requestFinished(QNetworkReply *reply) {
             qFatal("The only supported format it JSON");
 
         QJsonDocument data_json = QJsonDocument::fromJson(((QString)data_raw).toUtf8());
-        ((funct_callback_json)cb->funct)(cb->arg, reply, &data_json);
+
+        this->requestFinished(cb->obj_ptr, cb->funct, reply, &data_json, cb->arg);
 
         if (cb->free_arg)
             if (cb->arg != NULL)
@@ -75,7 +76,6 @@ void RedmineClient::requestFinished(QNetworkReply *reply) {
         this->_callbacks.remove(reply);
     }
 
-    //delete reply;
     return;
 }
 
@@ -83,7 +83,7 @@ void RedmineClient::init() {
     this->_nma       = new QNetworkAccessManager;
     this->_ua        = "redmine-qt";
 
-    connect(this->_nma, SIGNAL(finished(QNetworkReply *)), this, SLOT(requestFinished(QNetworkReply *)));
+    connect(this->_nma, SIGNAL(finished(QNetworkReply *)), this, SLOT(requestFinished_wrapper(QNetworkReply *)));
 
     return;
 }
@@ -97,7 +97,8 @@ void RedmineClient::setUserAgent(QByteArray ua) {
 QNetworkReply *RedmineClient::sendRequest(QString uri,
         EFormat format,
         EMode   mode,
-        void *callback,
+        void *obj_ptr,
+        callback_t callback,
         void *callback_arg,
         bool  free_arg,
         QString getParams,
@@ -147,6 +148,7 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
         this->_callbacks[reply].free_arg = free_arg;
         this->_callbacks[reply].arg      = callback_arg;
         this->_callbacks[reply].format   = format;
+        this->_callbacks[reply].obj_ptr  = obj_ptr;
         this->_callbacks[reply].funct    = callback;
     } else {
         if ((callback_arg != NULL) && free_arg)

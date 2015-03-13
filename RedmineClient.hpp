@@ -1,6 +1,41 @@
 #ifndef __REDMINE_CLIENT_HPP__
 #define __REDMINE_CLIENT_HPP__
 
+/* CALLBACK_T */
+
+#define CALLBACK_DISPATCHER(fromClass, toClass, thisptr)     \
+public:                                             \
+    typedef void (toClass::*callback_t)(QNetworkReply *reply, QJsonDocument *data, void *);\
+                                                    \
+private:                                            \
+    fromClass::callback_t operator = (toClass::callback_t & callback) { \
+        return reinterpret_cast <fromClass::callback_t> (callback); \
+    }                                               \
+                                                    \
+    Q_SLOT void callback_dispatcher(                \
+            void          *obj_ptr,                 \
+            callback_t     callback,                \
+            QNetworkReply *reply,                   \
+            QJsonDocument *data,                    \
+            void          *argument)                \
+    {                                               \
+        qDebug("callback_dispatcher: %p %p", this, obj_ptr); \
+        if (obj_ptr == thisptr)\
+            (this->*callback)(reply, data, argument);\
+        else                                        \
+            callback_call(obj_ptr, callback, reply, data, argument);\
+    }                                               \
+                                                    \
+    Q_SIGNAL void callback_call(                    \
+            void          *obj_ptr,                 \
+            callback_t     callback,                \
+            QNetworkReply *reply,                   \
+            QJsonDocument *data,                    \
+            void          *argument);
+
+
+/* /CALLBACK_DISPATCHER */
+
 class IAuthenticator;
 class QNetworkAccessManager;
 
@@ -30,6 +65,8 @@ class REDMINEQTSHARED_EXPORT RedmineClient : public QObject {
 	Q_OBJECT
 
 public:
+    typedef void (RedmineClient::*callback_t)(QNetworkReply *reply, QJsonDocument *data, void *);
+
 	enum EMode {
 		GET,
 		POST,
@@ -79,18 +116,18 @@ public:
 protected:
     /* Sends a request to the Redmine endpoint.
      */
-    QNetworkReply *sendRequest(
-            QString uri,
+    QNetworkReply *sendRequest(QString uri,
             EFormat format = JSON,
             EMode   mode   = GET,
-            void *callback     = NULL,
+            void *obj_ptr = NULL,
+            callback_t callback = NULL,
             void *callback_arg = NULL,
             bool  free_arg     = false,
             QString getParams = "",
             const QByteArray& requestData = "");
 
 private slots:
-    void requestFinished(QNetworkReply *reply);
+    void requestFinished_wrapper(QNetworkReply *reply);
 
 private:
 	/* Commont initialization steps.
@@ -100,18 +137,22 @@ private:
 	void					init();
     bool                    checkUrl(const QUrl &url);
 
+    struct callback {
+        void                   *obj_ptr;
+        callback_t              funct;
+        void                   *arg;
+        bool                    free_arg;
+        RedmineClient::EFormat  format;
+    };
+
     QString					_base_url;
     IAuthenticator*			_authenticator = NULL;
     QNetworkAccessManager*	_nma           = NULL;
     QHash<QNetworkReply *, struct callback> _callbacks;
 	QByteArray				_ua;
-};
 
-struct callback {
-    void                   *funct;
-    void                   *arg;
-    bool                    free_arg;
-    RedmineClient::EFormat  format;
-};
+signals:
+    void requestFinished(void *obj_ptr, callback_t callback, QNetworkReply *reply, QJsonDocument *data, void *);
 
+};
 #endif // __REDMINE_CLIENT_HPP__

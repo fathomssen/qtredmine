@@ -19,7 +19,7 @@ private:                                            \
             QJsonDocument *data,                    \
             void          *argument)                \
     {                                               \
-        qDebug("callback_dispatcher: %p %p", this, obj_ptr); \
+        /*qDebug("callback_dispatcher: %p %p", this, obj_ptr);*/ \
         if (obj_ptr == thisptr)\
             (this->*callback)(reply, data, argument);\
         else                                        \
@@ -123,8 +123,8 @@ protected:
             callback_t callback = NULL,
             void *callback_arg = NULL,
             bool  free_arg     = false,
-            QString getParams = "",
-            const QByteArray& requestData = "");
+            const QString    &getParams   = "",
+            const QByteArray &requestData = "");
 
 private slots:
     void requestFinished_wrapper(QNetworkReply *reply);

@@ -101,7 +101,7 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
         callback_t callback,
         void *callback_arg,
         bool  free_arg,
-        QString getParams,
+        const QString    &getParams,
         const QByteArray &requestData
 ) {
 	QByteArray postDataSize = QByteArray::number(requestData.size());

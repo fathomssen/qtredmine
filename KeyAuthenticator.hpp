@@ -10,12 +10,13 @@
  *
  * Adds an "X-Redmine-API-Key" header, with API key.
  */
-class REDMINEQTSHARED_EXPORT KeyAuthenticator : public IAuthenticator {
+class REDMINEQTSHARED_EXPORT KeyAuthenticator : public IAuthenticator
+{
 public:
-	KeyAuthenticator(QByteArray apiKey);
+	KeyAuthenticator ( QByteArray apiKey );
 	virtual ~KeyAuthenticator() {}
 
-	virtual void addAuthentication(QNetworkRequest* request);
+	virtual void addAuthentication ( QNetworkRequest* request );
 
 private:
 	QByteArray	_apiKey;

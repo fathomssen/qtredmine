@@ -9,11 +9,12 @@ class QNetworkRequest;
  *
  * Handle the authentication for a given network request.
  */
-class REDMINEQTSHARED_EXPORT IAuthenticator {
+class REDMINEQTSHARED_EXPORT IAuthenticator
+{
 public:
 	virtual ~IAuthenticator() {}
 
-	virtual void addAuthentication(QNetworkRequest* request) = 0;
+	virtual void addAuthentication ( QNetworkRequest* request ) = 0;
 };
 
 #endif // __I_AUTHENTICATOR_HPP__

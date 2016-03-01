@@ -10,12 +10,13 @@
  *
  * Adds an "Authorization" header, using HTTP Basic authentication.
  */
-class REDMINEQTSHARED_EXPORT PasswordAuthenticator : public IAuthenticator {
+class REDMINEQTSHARED_EXPORT PasswordAuthenticator : public IAuthenticator
+{
 public:
-	PasswordAuthenticator(QString login, QString password);
+	PasswordAuthenticator ( QString login, QString password );
 	virtual ~PasswordAuthenticator() {}
 
-	virtual void addAuthentication(QNetworkRequest* request);
+	virtual void addAuthentication ( QNetworkRequest* request );
 
 private:
 	QString	_login;

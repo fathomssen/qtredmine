@@ -88,6 +88,10 @@ public:
     void setBaseUrl(QString base_url);
     void setBaseUrl(const char *base_url);
 
+    /* Gets previously set base url (to the root URL of redmine site)
+     */
+    QString getBaseUrl();
+
     /* Set authentification parameters in case of non-configured client
      */
     void setAuth(QString apiKey);

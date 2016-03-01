@@ -31,6 +31,11 @@ void RedmineClient::setBaseUrl(const char *base_url) {
     this->_base_url = QString::fromUtf8(base_url);
 }
 
+QString RedmineClient::getBaseUrl()
+{
+    return this->_base_url;
+}
+
 void RedmineClient::setAuth(QString apiKey) {
     this->_authenticator = new KeyAuthenticator(apiKey.toLatin1());
     init();
@@ -110,7 +115,7 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
     QUrl    url     = url_str;
 
 #ifdef DEBUG
-    qDebug("URL: %s", url_str.toLatin1().data());
+    qDebug("URL: %s (%s)", url_str.toLatin1().data());
 #endif
     if (!url.isValid()) {
         qDebug("Invalid URL: %s", url_str.toLatin1().data());
@@ -120,7 +125,7 @@ QNetworkReply *RedmineClient::sendRequest(QString uri,
     QNetworkRequest request(url);
     request.setRawHeader("User-Agent",          _ua);
 	request.setRawHeader("X-Custom-User-Agent", _ua);
-    request.setRawHeader("Content-Type",        "text/xml");
+    request.setRawHeader("Content-Type",        (format == JSON ? "application/json" : "text/xml" ));
     request.setRawHeader("Content-Length",      postDataSize);
 
     this->_authenticator->addAuthentication(&request);

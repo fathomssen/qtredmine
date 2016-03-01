@@ -5,6 +5,7 @@ QMAKE_CXXFLAGS += -std=c++11
 
 TARGET = qtredmine
 TEMPLATE = lib
+CONFIG += staticlib
 
 DEFINES += REDMINEQT_LIBRARY
 

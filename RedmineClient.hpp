@@ -9,7 +9,7 @@
 	\
 	private:                                            \
 	fromClass::callback_t operator = (toClass::callback_t & callback) { \
-		return reinterpret_cast <fromClass::callback_t> (callback); \
+        return reinterpret_cast <fromClass::callback_t &> (callback); \
 	}                                               \
 	\
 	Q_SLOT void callback_dispatcher(                \
@@ -40,6 +40,10 @@ class IAuthenticator;
 class QNetworkAccessManager;
 
 #include "redmine-qt_global.hpp"
+
+#if _MSC_VER && !__INTEL_COMPILER
+#pragma pointers_to_members( full_generality, virtual_inheritance )
+#endif
 
 #include <QtCore/QObject>
 #include <QtCore/QString>

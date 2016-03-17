@@ -24,5 +24,6 @@ HEADERS += \
     qtredmine_global.h
 
 DISTFILES += \
-    README.md
+    README.md \
+    .travis.yml
 

@@ -1,12 +1,21 @@
-#include "KeyAuthenticator.hpp"
+#include "KeyAuthenticator.h"
 
-#include <QtNetwork/QNetworkRequest>
+#include "logging.h"
 
-KeyAuthenticator::KeyAuthenticator ( QByteArray apiKey ) : _apiKey ( apiKey )
+#include <QNetworkRequest>
+
+using namespace qtredmine;
+
+KeyAuthenticator::KeyAuthenticator( QByteArray apiKey, QObject* parent )
+    : Authenticator( parent ),
+      apiKey_( apiKey )
 {
+    qEnter() << _(apiKey);
 }
 
-void KeyAuthenticator::addAuthentication ( QNetworkRequest* request )
+void KeyAuthenticator::addAuthentication( QNetworkRequest* request )
 {
-	request->setRawHeader ( "X-Redmine-API-Key", _apiKey );
+    qEnter() << _(request);
+
+    request->setRawHeader( "X-Redmine-API-Key", apiKey_ );
 }

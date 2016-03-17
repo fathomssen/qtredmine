@@ -1,23 +1,28 @@
-QT       += network xml
-QT       -= gui
+QT += network xml
+QT -= gui
 
 QMAKE_CXXFLAGS += -std=c++11
 
 TARGET = qtredmine
 TEMPLATE = lib
-#CONFIG += staticlib
 
-DEFINES += REDMINEQT_LIBRARY
+DEFINES += QTREDMINE_LIBRARY
 
 SOURCES += \
-	RedmineClient.cpp \
-	PasswordAuthenticator.cpp \
-	KeyAuthenticator.cpp
+    Redmine.cpp \
+    PasswordAuthenticator.cpp \
+    KeyAuthenticator.cpp \
+    Example.cpp
 
 HEADERS += \
-        redmine-qt_global.hpp \
-	RedmineClient.hpp \
-	PasswordAuthenticator.hpp \
-	IAuthenticator.hpp \
-	KeyAuthenticator.hpp
+    KeyAuthenticator.h \
+    PasswordAuthenticator.h \
+    Redmine.h \
+    Authenticator.h \
+    logging.h \
+    Example.h \
+    qtredmine_global.h
+
+DISTFILES += \
+    README.md
 

@@ -1,12 +1,23 @@
-#include "PasswordAuthenticator.hpp"
+#include "PasswordAuthenticator.h"
 
-#include <QtNetwork/QNetworkRequest>
+#include "logging.h"
 
-PasswordAuthenticator::PasswordAuthenticator ( QString login, QString password ) : _login ( login ), _password ( password )
+#include <QNetworkRequest>
+
+using namespace qtredmine;
+
+PasswordAuthenticator::PasswordAuthenticator( QString login, QString password, QObject* parent )
+    : Authenticator( parent ),
+      login_( login ),
+      password_( password )
 {
+    qEnter() << _(login) << _(password);
 }
 
-void PasswordAuthenticator::addAuthentication ( QNetworkRequest* request )
+void PasswordAuthenticator::addAuthentication( QNetworkRequest* request )
 {
-	request->setRawHeader ( "Authorization", "Basic " + QByteArray ( QString ( "%1:%2" ).arg ( _login ).arg ( _password ).toLatin1().toBase64() ) );
+    qEnter() << _(request);
+
+    QByteArray auth = QByteArray(QString("%1:%2").arg(login_).arg(password_).toLatin1().toBase64());
+    request->setRawHeader( "Authorization", "Basic " + auth );
 }

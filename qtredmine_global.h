@@ -1,0 +1,12 @@
+#ifndef QTREDMINE_GLOBAL_H
+#define REDMINE_GLOBAL_H
+
+#include <QtGlobal>
+
+#if defined(QTREDMINE_LIBRARY)
+#  define QTREDMINESHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define QTREDMINESHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QTREDMINE_GLOBAL_H

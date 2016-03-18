@@ -27,6 +27,5 @@ install:
   - if [ "$QT_BASE" = "56" ]; then sudo apt-get install -qq qt56base; source /opt/qt56/bin/qt56-env.sh; fi
 
 script:
-  - qmake -project
-  - qmake qtredmine.pro
+  - qmake -r
   - make

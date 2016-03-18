@@ -13,6 +13,9 @@ private:
     /// Redmine connection object
     qtredmine::Redmine* redmine_;
 
+    /// Issues cache
+    qtredmine::Redmine::Issues issues_;
+
 public:
     /**
      * @brief Constructor
@@ -20,6 +23,11 @@ public:
      * @param parent Parent QObject
      */
     explicit Example( QObject* parent = nullptr );
+
+    /**
+     * @brief Cache issues
+     */
+    void cacheIssues();
 
     /**
      * @brief Print projects using qDebug()

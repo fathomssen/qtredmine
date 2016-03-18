@@ -15,6 +15,12 @@ Example::Example( QObject *parent )
 }
 
 void
+Example::cacheIssues()
+{
+    redmine_->retrieveIssues( [&]( Redmine::Issues issues ){ issues_ = issues; } );
+}
+
+void
 Example::printProjects()
 {
     auto callback = [=]( QNetworkReply* reply, QJsonDocument* data )

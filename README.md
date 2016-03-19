@@ -16,12 +16,12 @@ Features
 Documentation
 -------------
 Please have a look at the Doxygen documentation at
-(https://fathomssen.github.io/qtredmine)
+https://fathomssen.github.io/qtredmine.
 
 Example
 -------
 Please have a look at the examples in the Doxygen documentation at
-(https://fathomssen.github.io/qtredmine/examples.html)
+https://fathomssen.github.io/qtredmine/examples.html.
 
 Todo
 ----

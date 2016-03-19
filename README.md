@@ -13,9 +13,15 @@ Features
 * Both login/password and API key authentication
 * Simple methods to get serveral resources (issues, projects etc.) from a Redmine instance
 
+Documentation
+-------------
+Please have a look at the Doxygen documentation at
+(https://fathomssen.github.io/qtredmine)
+
 Example
 -------
-See Example.h and Example.cpp for a sample implementation.
+Please have a look at the examples in the Doxygen documentation at
+(https://fathomssen.github.io/qtredmine/examples.html)
 
 Todo
 ----

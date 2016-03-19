@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>QtRedmine: C:/Users/thomssen/ownCloud/Documents/Studium/Masterarbeit/prototypes/RedTimer/qtredmine/logging.h Source File</title>
+<title>QtRedmine: logging.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">C:/Users/thomssen/ownCloud/Documents/Studium/Masterarbeit/prototypes/RedTimer/qtredmine/logging.h</div>  </div>
+<div class="title">logging.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LOGGING_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LOGGING_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define qEnter() qDebug() &lt;&lt; &quot;Entering&quot; &lt;&lt; Q_FUNC_INFO</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _(x) #x &lt;&lt; &quot;=&quot; &lt;&lt; x</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define qReturn(x) {qDebug() &lt;&lt; &quot;Leaving&quot; &lt;&lt; Q_FUNC_INFO; return x;}</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#endif // LOGGING_H</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div></div><!-- fragment --></div><!-- contents -->

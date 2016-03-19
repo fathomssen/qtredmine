@@ -1,0 +1,11 @@
+/**
+ * @brief Documentation for QtRedmine
+ * @author Frederick Thomssen
+ * @file Mainpage.dox
+ */
+
+/**
+ * @mainpage QtRedmine
+ *
+ * Library to access to a Redmine instance using its REST API, developped in C++ with Qt.
+ */

@@ -8,6 +8,8 @@ Redmine REST API Qt client
 This is a [Redmine](http://redmine.org) client C++ library, written in Qt. It
 uses Redmine's REST API to access a Redmine instance.
 
+This library requires Qt version 5.2+.
+
 Features
 --------
 * Both login/password and API key authentication

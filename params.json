@@ -1,0 +1,6 @@
+{
+  "name": "QtRedmine",
+  "tagline": "Library to access to a Redmine instance using its REST API, developped in C++ with Qt",
+  "body": "[![Qt Pods](http://qt-pods.org/assets/logo.png \"Qt Pods\")](http://qt-pods.org)\r\n\r\n[![Travis](https://travis-ci.org/fathomssen/qtredmine.svg?branch=master)](https://travis-ci.org/fathomssen/qtredmine)\r\n\r\nRedmine REST API Qt client\r\n==========================\r\n\r\nThis is a [Redmine](http://redmine.org) client C++ library, written in Qt. It\r\nuses Redmine's REST API to access a Redmine instance.\r\n\r\nFeatures\r\n--------\r\n* Both login/password and API key authentication\r\n* Simple methods to get serveral resources (issues, projects etc.) from a Redmine instance\r\n\r\nExample\r\n-------\r\nSee Example.h and Example.cpp for a sample implementation.\r\n\r\nTodo\r\n----\r\n* Simple methods to update serveral resources (issues, projects etc.) in a Redmine instance\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

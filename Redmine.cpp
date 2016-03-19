@@ -79,7 +79,7 @@ Redmine::replyFinished( QNetworkReply* reply )
         QByteArray data_raw = reply->readAll();
         QJsonDocument data_json = QJsonDocument::fromJson( data_raw );
 
-        cbJson callback = callbacks_[reply];
+        JsonCb callback = callbacks_[reply];
         callback( reply, &data_json );
 
         callbacks_.remove( reply );
@@ -87,21 +87,21 @@ Redmine::replyFinished( QNetworkReply* reply )
 }
 
 void
-Redmine::retrieveCustomFields( cbJson callback, QString filters )
+Redmine::retrieveCustomFields( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "custom_fields", callback, Mode::GET, filters );
+    sendRequest( "custom_fields", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveEnumerations( cbJson callback, QString enumeration, QString filters )
+Redmine::retrieveEnumerations(QString enumeration, JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, filters );
+    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveEnumerations( cbEnumerations callback, QString enumeration, QString filters )
+Redmine::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QString parameters )
 {
     qEnter();
 
@@ -137,39 +137,39 @@ Redmine::retrieveEnumerations( cbEnumerations callback, QString enumeration, QSt
         callback( enumerations );
     };
 
-    retrieveEnumerations( cb, enumeration, filters );
+    retrieveEnumerations( enumeration, cb, parameters );
 }
 
 void
-Redmine::retrieveIssueCategories( cbJson callback, QString filters )
+Redmine::retrieveIssueCategories( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "issue_categories", callback, Mode::GET, filters );
+    sendRequest( "issue_categories", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveIssuePriorities( cbJson callback, QString filters )
+Redmine::retrieveIssuePriorities( JsonCb callback, QString parameters )
 {
     qEnter();
-    retrieveEnumerations( callback, "issue_priorities", filters );
+    retrieveEnumerations( "issue_priorities", callback, parameters );
 }
 
 void
-Redmine::retrieveIssuePriorities( cbEnumerations callback, QString filters )
+Redmine::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
 {
     qEnter();
-    retrieveEnumerations( callback, "issue_priorities", filters );
+    retrieveEnumerations( "issue_priorities", callback, parameters );
 }
 
 void
-Redmine::retrieveIssues( cbJson callback, QString filters )
+Redmine::retrieveIssues( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "issues", callback, Mode::GET, filters );
+    sendRequest( "issues", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveIssues( cbIssues callback, QString filters )
+Redmine::retrieveIssues( IssuesCb callback, QString parameters )
 {
     qEnter();
 
@@ -245,18 +245,18 @@ Redmine::retrieveIssues( cbIssues callback, QString filters )
         callback( issues );
     };
 
-    retrieveIssues( cb, filters );
+    retrieveIssues( cb, parameters );
 }
 
 void
-Redmine::retrieveIssueStatuses( cbJson callback, QString filters )
+Redmine::retrieveIssueStatuses( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "issue_statuses", callback, Mode::GET, filters );
+    sendRequest( "issue_statuses", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveIssueStatuses( cbIssueStatuses callback, QString filters )
+Redmine::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
 {
     qEnter();
 
@@ -292,18 +292,18 @@ Redmine::retrieveIssueStatuses( cbIssueStatuses callback, QString filters )
         callback( issueStatuses );
     };
 
-    retrieveIssueStatuses( cb, filters );
+    retrieveIssueStatuses( cb, parameters );
 }
 
 void
-Redmine::retrieveProjects( cbJson callback, QString filters )
+Redmine::retrieveProjects( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "projects", callback, Mode::GET, filters );
+    sendRequest( "projects", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveProjects( cbProjects callback, QString filters )
+Redmine::retrieveProjects( ProjectsCb callback, QString parameters )
 {
     qEnter();
 
@@ -345,39 +345,39 @@ Redmine::retrieveProjects( cbProjects callback, QString filters )
         callback( projects );
     };
 
-    retrieveProjects( cb, filters );
+    retrieveProjects( cb, parameters );
 }
 
 void
-Redmine::retrieveTimeEntries( cbJson callback, QString filters )
+Redmine::retrieveTimeEntries( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "time_entries", callback, Mode::GET, filters );
+    sendRequest( "time_entries", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveTimeEntryActivities( cbJson callback, QString filters )
+Redmine::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
 {
     qEnter();
-    retrieveEnumerations( callback, "time_entry_activities", filters );
+    retrieveEnumerations( "time_entry_activities", callback, parameters );
 }
 
 void
-Redmine::retrieveTimeEntryActivities( cbEnumerations callback, QString filters )
+Redmine::retrieveTimeEntryActivities( EnumerationsCb callback, QString parameters )
 {
     qEnter();
-    retrieveEnumerations( callback, "time_entry_activities", filters );
+    retrieveEnumerations( "time_entry_activities", callback, parameters );
 }
 
 void
-Redmine::retrieveTrackers( cbJson callback, QString filters )
+Redmine::retrieveTrackers( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "trackers", callback, Mode::GET, filters );
+    sendRequest( "trackers", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveTrackers( cbTrackers callback, QString filters )
+Redmine::retrieveTrackers( TrackersCb callback, QString parameters )
 {
     qEnter();
 
@@ -412,25 +412,25 @@ Redmine::retrieveTrackers( cbTrackers callback, QString filters )
         callback( trackers );
     };
 
-    retrieveTrackers( cb, filters );
+    retrieveTrackers( cb, parameters );
 }
 
 void
-Redmine::retrieveUsers( cbJson callback, QString filters )
+Redmine::retrieveUsers( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "users", callback, Mode::GET, filters );
+    sendRequest( "users", callback, Mode::GET, parameters );
 }
 
 void
-Redmine::retrieveVersions( cbJson callback, QString filters )
+Redmine::retrieveVersions( JsonCb callback, QString parameters )
 {
     qEnter();
-    sendRequest( "versions", callback, Mode::GET, filters );
+    sendRequest( "versions", callback, Mode::GET, parameters );
 }
 
 QNetworkReply*
-Redmine::sendRequest( QString resource, cbJson callback, Mode mode, const QString& queryParams,
+Redmine::sendRequest( QString resource, JsonCb callback, Mode mode, const QString& queryParams,
                       const QByteArray& postData )
 {
     qEnter();
@@ -491,11 +491,11 @@ Redmine::sendRequest( QString resource, cbJson callback, Mode mode, const QStrin
         reply = nma_->get( request );
         break;
 
-    case Mode::POST:
+    case Mode::ADD:
         reply = nma_->post( request, postData );
         break;
 
-    case Mode::PUT:
+    case Mode::UPDATE:
         reply = nma_->put( request, postData );
         break;
 

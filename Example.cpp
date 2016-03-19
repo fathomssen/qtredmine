@@ -1,7 +1,6 @@
 #include "Example.h"
 
-#include <QJsonArray>
-#include <QJsonObject>
+#include <QDebug>
 
 using namespace qtredmine;
 
@@ -23,23 +22,9 @@ Example::cacheIssues()
 void
 Example::printProjects()
 {
-    auto callback = [=]( QNetworkReply* reply, QJsonDocument* data )
+    redmine_->retrieveProjects( []( Redmine::Projects projects )
     {
-        // Quit on network error
-        if( reply->error() != QNetworkReply::NoError )
-            return;
-
-        // Iterate over the document
-        for( const auto& doc : data->object() )
-        {
-            // Iterate over all projects
-            for( const auto& project : doc.toArray() )
-            {
-                QJsonObject obj = project.toObject();
-                qDebug() << obj.value("name").toString() << obj.value("id").toInt();
-            }
-        }
-    };
-
-    redmine_->retrieveProjects( callback );
+        for( const auto& project : projects )
+            qDebug() << project.name;
+    } );
 }

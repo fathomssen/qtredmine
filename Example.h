@@ -5,6 +5,9 @@
 
 #include <QObject>
 
+/**
+ * @brief Example class for using QtRedmine
+ */
 class Example : public QObject
 {
     Q_OBJECT

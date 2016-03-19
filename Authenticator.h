@@ -22,7 +22,7 @@ public:
     /**
      * @brief Constructor
      *
-     * @param param Parent QObject
+     * @param parent Parent QObject
      */
     Authenticator( QObject* parent = nullptr ) : QObject( parent ) {}
 

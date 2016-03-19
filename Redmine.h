@@ -20,36 +20,34 @@
 
 #include <functional>
 
+/// QtRedmine namespace
 namespace qtredmine {
+
+/**
+ * @example Example.h
+ * @example Example.cpp
+ */
 
 /**
  * @brief Redmine connection class
  *
  * This class handles the connections to a Redmine instance and provides access to
- * the Redmine REST API (@sa http://www.redmine.org/projects/redmine/wiki/Rest_api).
+ * the Redmine REST API.
  *
- * @example Example.h
- * @example Example.cpp
+ * @sa http://www.redmine.org/projects/redmine/wiki/Rest_api
  */
 class QTREDMINESHARED_EXPORT Redmine : public QObject
 {
     Q_OBJECT
 
 public:
-    /// Typedef for a JSON callback function
-    using cbJson = std::function<void(QNetworkReply*, QJsonDocument*)>;
-
-    /// HTTP operation mode
+    /// Operation mode
     enum class Mode {
-        GET,  ///< HTTP GET operation
-        POST, ///< HTTP POST operation
-        PUT,  ///< HTTP PUT operation
-        DEL   ///< HTTP DELETE operation
+        GET,      ///< Get items from Redmine
+        ADD,      ///< Add a new item to Redmine
+        UPDATE,   ///< Update a Redmine item
+        DEL       ///< Delete a Redmine item
     };
-
-    //
-    // Internal representations
-    //
 
     /// Structure representing a Redmine item
     struct Item {
@@ -85,7 +83,7 @@ public:
     using Enumerations = QVector<Enumeration>;
 
     /// Typedef for a Redmine enumerations callback function
-    using cbEnumerations = std::function<void(Enumerations)>;
+    using EnumerationsCb = std::function<void(Enumerations)>;
 
     //
     // Issue
@@ -119,7 +117,7 @@ public:
     using Issues = QVector<Issue>;
 
     /// Typedef for a Redmine issues callback function
-    using cbIssues = std::function<void(Issues)>;
+    using IssuesCb = std::function<void(Issues)>;
 
     //
     // Issue statuses
@@ -137,7 +135,7 @@ public:
     using IssueStatuses = QVector<IssueStatus>;
 
     /// Typedef for a Redmine issue statuses callback function
-    using cbIssueStatuses = std::function<void(IssueStatuses)>;
+    using IssueStatusesCb = std::function<void(IssueStatuses)>;
 
     //
     // Project
@@ -160,7 +158,7 @@ public:
     using Projects = QVector<Project>;
 
     /// Typedef for a Redmine projects callback function
-    using cbProjects = std::function<void(Projects)>;
+    using ProjectsCb = std::function<void(Projects)>;
 
     //
     // Tracker
@@ -176,61 +174,7 @@ public:
     using Trackers = QVector<Tracker>;
 
     /// Typedef for a Redmine Trackers callback function
-    using cbTrackers = std::function<void(Trackers)>;
-
-private:
-    /// Currently configured authenticator for Redmine
-    Authenticator* auth_;
-
-    /**
-     * @brief Mapping from network reply to callback function
-     *
-     * This hash table can be used to find the correct callback for a network reply.
-     * It is used by slot replyFinished() to call the desired callback function after
-     * a reply from the network access manager has finished.
-     */
-    QMap<QNetworkReply*, cbJson> callbacks_;
-
-    /// Determines whether SSL data (e.g. certificate validity) should be checked
-    bool checkSsl_ = true;
-
-    /// Network access manager for networking operations
-    QNetworkAccessManager* nma_;
-
-    /// Redmine base URL
-    QString url_;
-
-    /// User agent for Redmine connection (default: "qtredmine")
-    QByteArray userAgent_ = "qtredmine";
-
-    /**
-     * @brief Initialise the Redmine connection
-     *
-     * Creates the network access manager and sets up the signal and slot for callbacks.
-     */
-    void init();
-
-    /**
-     * @brief Retrieve enumerations from Redmine
-     *
-     * @param callback    Callback function with a QJsonDocument object
-     * @param enumeration The enumeration to load
-     * @param filters     Additional enumeration filters
-     */
-    void retrieveEnumerations( cbJson  callback,
-                               QString enumeration,
-                               QString filters = "" );
-
-    /**
-     * @brief Retrieve enumerations from Redmine
-     *
-     * @param callback    Callback function with an Enumeration vector
-     * @param enumeration The enumeration to load
-     * @param filters     Additional enumeration filters
-     */
-    void retrieveEnumerations( cbEnumerations callback,
-                               QString enumeration,
-                               QString filters = "" );
+    using TrackersCb = std::function<void(Trackers)>;
 
 public:
     /**
@@ -322,159 +266,163 @@ public:
     void setCheckSsl( bool checkSsl );
 
     /**
-     * @brief Retrieve custom fields from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional custom field filters
-     */
-    void retrieveCustomFields( cbJson callback,
-                               QString filters = "" );
-
-    /**
-     * @brief Retrieve issue categories from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional issue category filters
-     */
-    void retrieveIssueCategories( cbJson callback,
-                                  QString filters = "" );
-
-    /**
-     * @brief Retrieve issue priorities from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional enumeration filters
-     */
-    void retrieveIssuePriorities( cbJson callback,
-                                  QString filters = "" );
-
-    /**
      * @brief Retrieve issue priorities from Redmine
      *
      * @param callback Callback function with an Enumeration vector
-     * @param filters  Additional enumeration filters
+     * @param parameters  Additional enumeration parameters
      */
-    void retrieveIssuePriorities( cbEnumerations callback,
-                                  QString filters = "" );
+    void retrieveIssuePriorities( EnumerationsCb callback,
+                                  QString parameters = "" );
 
     /**
      * @brief Retrieve issues from Redmine
      *
      * @param callback Callback function with an Issue vector
-     * @param filters  Additional issue filters
+     * @param parameters  Additional issue parameters
      */
-    void retrieveIssues( cbIssues callback,
-                         QString filters = "" );
-
-    /**
-     * @brief Retrieve issues from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional issue filters
-     */
-    void retrieveIssues( cbJson callback,
-                         QString filters = "" );
-
-    /**
-     * @brief Retrieve issue statuses from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional issue status filters
-     */
-    void retrieveIssueStatuses( cbJson callback,
-                                QString filters = "" );
+    void retrieveIssues( IssuesCb callback,
+                         QString parameters = "" );
 
     /**
      * @brief Retrieve issue statuses from Redmine
      *
      * @param callback Callback function with a IssueStatus vector
-     * @param filters  Additional issue status filters
+     * @param parameters  Additional issue status parameters
      */
-    void retrieveIssueStatuses( cbIssueStatuses callback,
-                                QString filters = "" );
+    void retrieveIssueStatuses( IssueStatusesCb callback,
+                                QString parameters = "" );
 
     /**
      * @brief Retrieve projects from Redmine
      *
      * @param callback Callback function with a Project vector
-     * @param filters  Additional project filters
+     * @param parameters  Additional project parameters
      */
-    void retrieveProjects( cbProjects callback,
-                           QString filters = "" );
-
-    /**
-     * @brief Retrieve projects from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional project filters
-     */
-    void retrieveProjects( cbJson callback,
-                           QString filters = "" );
-
-    /**
-     * @brief Retrieve time entries from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional time entry filters
-     */
-    void retrieveTimeEntries( cbJson callback,
-                              QString filters = "" );
-
-    /**
-     * @brief Retrieve time entry activities from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional enumeration filters
-     */
-    void retrieveTimeEntryActivities( cbJson callback,
-                                      QString filters = "" );
+    void retrieveProjects( ProjectsCb callback,
+                           QString parameters = "" );
 
     /**
      * @brief Retrieve time entry activities from Redmine
      *
      * @param callback Callback function with an Enumeration vector
-     * @param filters  Additional enumeration filters
+     * @param parameters  Additional enumeration parameters
      */
-    void retrieveTimeEntryActivities( cbEnumerations callback,
-                                      QString filters = "" );
-
-    /**
-     * @brief Retrieve trackers from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional tracker filters
-     */
-    void retrieveTrackers( cbJson callback,
-                           QString filters = "" );
+    void retrieveTimeEntryActivities( EnumerationsCb callback,
+                                      QString parameters = "" );
 
     /**
      * @brief Retrieve trackers from Redmine
      *
      * @param callback Callback function with a Tracker vector
-     * @param filters  Additional tracker filters
+     * @param parameters  Additional tracker parameters
      */
-    void retrieveTrackers( cbTrackers callback,
-                           QString filters = "" );
+    void retrieveTrackers( TrackersCb callback,
+                           QString parameters = "" );
+
+protected:
+    /// Typedef for a JSON callback function
+    using JsonCb = std::function<void(QNetworkReply*, QJsonDocument*)>;
+
+    /**
+     * @brief Retrieve custom fields from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional custom field parameters
+     */
+    void retrieveCustomFields( JsonCb callback,
+                               QString parameters = "" );
+
+    /**
+     * @brief Retrieve issue categories from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional issue category parameters
+     */
+    void retrieveIssueCategories( JsonCb callback,
+                                  QString parameters = "" );
+
+    /**
+     * @brief Retrieve issue priorities from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional enumeration parameters
+     */
+    void retrieveIssuePriorities( JsonCb callback,
+                                  QString parameters = "" );
+
+    /**
+     * @brief Retrieve issues from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional issue parameters
+     */
+    void retrieveIssues( JsonCb callback,
+                         QString parameters = "" );
+
+    /**
+     * @brief Retrieve issue statuses from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional issue status parameters
+     */
+    void retrieveIssueStatuses( JsonCb callback,
+                                QString parameters = "" );
+
+    /**
+     * @brief Retrieve projects from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional project parameters
+     */
+    void retrieveProjects( JsonCb callback,
+                           QString parameters = "" );
+
+    /**
+     * @brief Retrieve time entries from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional time entry parameters
+     */
+    void retrieveTimeEntries( JsonCb callback,
+                              QString parameters = "" );
+
+    /**
+     * @brief Retrieve time entry activities from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional enumeration parameters
+     */
+    void retrieveTimeEntryActivities( JsonCb callback,
+                                      QString parameters = "" );
+
+    /**
+     * @brief Retrieve trackers from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional tracker parameters
+     */
+    void retrieveTrackers( JsonCb callback,
+                           QString parameters = "" );
 
     /**
      * @brief Retrieve versions from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional version filters
+     * @param parameters  Additional version parameters
      */
-    void retrieveVersions( cbJson callback,
-                           QString filters = "" );
+    void retrieveVersions( JsonCb callback,
+                           QString parameters = "" );
 
     /**
      * @brief Retrieve users from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
-     * @param filters  Additional user filters
+     * @param parameters  Additional user parameters
      */
-    void retrieveUsers( cbJson callback,
-                        QString filters = "" );
+    void retrieveUsers( JsonCb callback,
+                        QString parameters = "" );
 
-protected:
+
     /**
      * @brief Send a request to Redmine
      *
@@ -511,10 +459,65 @@ protected:
      * @return The network reply for this request
      */
     QNetworkReply* sendRequest( QString resource,
-                                cbJson callback             = nullptr,
+                                JsonCb callback            = nullptr,
                                 Mode mode                  = Mode::GET,
                                 const QString& queryParams = "",
                                 const QByteArray& postData = "" );
+
+private:
+    /// Currently configured authenticator for Redmine
+    Authenticator* auth_;
+
+    /**
+     * @brief Mapping from network reply to callback function
+     *
+     * This hash table can be used to find the correct callback for a network reply.
+     * It is used by slot replyFinished() to call the desired callback function after
+     * a reply from the network access manager has finished.
+     */
+    QMap<QNetworkReply*, JsonCb> callbacks_;
+
+    /// Determines whether SSL data (e.g. certificate validity) should be checked
+    bool checkSsl_ = true;
+
+    /// Network access manager for networking operations
+    QNetworkAccessManager* nma_;
+
+    /// Redmine base URL
+    QString url_;
+
+    /// User agent for Redmine connection (default: "qtredmine")
+    QByteArray userAgent_ = "qtredmine";
+
+    /**
+     * @brief Initialise the Redmine connection
+     *
+     * Creates the network access manager and sets up the signal and slot for callbacks.
+     */
+    void init();
+
+    /**
+     * @brief Retrieve enumerations from Redmine
+     *
+     * @param enumeration The enumeration to load
+     * @param callback    Callback function with a QJsonDocument object
+     * @param parameters     Additional enumeration parameters
+     */
+    void retrieveEnumerations( QString enumeration,
+                               JsonCb  callback,
+                               QString parameters = "" );
+
+    /**
+     * @brief Retrieve enumerations from Redmine
+     *
+     * @param enumeration The enumeration to load
+     * @param callback    Callback function with an Enumeration vector
+     * @param parameters     Additional enumeration parameters
+     */
+    void retrieveEnumerations( QString enumeration,
+                               EnumerationsCb callback,
+                               QString parameters = "" );
+
 
 private slots:
     /**
@@ -532,7 +535,7 @@ signals:
      * @param reply    Reply that will be passed to the callback function
      * @param json     JSON data that will be passed to the callback function
      */
-    void requestFinished( cbJson callback, QNetworkReply* reply, QJsonDocument* data );
+    void requestFinished( JsonCb callback, QNetworkReply* reply, QJsonDocument* json );
 };
 
 } // qtredmine

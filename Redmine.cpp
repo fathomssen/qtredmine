@@ -15,13 +15,17 @@ Redmine::Redmine( QObject* parent )
     : QObject( parent )
 {
     qEnter();
+    qReturn();
 }
 
 Redmine::Redmine( QString url, QObject* parent )
     : QObject( parent )
 {
     qEnter() << _(url);
+
     setUrl( url );
+
+    qReturn();
 }
 
 Redmine::Redmine( QString url, QString apiKey, bool checkSsl, QObject* parent )
@@ -32,6 +36,8 @@ Redmine::Redmine( QString url, QString apiKey, bool checkSsl, QObject* parent )
     setCheckSsl( checkSsl );
     setUrl( url );
     setAuthenticator( apiKey );
+
+    qReturn();
 }
 
 Redmine::Redmine( QString url, QString login, QString password, bool checkSsl, QObject* parent )
@@ -42,11 +48,14 @@ Redmine::Redmine( QString url, QString login, QString password, bool checkSsl, Q
     setCheckSsl( checkSsl );
     setUrl( url );
     setAuthenticator( login, password );
+
+    qReturn();
 }
 
 Redmine::~Redmine()
 {
-    qEnter();
+    qEnter();    
+    qReturn();
 }
 
 QString
@@ -66,6 +75,8 @@ Redmine::init()
 
     // When a reqest to the network access manager has finished, call this->replyFinished()
     connect( nma_, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)) );
+
+    qReturn();
 }
 
 void
@@ -84,20 +95,28 @@ Redmine::replyFinished( QNetworkReply* reply )
 
         callbacks_.remove( reply );
     }
+
+    qReturn();
 }
 
 void
 Redmine::retrieveCustomFields( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "custom_fields", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveEnumerations(QString enumeration, JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
@@ -111,7 +130,10 @@ Redmine::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QStr
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
+        {
+            qDebug() << "Network error:" << reply->errorString();
             qReturn();
+        }
 
         Enumerations enumerations;
 
@@ -135,37 +157,53 @@ Redmine::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QStr
         }
 
         callback( enumerations );
+
+        qReturn();
     };
 
     retrieveEnumerations( enumeration, cb, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveIssueCategories( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "issue_categories", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveIssuePriorities( JsonCb callback, QString parameters )
 {
     qEnter();
+
     retrieveEnumerations( "issue_priorities", callback, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
 {
     qEnter();
+
     retrieveEnumerations( "issue_priorities", callback, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveIssues( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "issues", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
@@ -179,7 +217,10 @@ Redmine::retrieveIssues( IssuesCb callback, QString parameters )
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
+        {
+            qDebug() << "Network error:" << reply->errorString();
             qReturn();
+        }
 
         Issues issues;
 
@@ -243,16 +284,23 @@ Redmine::retrieveIssues( IssuesCb callback, QString parameters )
         }
 
         callback( issues );
+
+        qReturn();
     };
 
     retrieveIssues( cb, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveIssueStatuses( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "issue_statuses", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
@@ -266,7 +314,10 @@ Redmine::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
+        {
+            qDebug() << "Network error:" << reply->errorString();
             qReturn();
+        }
 
         IssueStatuses issueStatuses;
 
@@ -290,16 +341,23 @@ Redmine::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
         }
 
         callback( issueStatuses );
+
+        qReturn();
     };
 
     retrieveIssueStatuses( cb, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveProjects( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "projects", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
@@ -313,7 +371,10 @@ Redmine::retrieveProjects( ProjectsCb callback, QString parameters )
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
+        {
+            qDebug() << "Network error:" << reply->errorString();
             qReturn();
+        }
 
         Projects projects;
 
@@ -343,37 +404,53 @@ Redmine::retrieveProjects( ProjectsCb callback, QString parameters )
         }
 
         callback( projects );
+
+        qReturn();
     };
 
     retrieveProjects( cb, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveTimeEntries( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "time_entries", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
 {
     qEnter();
+
     retrieveEnumerations( "time_entry_activities", callback, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveTimeEntryActivities( EnumerationsCb callback, QString parameters )
 {
     qEnter();
+
     retrieveEnumerations( "time_entry_activities", callback, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveTrackers( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "trackers", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
@@ -387,7 +464,10 @@ Redmine::retrieveTrackers( TrackersCb callback, QString parameters )
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
+        {
+            qDebug() << "Network error:" << reply->errorString();
             qReturn();
+        }
 
         Trackers trackers;
 
@@ -410,23 +490,33 @@ Redmine::retrieveTrackers( TrackersCb callback, QString parameters )
         }
 
         callback( trackers );
+
+        qReturn();
     };
 
     retrieveTrackers( cb, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveUsers( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "users", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 void
 Redmine::retrieveVersions( JsonCb callback, QString parameters )
 {
     qEnter();
+
     sendRequest( "versions", callback, Mode::GET, parameters );
+
+    qReturn();
 }
 
 QNetworkReply*
@@ -517,6 +607,8 @@ Redmine::setAuthenticator( QString apiKey )
 
     auth_ = new KeyAuthenticator( apiKey.toLatin1(), this );
     init();
+
+    qReturn();
 }
 
 void
@@ -526,25 +618,36 @@ Redmine::setAuthenticator( QString login, QString password )
 
     auth_ = new PasswordAuthenticator( login, password, this );
     init();
+
+    qReturn();
 }
 
 void
 Redmine::setCheckSsl( bool checkSsl )
 {
     qEnter();
+
     checkSsl_ = checkSsl;
+
+    qReturn();
 }
 
 void
 Redmine::setUrl( QString url )
 {
     qEnter();
+
     url_ = url;
+
+    qReturn();
 }
 
 void
 Redmine::setUserAgent( QByteArray userAgent )
 {
     qEnter();
+
     userAgent_ = userAgent;
+
+    qReturn();
 }

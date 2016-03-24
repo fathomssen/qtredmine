@@ -3,54 +3,8 @@
 
 #include <QDebug>
 
-//
-// If debug mode is enabled, use advanced logging methods
-//
-#ifdef DEBUG_OUTPUT
-
-#include <QFileInfo>
-
-enum normal
-{
-    ARG0
-};
-
-enum close
-{
-    ARG1,
-    ARG2
-};
-
-inline QDebug operator<<( QDebug debug, normal )
-{
-    return debug;
-}
-
-inline QDebug operator<<( QDebug debug, close )
-{
-    return debug << ")";
-}
-
-#define C(s) s.c_str()
-#define STR(s) std::string(s)
-#define TOS(i) std::to_string(i)
-
-// Function name
-#define FUNC C( STR(__func__).append("()") )
-
-// Filename and position
-#define POS C( QFileInfo(__FILE__).fileName().toStdString().append(":").append(TOS(__LINE__)).append(":") )
-
-// Enter and return helpers with filename and position
-#define DBG(...) qDebug().noquote().nospace() << POS << " " << #__VA_ARGS__ << " "
-
-#define ARG0(x)  "(" #x "=" << x << ARG1
-#define ARG1(x) ", " #x "=" << x << ARG2
-#define ARG2(x) ", " #x "=" << x << ARG1
-#define ARGS ARG0
-
 /*
- * This is how the variable printing works
+ * This is how the variable printing works (examples below for debug mode)
  *
  * 1. A call to DEBUG() will translate to
  *    a. DBG() << ARGS
@@ -71,16 +25,61 @@ inline QDebug operator<<( QDebug debug, close )
  *    d. DBG() << "(" #var1 "=" << #var1 << ", " #var1 "=" << #var2 << ")"  // QDebug << ")"
  */
 
+enum argNone{ ARG0 };
+enum argLast{ ARG1, ARG2 };
+
+inline QDebug operator<<( QDebug debug, argNone )
+{
+    return debug;
+}
+
+inline QDebug operator<<( QDebug debug, argLast )
+{
+    return debug << ")";
+}
+
+#define ARG0(x)  "(" #x "=" << x << ARG1
+#define ARG1(x) ", " #x "=" << x << ARG2
+#define ARG2(x) ", " #x "=" << x << ARG1
+#define ARGS ARG0
+
+//
+// If debug mode is enabled, use advanced logging methods
+//
+#ifdef DEBUG_OUTPUT
+
+#include <QFileInfo>
+
+#define C(s) s.c_str()
+#define STR(s) std::string(s)
+#define TOS(i) std::to_string(i)
+
+// Function name
+#define FUNC C( STR(__func__).append("()") )
+
+// Filename and position
+#define POS C( QFileInfo(__FILE__).fileName().toStdString().append(":").append(TOS(__LINE__)).append(":") )
+
+// Enter and return helpers with filename and position
+#define DBG(...) qDebug().noquote().nospace() << POS << " " << #__VA_ARGS__ << " "
+
 #define DEBUG(...) DBG(__VA_ARGS__) << ARGS
 #define ENTER(...) DBG(__VA_ARGS__) << "Entering " << FUNC << ARGS
 #define RETURN(x) {DBG() << "Leaving " << FUNC; return x;}
 
 #else
 
-#define DEBUG(...) qDebug(__VA_ARGS__)
-#define ENTER(...) DEBUG(__VA_ARGS__) << "Entering" << Q_FUNC_INFO
+#define DEBUG(...) qDebug(__VA_ARGS__) << ARGS
+#define ENTER(...) DEBUG(__VA_ARGS__) << "Entering" << Q_FUNC_INFO << ARGS
 #define RETURN(x) {DEBUG() << "Leaving" << Q_FUNC_INFO; return x;}
 
+#endif
+
+#ifndef Q_ENUM
+// For Qt < 5.5
+#define Q_ENUM(ENUM) \
+    friend Q_DECL_CONSTEXPR const QMetaObject *qt_getEnumMetaObject(ENUM) Q_DECL_NOEXCEPT { return &staticMetaObject; } \
+    friend Q_DECL_CONSTEXPR const char *qt_getEnumName(ENUM) Q_DECL_NOEXCEPT { return #ENUM; }
 #endif
 
 #endif // LOGGING_H

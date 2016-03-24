@@ -521,7 +521,7 @@ Redmine::retrieveVersions( JsonCb callback, QString parameters )
 }
 
 QNetworkReply*
-Redmine::sendRequest( QString resource, JsonCb callback, Mode mode, QString queryParams,
+Redmine::sendRequest( QString resource, JsonCb callback, Mode mode, const QString& queryParams,
                       const QByteArray& postData )
 {
     ENTER()(resource)(mode)(queryParams)(postData);

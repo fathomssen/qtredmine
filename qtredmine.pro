@@ -10,7 +10,7 @@ DEFINES += QTREDMINE_LIBRARY
 
 # No debug statements in release
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
-CONFIG(debug, debug|release):DEFINES += DEBUG
+CONFIG(debug, debug|release):DEFINES += DEBUG_OUTPUT
 
 SOURCES += \
     Redmine.cpp \

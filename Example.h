@@ -33,7 +33,7 @@ public:
     void cacheIssues();
 
     /**
-     * @brief Print projects using qDebug()
+     * @brief Print projects using DEBUG()
      */
     void printProjects();
 };

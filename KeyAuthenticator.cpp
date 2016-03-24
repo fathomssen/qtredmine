@@ -10,15 +10,15 @@ KeyAuthenticator::KeyAuthenticator( QByteArray apiKey, QObject* parent )
     : Authenticator( parent ),
       apiKey_( apiKey )
 {
-    qEnter() << _(apiKey);
-    qReturn();
+    ENTER()(apiKey);
+    RETURN();
 }
 
 void KeyAuthenticator::addAuthentication( QNetworkRequest* request )
 {
-    qEnter() << _(request);
+    ENTER()(request);
 
     request->setRawHeader( "X-Redmine-API-Key", apiKey_ );
 
-    qReturn();
+    RETURN();
 }

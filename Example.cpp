@@ -1,5 +1,7 @@
 #include "Example.h"
 
+#include "logging.h"
+
 #include <QDebug>
 
 using namespace qtredmine;
@@ -25,6 +27,6 @@ Example::printProjects()
     redmine_->retrieveProjects( []( Redmine::Projects projects )
     {
         for( const auto& project : projects )
-            qDebug() << project.name;
+            DEBUG() << project.name;
     } );
 }

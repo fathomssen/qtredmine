@@ -48,6 +48,7 @@ public:
         UPDATE,   ///< Update a Redmine item
         DEL       ///< Delete a Redmine item
     };
+    Q_ENUM( Mode )
 
     /// Structure representing a Redmine item
     struct Item {

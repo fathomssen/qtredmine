@@ -43,12 +43,11 @@ class QTREDMINESHARED_EXPORT Redmine : public QObject
 public:
     /// Operation mode
     enum class Mode {
-        GET,      ///< Get items from Redmine
-        ADD,      ///< Add a new item to Redmine
-        UPDATE,   ///< Update a Redmine item
-        DEL       ///< Delete a Redmine item
+        GET,    ///< Get items from Redmine
+        ADD,    ///< Add a new item to Redmine
+        UPD,    ///< Update a Redmine item
+        DEL     ///< Delete a Redmine item
     };
-    Q_ENUM( Mode );
 
     /// Structure representing a Redmine item
     struct Item {
@@ -538,6 +537,22 @@ signals:
      */
     void requestFinished( JsonCb callback, QNetworkReply* reply, QJsonDocument* json );
 };
+
+inline QDebug
+operator<<( QDebug debug, const Redmine::Mode& mode )
+{
+    QDebugStateSaver saver( debug );
+
+    switch( mode )
+    {
+    case Redmine::Mode::GET: debug.nospace() << "GET"; break;
+    case Redmine::Mode::ADD: debug.nospace() << "ADD"; break;
+    case Redmine::Mode::UPD: debug.nospace() << "UPD"; break;
+    case Redmine::Mode::DEL: debug.nospace() << "DEL"; break;
+    }
+
+    return debug;
+}
 
 } // qtredmine
 

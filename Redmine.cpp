@@ -586,7 +586,7 @@ Redmine::sendRequest( QString resource, JsonCb callback, Mode mode, const QStrin
         reply = nma_->post( request, postData );
         break;
 
-    case Mode::UPDATE:
+    case Mode::UPD:
         reply = nma_->put( request, postData );
         break;
 

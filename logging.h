@@ -69,17 +69,10 @@ inline QDebug operator<<( QDebug debug, argLast )
 
 #else
 
-#define DEBUG(...) qDebug(__VA_ARGS__) << ARGS
+#define DEBUG(...) qDebug() << #__VA_ARGS__ << ARGS
 #define ENTER(...) DEBUG(__VA_ARGS__) << "Entering" << Q_FUNC_INFO << ARGS
 #define RETURN(x) {DEBUG() << "Leaving" << Q_FUNC_INFO; return x;}
 
-#endif
-
-#ifndef Q_ENUM
-// For Qt < 5.5
-#define Q_ENUM(ENUM) \
-    friend Q_DECL_CONSTEXPR const QMetaObject *qt_getEnumMetaObject(ENUM) Q_DECL_NOEXCEPT { return &staticMetaObject; } \
-    friend Q_DECL_CONSTEXPR const char *qt_getEnumName(ENUM) Q_DECL_NOEXCEPT { return #ENUM; }
 #endif
 
 #endif // LOGGING_H

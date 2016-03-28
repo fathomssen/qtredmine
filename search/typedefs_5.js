@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['trackers',['Trackers',['../classqtredmine_1_1_redmine.html#a3261f7073dc8fe4f378110b4864d94e9',1,'qtredmine::Redmine']]],
-  ['trackerscb',['TrackersCb',['../classqtredmine_1_1_redmine.html#a800820606beeac95f38317befe629172',1,'qtredmine::Redmine']]]
+  ['trackers',['Trackers',['../namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e',1,'qtredmine']]],
+  ['trackerscb',['TrackersCb',['../namespaceqtredmine.html#a7c33e09354c904df1c7e06207a870d6c',1,'qtredmine']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['estimatedhours',['estimatedHours',['../structqtredmine_1_1_redmine_1_1_issue.html#ab45c080a700caff538e52d9dc0cebfa7',1,'qtredmine::Redmine::Issue']]]
+  ['estimatedhours',['estimatedHours',['../structqtredmine_1_1_issue.html#a8e12e63e1d917df752531215068f6621',1,'qtredmine::Issue']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['startdate',['startDate',['../structqtredmine_1_1_redmine_1_1_issue.html#a862927ac1d5fbbd9ab156af20cba8ef8',1,'qtredmine::Redmine::Issue']]],
-  ['status',['status',['../structqtredmine_1_1_redmine_1_1_issue.html#a1d48f168d1c6aff8d4f18e70fcab2e5f',1,'qtredmine::Redmine::Issue']]],
-  ['subject',['subject',['../structqtredmine_1_1_redmine_1_1_issue.html#adf81fdbc1cae2207680c9fc97192873b',1,'qtredmine::Redmine::Issue']]]
+  ['startdate',['startDate',['../structqtredmine_1_1_issue.html#a364cd2dd0204970d9ef10b4665f22d24',1,'qtredmine::Issue']]],
+  ['status',['status',['../structqtredmine_1_1_issue.html#a2d46ccb9e7ba39a8402eef6f9a9936db',1,'qtredmine::Issue']]],
+  ['subject',['subject',['../structqtredmine_1_1_issue.html#abc12239f3173152e2f89c4a89d55b5c0',1,'qtredmine::Issue']]]
 ];

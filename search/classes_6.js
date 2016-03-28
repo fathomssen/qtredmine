@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['redmine',['Redmine',['../classqtredmine_1_1_redmine.html',1,'qtredmine']]]
+  ['redmineclient',['RedmineClient',['../classqtredmine_1_1_redmine_client.html',1,'qtredmine']]]
 ];

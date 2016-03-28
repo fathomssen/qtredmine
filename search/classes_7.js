@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tracker',['Tracker',['../structqtredmine_1_1_redmine_1_1_tracker.html',1,'qtredmine::Redmine']]]
+  ['simpleredmineclient',['SimpleRedmineClient',['../classqtredmine_1_1_simple_redmine_client.html',1,'qtredmine']]]
 ];

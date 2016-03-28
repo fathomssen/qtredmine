@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jsoncb',['JsonCb',['../classqtredmine_1_1_redmine.html#a897b074e64087c39088e8fdda6d398ba',1,'qtredmine::Redmine']]]
+  ['jsoncb',['JsonCb',['../classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4',1,'qtredmine::RedmineClient']]]
 ];

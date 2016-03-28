@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['projects',['Projects',['../classqtredmine_1_1_redmine.html#ade30db229ad56340f2945e25aff9630a',1,'qtredmine::Redmine']]],
-  ['projectscb',['ProjectsCb',['../classqtredmine_1_1_redmine.html#aaa1e64660c0dc35ac50753c1a09a5216',1,'qtredmine::Redmine']]]
+  ['projects',['Projects',['../namespaceqtredmine.html#ab93b435131a43369b586392c72a58c3a',1,'qtredmine']]],
+  ['projectscb',['ProjectsCb',['../namespaceqtredmine.html#a6ac9c6b7a01b08d5af33cb2017c63dff',1,'qtredmine']]]
 ];

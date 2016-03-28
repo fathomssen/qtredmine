@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['issues',['Issues',['../classqtredmine_1_1_redmine.html#a9b8a7fab3221ac16f7f76e9005bd8209',1,'qtredmine::Redmine']]],
-  ['issuescb',['IssuesCb',['../classqtredmine_1_1_redmine.html#a116f9af907f2bf54317eecc2999e36c8',1,'qtredmine::Redmine']]],
-  ['issuestatuses',['IssueStatuses',['../classqtredmine_1_1_redmine.html#af6c837e5c8972b1dc7ac3cd4efe85301',1,'qtredmine::Redmine']]],
-  ['issuestatusescb',['IssueStatusesCb',['../classqtredmine_1_1_redmine.html#a66aa0676debda4dfd522578e7732ed16',1,'qtredmine::Redmine']]],
-  ['items',['Items',['../classqtredmine_1_1_redmine.html#a8389a571409465e18f400a48802bcf1b',1,'qtredmine::Redmine']]]
+  ['issues',['Issues',['../namespaceqtredmine.html#af991ed28e4624f11eac1840aec76a3f2',1,'qtredmine']]],
+  ['issuescb',['IssuesCb',['../namespaceqtredmine.html#a807caa91ae4dd9e75125fdedcfa706ec',1,'qtredmine']]],
+  ['issuestatuses',['IssueStatuses',['../namespaceqtredmine.html#a8868392d9846249b7953b2a918d3cd83',1,'qtredmine']]],
+  ['issuestatusescb',['IssueStatusesCb',['../namespaceqtredmine.html#a575aa5f900f903eea2545285bed1d23f',1,'qtredmine']]],
+  ['items',['Items',['../namespaceqtredmine.html#aac68fe4eacc85b255ab0ec9dcbf97f76',1,'qtredmine']]]
 ];

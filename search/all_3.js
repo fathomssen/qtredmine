@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['enumeration',['Enumeration',['../structqtredmine_1_1_redmine_1_1_enumeration.html',1,'qtredmine::Redmine']]],
-  ['enumerations',['Enumerations',['../classqtredmine_1_1_redmine.html#ab39fb425874d9f627145a716a455d6c1',1,'qtredmine::Redmine']]],
-  ['enumerationscb',['EnumerationsCb',['../classqtredmine_1_1_redmine.html#acf0d7a6ffb470841c3362de6e4f11081',1,'qtredmine::Redmine']]],
-  ['estimatedhours',['estimatedHours',['../structqtredmine_1_1_redmine_1_1_issue.html#ab45c080a700caff538e52d9dc0cebfa7',1,'qtredmine::Redmine::Issue']]]
+  ['enumeration',['Enumeration',['../structqtredmine_1_1_enumeration.html',1,'qtredmine']]],
+  ['enumerations',['Enumerations',['../namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c',1,'qtredmine']]],
+  ['enumerationscb',['EnumerationsCb',['../namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e',1,'qtredmine']]],
+  ['estimatedhours',['estimatedHours',['../structqtredmine_1_1_issue.html#a8e12e63e1d917df752531215068f6621',1,'qtredmine::Issue']]]
 ];

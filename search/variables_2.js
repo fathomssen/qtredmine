@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['description',['description',['../structqtredmine_1_1_redmine_1_1_issue.html#a441c95085c03f63957d8519a9074e962',1,'qtredmine::Redmine::Issue::description()'],['../structqtredmine_1_1_redmine_1_1_project.html#a23b0bc7083665f0849c51342504faeb6',1,'qtredmine::Redmine::Project::description()']]],
-  ['doneratio',['doneRatio',['../structqtredmine_1_1_redmine_1_1_issue.html#aa6ced5ae4a9601dee9791dbd2097b32d',1,'qtredmine::Redmine::Issue']]],
-  ['duedate',['dueDate',['../structqtredmine_1_1_redmine_1_1_issue.html#a9510d20bda4601b27558788a0faf5c65',1,'qtredmine::Redmine::Issue']]]
+  ['description',['description',['../structqtredmine_1_1_issue.html#ad86e12c07752f48f6a62bf56e24cfe13',1,'qtredmine::Issue::description()'],['../structqtredmine_1_1_project.html#a44028af8b2fe440c2410954840271b6a',1,'qtredmine::Project::description()']]],
+  ['doneratio',['doneRatio',['../structqtredmine_1_1_issue.html#a520af87c83e5e911c371ecaf8bd6a8b1',1,'qtredmine::Issue']]],
+  ['duedate',['dueDate',['../structqtredmine_1_1_issue.html#a652a125504d565af79b8a918cd14d240',1,'qtredmine::Issue']]]
 ];

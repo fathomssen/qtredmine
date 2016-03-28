@@ -1,5 +1,3 @@
-[![Qt Pods](http://qt-pods.org/assets/logo.png "Qt Pods")](http://qt-pods.org)
-
 [![Travis](https://travis-ci.org/fathomssen/qtredmine.svg?branch=master)](https://travis-ci.org/fathomssen/qtredmine)
 
 Redmine REST API Qt client

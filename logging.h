@@ -65,13 +65,13 @@ inline QDebug operator<<( QDebug debug, argLast )
 
 #define DEBUG(...) DBG(__VA_ARGS__) << ARGS
 #define ENTER(...) DBG(__VA_ARGS__) << "Entering " << FUNC << ARGS
-#define RETURN(x) {DBG() << "Leaving " << FUNC; return x;}
+#define RETURN(x) do{ DBG() << "Leaving " << FUNC; return x; }while(0)
 
 #else
 
 #define DEBUG(...) qDebug() << #__VA_ARGS__ << ARGS
 #define ENTER(...) DEBUG(__VA_ARGS__) << "Entering" << Q_FUNC_INFO << ARGS
-#define RETURN(x) {DEBUG() << "Leaving" << Q_FUNC_INFO; return x;}
+#define RETURN(x) do{ DEBUG() << "Leaving" << Q_FUNC_INFO; return x; }while(0)
 
 #endif
 

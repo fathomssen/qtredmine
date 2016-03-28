@@ -1,7 +1,7 @@
 #ifndef EXAMPLE_H
 #define EXAMPLE_H
 
-#include "Redmine.h"
+#include "SimpleRedmineClient.h"
 
 #include <QObject>
 
@@ -14,10 +14,10 @@ class Example : public QObject
 
 private:
     /// Redmine connection object
-    qtredmine::Redmine* redmine_;
+    qtredmine::SimpleRedmineClient* redmine_;
 
     /// Issues cache
-    qtredmine::Redmine::Issues issues_;
+    qtredmine::Issues issues_;
 
 public:
     /**

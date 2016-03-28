@@ -1,127 +1,13 @@
-#include "Redmine.h"
-
-#include "KeyAuthenticator.h"
-#include "PasswordAuthenticator.h"
+#include "SimpleRedmineClient.h"
+#include "logging.h"
 
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QNetworkRequest>
-
-#include "logging.h"
 
 using namespace qtredmine;
 
-Redmine::Redmine( QObject* parent )
-    : QObject( parent )
-{
-    ENTER();
-    RETURN();
-}
-
-Redmine::Redmine( QString url, QObject* parent )
-    : QObject( parent )
-{
-    ENTER()(url);
-
-    setUrl( url );
-
-    RETURN();
-}
-
-Redmine::Redmine( QString url, QString apiKey, bool checkSsl, QObject* parent )
-    : QObject( parent )
-{
-    ENTER()(url)(apiKey)(checkSsl);
-
-    setCheckSsl( checkSsl );
-    setUrl( url );
-    setAuthenticator( apiKey );
-
-    RETURN();
-}
-
-Redmine::Redmine( QString url, QString login, QString password, bool checkSsl,
-                  QObject* parent )
-    : QObject( parent )
-{
-    ENTER()(url)(login)(password)(checkSsl);
-
-    setCheckSsl( checkSsl );
-    setUrl( url );
-    setAuthenticator( login, password );
-
-    RETURN();
-}
-
-Redmine::~Redmine()
-{
-    ENTER();
-    RETURN();
-}
-
-QString
-Redmine::getUrl() const
-{
-    ENTER();
-    RETURN( url_ );
-}
-
 void
-Redmine::init()
-{
-    ENTER();
-
-    // Create QNetworkAccessManager object
-    nma_ = new QNetworkAccessManager( this );
-
-    // When a reqest to the network access manager has finished, call this->replyFinished()
-    connect( nma_, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)) );
-
-    RETURN();
-}
-
-void
-Redmine::replyFinished( QNetworkReply* reply )
-{
-    ENTER();
-
-    // Search for callback function
-    if( callbacks_.contains(reply) )
-    {
-        QByteArray data_raw = reply->readAll();
-        QJsonDocument data_json = QJsonDocument::fromJson( data_raw );
-
-        JsonCb callback = callbacks_[reply];
-        callback( reply, &data_json );
-
-        callbacks_.remove( reply );
-    }
-
-    RETURN();
-}
-
-void
-Redmine::retrieveCustomFields( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "custom_fields", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveEnumerations(QString enumeration, JsonCb callback, QString parameters )
-{
-    ENTER()(enumeration)(parameters);
-
-    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QString parameters )
+SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QString parameters )
 {
     ENTER()(enumeration)(parameters);
 
@@ -168,17 +54,7 @@ Redmine::retrieveEnumerations(QString enumeration, EnumerationsCb callback, QStr
 }
 
 void
-Redmine::retrieveIssueCategories( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issue_categories", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveIssuePriorities( JsonCb callback, QString parameters )
+SimpleRedmineClient::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -188,27 +64,7 @@ Redmine::retrieveIssuePriorities( JsonCb callback, QString parameters )
 }
 
 void
-Redmine::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    retrieveEnumerations( "issue_priorities", callback, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveIssues( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issues", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveIssues( IssuesCb callback, QString parameters )
+SimpleRedmineClient::retrieveIssues( IssuesCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -295,17 +151,7 @@ Redmine::retrieveIssues( IssuesCb callback, QString parameters )
 }
 
 void
-Redmine::retrieveIssueStatuses( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issue_statuses", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
+SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -352,17 +198,7 @@ Redmine::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
 }
 
 void
-Redmine::retrieveProjects( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "projects", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveProjects( ProjectsCb callback, QString parameters )
+SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -415,17 +251,7 @@ Redmine::retrieveProjects( ProjectsCb callback, QString parameters )
 }
 
 void
-Redmine::retrieveTimeEntries( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "time_entries", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
+SimpleRedmineClient::retrieveTimeEntryActivities( EnumerationsCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -435,27 +261,7 @@ Redmine::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
 }
 
 void
-Redmine::retrieveTimeEntryActivities( EnumerationsCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    retrieveEnumerations( "time_entry_activities", callback, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveTrackers( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "trackers", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveTrackers( TrackersCb callback, QString parameters )
+SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
 {
     ENTER()(parameters);
 
@@ -496,159 +302,6 @@ Redmine::retrieveTrackers( TrackersCb callback, QString parameters )
     };
 
     retrieveTrackers( cb, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveUsers( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "users", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-Redmine::retrieveVersions( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "versions", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-QNetworkReply*
-Redmine::sendRequest( QString resource, JsonCb callback, Mode mode, const QString& queryParams,
-                      const QByteArray& postData )
-{
-    ENTER()(resource)(mode)(queryParams)(postData);
-
-    //
-    // Initial checks
-    //
-
-    if( resource.isEmpty() )
-    {
-        DEBUG() << "No resource specified";
-        RETURN( nullptr );
-    }
-
-    if( mode == Mode::GET && !callback )
-    {
-        DEBUG() << "No callback specified for HTTP GET mode";
-        RETURN( nullptr );
-    }
-
-    //
-    // Build the Redmine REST URL
-    //
-
-    QUrl url = url_ + "/" + resource + ".json?" + queryParams;
-
-    if( !url.isValid() )
-    {
-        DEBUG() <<  "Invalid URL:"  << url;
-        RETURN( nullptr );
-    }
-    else
-      DEBUG() <<  "Using URL:"  << url;
-
-    //
-    // Build the network request
-    //
-
-    QNetworkRequest request( url );
-    request.setRawHeader( "User-Agent",          userAgent_ );
-    request.setRawHeader( "X-Custom-User-Agent", userAgent_ );
-    request.setRawHeader( "Content-Type",        "application/json" );
-    request.setRawHeader( "Content-Length",      QByteArray::number(postData.size()) );
-    auth_->addAuthentication( &request );
-
-    //
-    // Perform the network action
-    //
-
-    QNetworkReply* reply;
-
-    if( !checkSsl_ )
-        reply->ignoreSslErrors();
-
-    switch( mode )
-    {
-    case Mode::GET:
-        reply = nma_->get( request );
-        break;
-
-    case Mode::ADD:
-        reply = nma_->post( request, postData );
-        break;
-
-    case Mode::UPD:
-        reply = nma_->put( request, postData );
-        break;
-
-    case Mode::DEL:
-        reply = nma_->deleteResource( request );
-        break;
-    }
-
-    if( reply && callback )
-        callbacks_[reply] = callback;
-
-    RETURN( reply );
-}
-
-void
-Redmine::setAuthenticator( QString apiKey )
-{
-    ENTER()(apiKey);
-
-    auth_ = new KeyAuthenticator( apiKey.toLatin1(), this );
-    init();
-
-    RETURN();
-}
-
-void
-Redmine::setAuthenticator( QString login, QString password )
-{
-    ENTER()(login)(password);
-
-    auth_ = new PasswordAuthenticator( login, password, this );
-    init();
-
-    RETURN();
-}
-
-void
-Redmine::setCheckSsl( bool checkSsl )
-{
-    ENTER()(checkSsl);
-
-    checkSsl_ = checkSsl;
-
-    RETURN();
-}
-
-void
-Redmine::setUrl( QString url )
-{
-    ENTER()(url);
-
-    url_ = url;
-
-    RETURN();
-}
-
-void
-Redmine::setUserAgent( QByteArray userAgent )
-{
-    ENTER()(userAgent);
-
-    userAgent_ = userAgent;
 
     RETURN();
 }

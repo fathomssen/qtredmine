@@ -334,6 +334,14 @@ signals:
     void requestFinished( JsonCb callback, QNetworkReply* reply, QJsonDocument* json );
 };
 
+/**
+ * @brief QDebug stream operator for operation modes
+ *
+ * @param debug QDebug object
+ * @param mode Operation mode
+ *
+ * @return QDebug object
+ */
 inline QDebug
 operator<<( QDebug debug, const RedmineClient::Mode& mode )
 {

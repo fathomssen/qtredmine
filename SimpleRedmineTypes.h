@@ -122,10 +122,12 @@ using Trackers = QVector<Tracker>;
 using TrackersCb = std::function<void(Trackers)>;
 
 /**
- * @brief QDebug stream for issues
+ * @brief QDebug stream operator for issues
  *
  * @param debug QDebug object
- * @Param item Issue item
+ * @param item Issue item
+ *
+ * @return QDebug object
  */
 inline QDebug
 operator<<( QDebug debug, const Issue& item )

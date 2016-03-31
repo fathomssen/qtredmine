@@ -38,13 +38,15 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
     if( item.hours < 0.01 )
     {
         DEBUG() << "Time entry has to be at least 0.01 hours";
-        RETURN( false );
+        callback( false );
+        RETURN();
     }
 
     if( item.issue.id == 0 && item.project.id == 0 )
     {
         DEBUG() << "No issue and no project specified";
-        RETURN( false );
+        callback( false );
+        RETURN();
     }
 
     QJsonObject attr;
@@ -89,7 +91,7 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
 
     createTimeEntry( json, cb, parameters );
 
-    RETURN( true );
+    RETURN();
 }
 
 void

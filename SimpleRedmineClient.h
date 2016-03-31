@@ -37,7 +37,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional enumeration parameters
      */
-    bool createIssuePriority( Enumeration item,
+    void createIssuePriority( Enumeration item,
                               SuccessCb callback = nullptr,
                               QString parameters = "" );
 
@@ -48,7 +48,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional issue parameters
      */
-    bool createIssue( Issue item,
+    void createIssue( Issue item,
                       SuccessCb callback = nullptr,
                       QString parameters = "" );
 
@@ -59,7 +59,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional issue status parameters
      */
-    bool createIssueStatus( IssueStatus item,
+    void createIssueStatus( IssueStatus item,
                             SuccessCb callback = nullptr,
                             QString parameters = "" );
 
@@ -70,7 +70,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional project parameters
      */
-    bool createProject( Project item,
+    void createProject( Project item,
                         SuccessCb callback = nullptr,
                         QString parameters = "" );
 
@@ -81,7 +81,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional time entry parameters
      */
-    bool createTimeEntry( TimeEntry item,
+    void createTimeEntry( TimeEntry item,
                           SuccessCb callback = nullptr,
                           QString parameters = "" );
 
@@ -92,7 +92,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional enumeration parameters
      */
-    bool createTimeEntryActivity( Enumeration item,
+    void createTimeEntryActivity( Enumeration item,
                                   SuccessCb callback = nullptr,
                                   QString parameters = "" );
 
@@ -103,7 +103,7 @@ public:
      * @param callback Success callback function
      * @param parameters Additional tracker parameters
      */
-    bool createTracker( Tracker item,
+    void createTracker( Tracker item,
                         SuccessCb callback = nullptr,
                         QString parameters = "" );
 

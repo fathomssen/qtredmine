@@ -51,13 +51,6 @@ RedmineClient::RedmineClient( QString url, QString login, QString password, bool
     RETURN();
 }
 
-QString
-RedmineClient::getUrl() const
-{
-    ENTER();
-    RETURN( url_ );
-}
-
 void
 RedmineClient::init()
 {
@@ -72,142 +65,62 @@ RedmineClient::init()
     RETURN();
 }
 
-void
-RedmineClient::replyFinished( QNetworkReply* reply )
+QString
+RedmineClient::getUrl() const
 {
     ENTER();
+    RETURN( url_ );
+}
 
-    // Search for callback function
-    if( callbacks_.contains(reply) )
-    {
-        QByteArray data_raw = reply->readAll();
-        QJsonDocument data_json = QJsonDocument::fromJson( data_raw );
 
-        JsonCb callback = callbacks_[reply];
-        callback( reply, &data_json );
+void
+RedmineClient::setAuthenticator( QString apiKey )
+{
+    ENTER()(apiKey);
 
-        callbacks_.remove( reply );
-    }
+    auth_ = new KeyAuthenticator( apiKey.toLatin1(), this );
+    init();
 
     RETURN();
 }
 
 void
-RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
+RedmineClient::setAuthenticator( QString login, QString password )
 {
-    ENTER()(parameters);
+    ENTER()(login)(password);
 
-    sendRequest( "custom_fields", callback, Mode::GET, parameters );
+    auth_ = new PasswordAuthenticator( login, password, this );
+    init();
 
     RETURN();
 }
 
 void
-RedmineClient::retrieveEnumerations( QString enumeration, JsonCb callback, QString parameters )
+RedmineClient::setCheckSsl( bool checkSsl )
 {
-    ENTER()(enumeration)(parameters);
+    ENTER()(checkSsl);
 
-    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
+    checkSsl_ = checkSsl;
 
     RETURN();
 }
 
 void
-RedmineClient::retrieveIssueCategories( JsonCb callback, QString parameters )
+RedmineClient::setUrl( QString url )
 {
-    ENTER()(parameters);
+    ENTER()(url);
 
-    sendRequest( "issue_categories", callback, Mode::GET, parameters );
+    url_ = url;
 
     RETURN();
 }
 
 void
-RedmineClient::retrieveIssuePriorities( JsonCb callback, QString parameters )
+RedmineClient::setUserAgent( QByteArray userAgent )
 {
-    ENTER()(parameters);
+    ENTER()(userAgent);
 
-    retrieveEnumerations( "issue_priorities", callback, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issues", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issue_statuses", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "projects", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveTimeEntries( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "time_entries", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    retrieveEnumerations( "time_entry_activities", callback, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "trackers", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "users", callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveVersions( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "versions", callback, Mode::GET, parameters );
+    userAgent_ = userAgent;
 
     RETURN();
 }
@@ -294,53 +207,262 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, Mode mode, const 
 }
 
 void
-RedmineClient::setAuthenticator( QString apiKey )
+RedmineClient::replyFinished( QNetworkReply* reply )
 {
-    ENTER()(apiKey);
+    ENTER();
 
-    auth_ = new KeyAuthenticator( apiKey.toLatin1(), this );
-    init();
+    // Search for callback function
+    if( callbacks_.contains(reply) )
+    {
+        QByteArray data_raw = reply->readAll();
+        QJsonDocument data_json = QJsonDocument::fromJson( data_raw );
+
+        JsonCb callback = callbacks_[reply];
+        callback( reply, &data_json );
+
+        callbacks_.remove( reply );
+    }
 
     RETURN();
 }
 
 void
-RedmineClient::setAuthenticator( QString login, QString password )
+RedmineClient::createCustomField( const QJsonDocument& data, JsonCb callback, QString parameters )
 {
-    ENTER()(login)(password);
+    ENTER()(parameters);
 
-    auth_ = new PasswordAuthenticator( login, password, this );
-    init();
+    sendRequest( "custom_fields", callback, Mode::ADD, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::setCheckSsl( bool checkSsl )
+RedmineClient::createEnumeration( QString enumeration, const QJsonDocument& data, JsonCb callback,
+                                  QString parameters )
 {
-    ENTER()(checkSsl);
+    ENTER()(enumeration)(parameters);
 
-    checkSsl_ = checkSsl;
+    sendRequest( "enumerations/"+enumeration, callback, Mode::ADD, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::setUrl( QString url )
+RedmineClient::createIssueCategory( const QJsonDocument& data, JsonCb callback, QString parameters )
 {
-    ENTER()(url);
+    ENTER()(parameters);
 
-    url_ = url;
+    sendRequest( "issue_categories", callback, Mode::ADD, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::setUserAgent( QByteArray userAgent )
+RedmineClient::createIssuePriority( const QJsonDocument& data, JsonCb callback, QString parameters )
 {
-    ENTER()(userAgent);
+    ENTER()(parameters);
 
-    userAgent_ = userAgent;
+    createEnumeration( "issue_priorities", data, callback, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::createIssue( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issues", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::createIssueStatus( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issue_statuses", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::createProject( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "projects", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::createTimeEntry( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "time_entries", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::createTimeEntryActivity( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    createEnumeration( "time_entry_activities", data, callback, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::createTracker( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "trackers", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::createUser( const QJsonDocument& data, JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "users", callback, Mode::ADD, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "custom_fields", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveEnumerations( QString enumeration, JsonCb callback, QString parameters )
+{
+    ENTER()(enumeration)(parameters);
+
+    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssueCategories( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issue_categories", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssuePriorities( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    retrieveEnumerations( "issue_priorities", callback, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssue( JsonCb callback, int issueId, QString parameters )
+{
+    ENTER()(issueId)(parameters);
+
+    sendRequest( QString("issues/%1").arg(issueId), callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issues", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issue_statuses", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "projects", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveTimeEntries( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "time_entries", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    retrieveEnumerations( "time_entry_activities", callback, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "trackers", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "users", callback, Mode::GET, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveVersions( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "versions", callback, Mode::GET, parameters );
 
     RETURN();
 }

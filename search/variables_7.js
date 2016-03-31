@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['startdate',['startDate',['../structqtredmine_1_1_issue.html#a364cd2dd0204970d9ef10b4665f22d24',1,'qtredmine::Issue']]],
-  ['status',['status',['../structqtredmine_1_1_issue.html#a2d46ccb9e7ba39a8402eef6f9a9936db',1,'qtredmine::Issue']]],
-  ['subject',['subject',['../structqtredmine_1_1_issue.html#abc12239f3173152e2f89c4a89d55b5c0',1,'qtredmine::Issue']]]
+  ['priority',['priority',['../structqtredmine_1_1_issue.html#a6bb5a5fc8adedbddcdf43577a96fe717',1,'qtredmine::Issue']]],
+  ['project',['project',['../structqtredmine_1_1_issue.html#a4b9bc46814ecda1eb876fab9fd5cc5a1',1,'qtredmine::Issue::project()'],['../structqtredmine_1_1_time_entry.html#af4739bd96338ff0e142f601068d5824f',1,'qtredmine::TimeEntry::project()']]]
 ];

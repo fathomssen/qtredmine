@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updatedon',['updatedOn',['../structqtredmine_1_1_issue.html#a5bb6795277993d9db04af482ad2879ea',1,'qtredmine::Issue::updatedOn()'],['../structqtredmine_1_1_project.html#ae2e659d926d7313c01b04f1b25aeafa2',1,'qtredmine::Project::updatedOn()']]]
+  ['tracker',['tracker',['../structqtredmine_1_1_issue.html#a274448506db7d42794ddb76439c39c9a',1,'qtredmine::Issue']]]
 ];

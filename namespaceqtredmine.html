@@ -84,6 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">qtredmine Namespace Reference</div>  </div>
@@ -171,10 +172,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nam
 <tr class="memdesc:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structqtredmine_1_1_tracker.html" title="Structure representing a tracker. ">Tracker</a> vector. <br /></td></tr>
 <tr class="separator:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Callbacks</div></td></tr>
-<tr class="memitem:a145a105e686672cd385eb0ff07cc843f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a145a105e686672cd385eb0ff07cc843f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a145a105e686672cd385eb0ff07cc843f">SuccessCb</a> = std::function&lt; void(bool)&gt;</td></tr>
-<tr class="memdesc:a145a105e686672cd385eb0ff07cc843f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success callback which passes a boolean value. <br /></td></tr>
-<tr class="separator:a145a105e686672cd385eb0ff07cc843f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bb58cb141946c980251d6d65c49c8c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bb58cb141946c980251d6d65c49c8c0"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a4bb58cb141946c980251d6d65c49c8c0">SuccessCb</a> = std::function&lt; void(bool, <a class="el" href="namespaceqtredmine.html#a26a2ed6aa878e2785b9e080c28c6a2e7">Error</a>)&gt;</td></tr>
+<tr class="memdesc:a4bb58cb141946c980251d6d65c49c8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success callback which passes a boolean value and an error code. <br /></td></tr>
+<tr class="separator:a4bb58cb141946c980251d6d65c49c8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb2592646214e2a6c6bcf620dd2809e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cb2592646214e2a6c6bcf620dd2809e"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c">Enumerations</a>)&gt;</td></tr>
 <tr class="memdesc:a6cb2592646214e2a6c6bcf620dd2809e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a enumerations callback function. <br /></td></tr>
@@ -203,6 +204,21 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nam
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a7c33e09354c904df1c7e06207a870d6c">TrackersCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e">Trackers</a>)&gt;</td></tr>
 <tr class="memdesc:a7c33e09354c904df1c7e06207a870d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a Trackers callback function. <br /></td></tr>
 <tr class="separator:a7c33e09354c904df1c7e06207a870d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26a2ed6aa878e2785b9e080c28c6a2e7"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a26a2ed6aa878e2785b9e080c28c6a2e7">Error</a> { <br />
+&#160;&#160;<b>NO_ERROR</b>, 
+<b>INCOMPLETE_DATA</b>, 
+<b>NETWORK</b>, 
+<b>NOT_SAVED</b>, 
+<br />
+&#160;&#160;<b>TIME_ENTRY_TOO_SHORT</b>, 
+<b>TIMEOUT</b>
+<br />
+ }<tr class="memdesc:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine error codes. <br /></td></tr>
+</td></tr>
+<tr class="separator:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>

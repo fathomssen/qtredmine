@@ -26,8 +26,6 @@ fillDefaultFields( T& item, QJsonObject* obj)
     item.updatedOn = obj->value("updated_on").toVariant().toDateTime();
 
     fillItem( item.user, obj, "user" );
-
-    item.valid = true;
 }
 
 void
@@ -35,17 +33,17 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
 {
     ENTER()(parameters);
 
-    if( item.hours < 0.01 )
+    if( (item.hours * 60) < 1 )
     {
-        DEBUG() << "Time entry has to be at least 0.01 hours";
-        callback( false );
+        DEBUG() << "Time entry has to be at least 1 minute";
+        callback( false, Error::TIME_ENTRY_TOO_SHORT );
         RETURN();
     }
 
     if( item.issue.id == 0 && item.project.id == 0 )
     {
         DEBUG() << "No issue and no project specified";
-        callback( false );
+        callback( false, Error::INCOMPLETE_DATA );
         RETURN();
     }
 
@@ -82,11 +80,11 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false );
+            callback( false, Error::NETWORK );
             RETURN();
         }
 
-        callback( true );
+        callback( true, Error::NO_ERROR );
     };
 
     createTimeEntry( json, cb, parameters );

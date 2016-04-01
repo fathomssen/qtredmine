@@ -14,26 +14,35 @@
 
 namespace qtredmine {
 
-#define DEFAULT_FIELDS \
-    QDateTime createdOn;     /**< @brief Created on */   \
-    QDateTime updatedOn;     /**< @brief Updated on */   \
-    Item      user;          /**< @brief Redmine user */ \
-    bool      valid = false; /**< @brief Valid record */
+/// Redmine error codes
+enum class Error {
+    NO_ERROR,
+    INCOMPLETE_DATA,
+    NETWORK,
+    NOT_SAVED,
+    TIME_ENTRY_TOO_SHORT,
+    TIMEOUT,
+};
 
 /// @name Redmine data structures
 /// @{
 
+#define DEFAULT_FIELDS \
+    QDateTime createdOn;     /**< @brief Created on */   \
+    QDateTime updatedOn;     /**< @brief Updated on */   \
+    Item      user;          /**< @brief Redmine user */
+
 /// Structure representing a Redmine item
 struct Item {
-    int     id;   ///< ID
-    QString name; ///< Name
+    int     id = -1; ///< ID
+    QString name;    ///< Name
 };
 
 /// Structure representing a Redmine custom field
 struct CustomField {
-    int                  id;    ///< ID
-    QString              name;  ///< Name
-    std::vector<QString> value; ///< Value
+    int                  id = -1; ///< ID
+    QString              name;    ///< Name
+    std::vector<QString> value;   ///< Value
 };
 
 /// @}
@@ -49,7 +58,7 @@ using CustomFields = QVector<CustomField>;
 
 /// Structure representing an enumeration
 struct Enumeration {
-    int     id;        ///< ID
+    int     id = -1;   ///< ID
     QString name;      ///< Project name
     bool    isDefault; ///< Default entry
 
@@ -63,7 +72,7 @@ struct Enumeration {
 
 /// Structure representing an issue
 struct Issue {
-    int          id;             ///< ID
+    int          id = -1;        ///< ID
 
     QString      description;    ///< Description
     double       doneRatio;      ///< Done ratio
@@ -87,7 +96,7 @@ struct Issue {
 
 /// Structure representing an issue status
 struct IssueStatus {
-    int     id;        ///< ID
+    int     id = -1;   ///< ID
     QString name;      ///< Project name
     bool    isClosed;  ///< Closed status
     bool    isDefault; ///< Default entry
@@ -97,7 +106,7 @@ struct IssueStatus {
 
 /// Structure representing a project
 struct Project {
-    int       id;          ///< ID
+    int       id = -1;     ///< ID
 
     QString   description; ///< Description
     QString   identifier;  ///< Internal identifier
@@ -121,8 +130,8 @@ struct TimeEntry {
 
 /// Structure representing a tracker
 struct Tracker {
-    int     id;   ///< ID
-    QString name; ///< Project name
+    int     id = -1; ///< ID
+    QString name;    ///< Project name
 
     DEFAULT_FIELDS
 };
@@ -155,8 +164,8 @@ using Trackers = QVector<Tracker>;
 /// @name Callbacks
 /// @{
 
-/// Success callback which passes a boolean value
-using SuccessCb = std::function<void(bool)>;
+/// Success callback which passes a boolean value and an error code
+using SuccessCb = std::function<void(bool, Error)>;
 
 /// Typedef for a enumerations callback function
 using EnumerationsCb = std::function<void(Enumerations)>;

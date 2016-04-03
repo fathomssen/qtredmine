@@ -172,10 +172,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nam
 <tr class="memdesc:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structqtredmine_1_1_tracker.html" title="Structure representing a tracker. ">Tracker</a> vector. <br /></td></tr>
 <tr class="separator:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Callbacks</div></td></tr>
-<tr class="memitem:a4bb58cb141946c980251d6d65c49c8c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bb58cb141946c980251d6d65c49c8c0"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a4bb58cb141946c980251d6d65c49c8c0">SuccessCb</a> = std::function&lt; void(bool, <a class="el" href="namespaceqtredmine.html#a26a2ed6aa878e2785b9e080c28c6a2e7">Error</a>)&gt;</td></tr>
-<tr class="memdesc:a4bb58cb141946c980251d6d65c49c8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success callback which passes a boolean value and an error code. <br /></td></tr>
-<tr class="separator:a4bb58cb141946c980251d6d65c49c8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc186ce3cc6fc2b321995a9d58c7830c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc186ce3cc6fc2b321995a9d58c7830c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> = std::function&lt; void(bool, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QNetworkReply::NetworkError)&gt;</td></tr>
+<tr class="memdesc:adc186ce3cc6fc2b321995a9d58c7830c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success callback which passes a boolean value and an error code. <br /></td></tr>
+<tr class="separator:adc186ce3cc6fc2b321995a9d58c7830c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb2592646214e2a6c6bcf620dd2809e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cb2592646214e2a6c6bcf620dd2809e"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c">Enumerations</a>)&gt;</td></tr>
 <tr class="memdesc:a6cb2592646214e2a6c6bcf620dd2809e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a enumerations callback function. <br /></td></tr>
@@ -207,27 +207,24 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nam
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26a2ed6aa878e2785b9e080c28c6a2e7"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a26a2ed6aa878e2785b9e080c28c6a2e7">Error</a> { <br />
+<tr class="memitem:a5bc12287e0e6ea8946e04cda6a93eeab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bc12287e0e6ea8946e04cda6a93eeab"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a> { <br />
 &#160;&#160;<b>NO_ERROR</b>, 
-<b>INCOMPLETE_DATA</b>, 
-<b>NETWORK</b>, 
-<b>NOT_SAVED</b>, 
+<b>ERR_INCOMPLETE_DATA</b>, 
+<b>ERR_NETWORK</b>, 
+<b>ERR_NOT_SAVED</b>, 
 <br />
-&#160;&#160;<b>TIME_ENTRY_TOO_SHORT</b>, 
-<b>TIMEOUT</b>
+&#160;&#160;<b>ERR_TIME_ENTRY_TOO_SHORT</b>, 
+<b>ERR_TIMEOUT</b>
 <br />
- }<tr class="memdesc:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine error codes. <br /></td></tr>
+ }<tr class="memdesc:a5bc12287e0e6ea8946e04cda6a93eeab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine error codes. <br /></td></tr>
 </td></tr>
-<tr class="separator:a26a2ed6aa878e2785b9e080c28c6a2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a5bc12287e0e6ea8946e04cda6a93eeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a64156c5316b764dc8d0a749cedc7eb8f"><td class="memItemLeft" align="right" valign="top">QDebug&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a64156c5316b764dc8d0a749cedc7eb8f">operator&lt;&lt;</a> (QDebug debug, const <a class="el" href="structqtredmine_1_1_issue.html">Issue</a> &amp;item)</td></tr>
 <tr class="memdesc:a64156c5316b764dc8d0a749cedc7eb8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">QDebug stream operator for issues.  <a href="#a64156c5316b764dc8d0a749cedc7eb8f">More...</a><br /></td></tr>
 <tr class="separator:a64156c5316b764dc8d0a749cedc7eb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac13d6f258f18973db2caeb28014ed612"><td class="memItemLeft" align="right" valign="top">QDebug&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#ac13d6f258f18973db2caeb28014ed612">operator&lt;&lt;</a> (QDebug debug, const <a class="el" href="classqtredmine_1_1_redmine_client.html#a5f4575e075978f4a91e927b8814cdbf7">RedmineClient::Mode</a> &amp;mode)</td></tr>
-<tr class="memdesc:ac13d6f258f18973db2caeb28014ed612"><td class="mdescLeft">&#160;</td><td class="mdescRight">QDebug stream operator for operation modes.  <a href="#ac13d6f258f18973db2caeb28014ed612">More...</a><br /></td></tr>
-<tr class="separator:ac13d6f258f18973db2caeb28014ed612"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>QtRedmine namespace. </p>
@@ -269,50 +266,6 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">debug</td><td>QDebug object </td></tr>
     <tr><td class="paramname">item</td><td><a class="el" href="structqtredmine_1_1_issue.html" title="Structure representing an issue. ">Issue</a> item</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>QDebug object </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac13d6f258f18973db2caeb28014ed612"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QDebug qtredmine::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">QDebug&#160;</td>
-          <td class="paramname"><em>debug</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classqtredmine_1_1_redmine_client.html#a5f4575e075978f4a91e927b8814cdbf7">RedmineClient::Mode</a> &amp;&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>QDebug stream operator for operation modes. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">debug</td><td>QDebug object </td></tr>
-    <tr><td class="paramname">mode</td><td>Operation mode</td></tr>
   </table>
   </dd>
 </dl>

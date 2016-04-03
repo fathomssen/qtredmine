@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3c_3c',['operator&lt;&lt;',['../namespaceqtredmine.html#ac13d6f258f18973db2caeb28014ed612',1,'qtredmine::operator&lt;&lt;(QDebug debug, const RedmineClient::Mode &amp;mode)'],['../namespaceqtredmine.html#a64156c5316b764dc8d0a749cedc7eb8f',1,'qtredmine::operator&lt;&lt;(QDebug debug, const Issue &amp;item)']]]
+  ['passwordauthenticator',['PasswordAuthenticator',['../classqtredmine_1_1_password_authenticator.html#a6db564b1c4cbcd436ecfec3ff9e5bd4b',1,'qtredmine::PasswordAuthenticator']]]
 ];

@@ -15,6 +15,8 @@
 
 #include <functional>
 
+#define NULL_ID -1
+
 /// QtRedmine namespace
 namespace qtredmine {
 
@@ -36,14 +38,6 @@ class QTREDMINESHARED_EXPORT RedmineClient : public QObject
     Q_OBJECT
 
 public:
-    /// Operation mode
-    enum class Mode {
-        GET,    ///< Get items from Redmine
-        ADD,    ///< Add a new item to Redmine
-        UPD,    ///< Update a Redmine item
-        DEL     ///< Delete a Redmine item
-    };
-
     /// Typedef for a JSON callback function
     using JsonCb = std::function<void(QNetworkReply*, QJsonDocument*)>;
 
@@ -145,125 +139,147 @@ public:
     /// @{
 
     /**
-     * @brief Create custom field in Redmine
+     * @brief Create or update custom field in Redmine
      *
      * @param data Data to store in Redmine
      * @param callback Callback function with a QJsonDocument object
+     * @param id Custom field ID to update; if set to \c NULL_ID, create a new custom field
      * @param parameters  Additional custom field parameters
      */
-    void createCustomField( const QJsonDocument& data,
-                            JsonCb callback = nullptr,
-                            QString parameters = "" );
-
-    /**
-     * @brief Create issue category in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional issue category parameters
-     */
-    void createIssueCategory( const QJsonDocument& data,
-                              JsonCb callback = nullptr,
-                              QString parameters = "" );
-
-    /**
-     * @brief Create issue priority in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional enumeration parameters
-     */
-    void createIssuePriority( const QJsonDocument& data,
-                              JsonCb callback = nullptr,
-                              QString parameters = "" );
-
-    /**
-     * @brief Create issue in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional issue parameters
-     */
-    void createIssue( const QJsonDocument& data,
-                      JsonCb callback = nullptr,
-                      QString parameters = "" );
-
-    /**
-     * @brief Create issue status in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional issue status parameters
-     */
-    void createIssueStatus( const QJsonDocument& data,
-                            JsonCb callback = nullptr,
-                            QString parameters = "" );
-
-    /**
-     * @brief Create project in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional project parameters
-     */
-    void createProject( const QJsonDocument& data,
-                        JsonCb callback = nullptr,
-                        QString parameters = "" );
-
-    /**
-     * @brief Create time entry in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional time entry parameters
-     */
-    void createTimeEntry( const QJsonDocument& data,
+    void sendCustomField( const QJsonDocument& data,
                           JsonCb callback = nullptr,
+                          int id = NULL_ID,
                           QString parameters = "" );
 
     /**
-     * @brief Create time entry activity in Redmine
+     * @brief Create or update issue in Redmine
      *
      * @param data Data to store in Redmine
      * @param callback Callback function with a QJsonDocument object
+     * @param id Issue ID to update; if set to \c NULL_ID, create a new issue
+     * @param parameters  Additional issue parameters
+     */
+    void sendIssue( const QJsonDocument& data,
+                    JsonCb callback = nullptr,
+                    int id = NULL_ID,
+                    QString parameters = "" );
+
+    /**
+     * @brief Create or update issue category in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Issue category ID to update; if set to \c NULL_ID, create a new issue category
+     * @param parameters  Additional issue category parameters
+     */
+    void sendIssueCategory( const QJsonDocument& data,
+                            JsonCb callback = nullptr,
+                            int id = NULL_ID,
+                            QString parameters = "" );
+
+    /**
+     * @brief Create or update issue priority in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Issue priority ID to update; if set to \c NULL_ID, create a new issue priority
      * @param parameters  Additional enumeration parameters
      */
-    void createTimeEntryActivity( const QJsonDocument& data,
-                                  JsonCb callback = nullptr,
-                                  QString parameters = "" );
+    void sendIssuePriority( const QJsonDocument& data,
+                            JsonCb callback = nullptr,
+                            int id = NULL_ID,
+                            QString parameters = "" );
 
     /**
-     * @brief Create tracker in Redmine
+     * @brief Create or update issue status in Redmine
      *
      * @param data Data to store in Redmine
      * @param callback Callback function with a QJsonDocument object
+     * @param id Issue status ID to update; if set to \c NULL_ID, create a new issue status
+     * @param parameters  Additional issue status parameters
+     */
+    void sendIssueStatus( const QJsonDocument& data,
+                          JsonCb callback = nullptr,
+                          int id = NULL_ID,
+                          QString parameters = "" );
+
+    /**
+     * @brief Create or update project in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Project ID to update; if set to \c NULL_ID, create a new project
+     * @param parameters  Additional project parameters
+     */
+    void sendProject( const QJsonDocument& data,
+                      JsonCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
+
+    /**
+     * @brief Create or update time entry in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Time entry ID to update; if set to \c NULL_ID, create a new time entry
+     * @param parameters  Additional time entry parameters
+     */
+    void sendTimeEntry( const QJsonDocument& data,
+                        JsonCb callback = nullptr,
+                        int id = NULL_ID,
+                        QString parameters = "" );
+
+    /**
+     * @brief Create or update time entry activity in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Time entry activity ID to update; if set to \c NULL_ID, create a new time entry activity
+     * @param parameters  Additional enumeration parameters
+     */
+    void sendTimeEntryActivity( const QJsonDocument& data,
+                                JsonCb callback = nullptr,
+                                int id = NULL_ID,
+                                QString parameters = "" );
+
+    /**
+     * @brief Create or update tracker in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Tracker ID to update; if set to \c NULL_ID, create a new tracker
      * @param parameters  Additional tracker parameters
      */
-    void createTracker( const QJsonDocument& data,
-                        JsonCb callback = nullptr,
-                        QString parameters = "" );
+    void sendTracker( const QJsonDocument& data,
+                      JsonCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
 
     /**
-     * @brief Create version in Redmine
+     * @brief Create or update user in Redmine
      *
      * @param data Data to store in Redmine
      * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional version parameters
-     */
-    void createVersion( const QJsonDocument& data,
-                        JsonCb callback = nullptr,
-                        QString parameters = "" );
-
-    /**
-     * @brief Create user in Redmine
-     *
-     * @param data Data to store in Redmine
-     * @param callback Callback function with a QJsonDocument object
+     * @param id User ID to update; if set to \c NULL_ID, create a new user
      * @param parameters  Additional user parameters
      */
-    void createUser( const QJsonDocument& data,
-                     JsonCb callback = nullptr,
-                     QString parameters = "" );
+    void sendUser( const QJsonDocument& data,
+                   JsonCb callback = nullptr,
+                   int id = NULL_ID,
+                   QString parameters = "" );
+
+    /**
+     * @brief Create or update version in Redmine
+     *
+     * @param data Data to store in Redmine
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Version ID to update; if set to \c NULL_ID, create a new version
+     * @param parameters  Additional version parameters
+     */
+    void sendVersion( const QJsonDocument& data,
+                      JsonCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
 
     /// @}
 
@@ -278,6 +294,16 @@ public:
      */
     void retrieveCustomFields( JsonCb callback,
                                QString parameters = "" );
+
+    /**
+     * @brief Retrieve an issue from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param issueId Issue ID
+     * @param parameters  Additional issue parameters
+     */
+    void retrieveIssue( JsonCb callback, int issueId,
+                        QString parameters = "" );
 
     /**
      * @brief Retrieve issue categories from Redmine
@@ -296,16 +322,6 @@ public:
      */
     void retrieveIssuePriorities( JsonCb callback,
                                   QString parameters = "" );
-
-    /**
-     * @brief Retrieve an issue from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param issueId Issue ID
-     * @param parameters  Additional issue parameters
-     */
-    void retrieveIssue( JsonCb callback, int issueId,
-                        QString parameters = "" );
 
     /**
      * @brief Retrieve issues from Redmine
@@ -362,15 +378,6 @@ public:
                            QString parameters = "" );
 
     /**
-     * @brief Retrieve versions from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional version parameters
-     */
-    void retrieveVersions( JsonCb callback,
-                           QString parameters = "" );
-
-    /**
      * @brief Retrieve users from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
@@ -378,6 +385,15 @@ public:
      */
     void retrieveUsers( JsonCb callback,
                         QString parameters = "" );
+
+    /**
+     * @brief Retrieve versions from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional version parameters
+     */
+    void retrieveVersions( JsonCb callback,
+                           QString parameters = "" );
 
     /// @}
 
@@ -402,7 +418,7 @@ protected:
      *     The callback function is required for GET operations and optional for other operations
      *   @endparblock
      *
-     * @param mode HTTP operation mode (default: GET) \sa Mode
+     * @param mode HTTP operation mode \sa Mode
      *
      * @param queryParams
      *   @parblock
@@ -418,23 +434,25 @@ protected:
      * @return The network reply for this request
      */
     QNetworkReply* sendRequest( QString resource,
-                                JsonCb callback            = nullptr,
-                                Mode mode                  = Mode::GET,
+                                JsonCb callback = nullptr,
+                                QNetworkAccessManager::Operation mode = QNetworkAccessManager::GetOperation,
                                 const QString& queryParams = "",
                                 const QByteArray& postData = "" );
 
     /**
-     * @brief Create enumeration in Redmine
+     * @brief Create or update enumeration in Redmine
      *
      * @param enumeration The enumeration to create
      * @param data Data to store in Redmine
-     * @param callback    Callback function with a QJsonDocument object
-     * @param parameters  Additional enumeration parameters
+     * @param callback Callback function with a QJsonDocument object
+     * @param id Enumeration to update; if set to \c NULL_ID, create a enumeration
+     * @param parameters Additional enumeration parameters
      */
-    void createEnumeration( QString enumeration,
-                            const QJsonDocument& data,
-                            JsonCb  callback = nullptr,
-                            QString parameters = "" );
+    void sendEnumeration( QString enumeration,
+                          const QJsonDocument& data,
+                          JsonCb callback = nullptr,
+                          int id = NULL_ID,
+                          QString parameters = "" );
 
     /**
      * @brief Retrieve enumerations from Redmine
@@ -454,9 +472,11 @@ private:
     /**
      * @brief Mapping from network reply to callback function
      *
-     * This hash table can be used to find the correct callback for a network reply.
+     * This map can be used to find the correct callback for a network reply.
      * It is used by slot replyFinished() to call the desired callback function after
      * a reply from the network access manager has finished.
+     *
+     * A QMap is usually faster than a QHash for less than 20 elements.
      */
     QMap<QNetworkReply*, JsonCb> callbacks_;
 
@@ -497,30 +517,6 @@ signals:
      */
     void requestFinished( JsonCb callback, QNetworkReply* reply, QJsonDocument* json );
 };
-
-/**
- * @brief QDebug stream operator for operation modes
- *
- * @param debug QDebug object
- * @param mode Operation mode
- *
- * @return QDebug object
- */
-inline QDebug
-operator<<( QDebug debug, const RedmineClient::Mode& mode )
-{
-    QDebugStateSaver saver( debug );
-
-    switch( mode )
-    {
-    case RedmineClient::Mode::GET: debug.nospace() << "GET"; break;
-    case RedmineClient::Mode::ADD: debug.nospace() << "ADD"; break;
-    case RedmineClient::Mode::UPD: debug.nospace() << "UPD"; break;
-    case RedmineClient::Mode::DEL: debug.nospace() << "DEL"; break;
-    }
-
-    return debug;
-}
 
 } // qtredmine
 

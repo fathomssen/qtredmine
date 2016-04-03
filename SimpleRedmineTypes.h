@@ -1,10 +1,13 @@
 #ifndef SIMPLEREDMINETYPES_H
 #define SIMPLEREDMINETYPES_H
 
+#include "RedmineClient.h"
+
 #include <QDebug>
 #include <QDate>
 #include <QDateTime>
 #include <QMetaType>
+#include <QNetworkAccessManager>
 #include <QString>
 #include <QTime>
 #include <QVector>
@@ -15,13 +18,13 @@
 namespace qtredmine {
 
 /// Redmine error codes
-enum class Error {
+enum RedmineError {
     NO_ERROR,
-    INCOMPLETE_DATA,
-    NETWORK,
-    NOT_SAVED,
-    TIME_ENTRY_TOO_SHORT,
-    TIMEOUT,
+    ERR_INCOMPLETE_DATA,
+    ERR_NETWORK,
+    ERR_NOT_SAVED,
+    ERR_TIME_ENTRY_TOO_SHORT,
+    ERR_TIMEOUT,
 };
 
 /// @name Redmine data structures
@@ -34,13 +37,13 @@ enum class Error {
 
 /// Structure representing a Redmine item
 struct Item {
-    int     id = -1; ///< ID
+    int     id = NULL_ID; ///< ID
     QString name;    ///< Name
 };
 
 /// Structure representing a Redmine custom field
 struct CustomField {
-    int                  id = -1; ///< ID
+    int                  id = NULL_ID; ///< ID
     QString              name;    ///< Name
     std::vector<QString> value;   ///< Value
 };
@@ -58,7 +61,7 @@ using CustomFields = QVector<CustomField>;
 
 /// Structure representing an enumeration
 struct Enumeration {
-    int     id = -1;   ///< ID
+    int     id = NULL_ID;   ///< ID
     QString name;      ///< Project name
     bool    isDefault; ///< Default entry
 
@@ -72,10 +75,10 @@ struct Enumeration {
 
 /// Structure representing an issue
 struct Issue {
-    int          id = -1;        ///< ID
+    int          id = NULL_ID;        ///< ID
 
     QString      description;    ///< Description
-    double       doneRatio;      ///< Done ratio
+    double       doneRatio = 0;  ///< Done ratio
     QString      subject;        ///< Subject
 
     Item         author;         ///< Author
@@ -86,7 +89,7 @@ struct Issue {
     Item         tracker;        ///< Tracker
 
     QDate        dueDate;        ///< Due date
-    QTime        estimatedHours; ///< Estimated hours
+    double       estimatedHours = 0; ///< Estimated hours
     QDate        startDate;      ///< Start date
 
     CustomFields customFields;   ///< Custom fields vector
@@ -96,8 +99,8 @@ struct Issue {
 
 /// Structure representing an issue status
 struct IssueStatus {
-    int     id = -1;   ///< ID
-    QString name;      ///< Project name
+    int     id = NULL_ID;   ///< ID
+    QString name;      ///< Issue status name
     bool    isClosed;  ///< Closed status
     bool    isDefault; ///< Default entry
 
@@ -106,7 +109,7 @@ struct IssueStatus {
 
 /// Structure representing a project
 struct Project {
-    int       id = -1;     ///< ID
+    int       id = NULL_ID;     ///< ID
 
     QString   description; ///< Description
     QString   identifier;  ///< Internal identifier
@@ -120,7 +123,7 @@ struct Project {
 struct TimeEntry {
     Item    activity; ///< Activity
     QString comment;  ///< Additional comment
-    double  hours;    ///< Hours spent
+    double  hours = 0;///< Hours spent
     Item    issue;    ///< Issue (required if no project was specified)
     Item    project;  ///< Project (required if no issue was specified)
     QDate   spentOn;  ///< Date of the time spent
@@ -130,7 +133,7 @@ struct TimeEntry {
 
 /// Structure representing a tracker
 struct Tracker {
-    int     id = -1; ///< ID
+    int     id = NULL_ID; ///< ID
     QString name;    ///< Project name
 
     DEFAULT_FIELDS
@@ -165,7 +168,7 @@ using Trackers = QVector<Tracker>;
 /// @{
 
 /// Success callback which passes a boolean value and an error code
-using SuccessCb = std::function<void(bool, Error)>;
+using SuccessCb = std::function<void(bool, RedmineError, QNetworkReply::NetworkError)>;
 
 /// Typedef for a enumerations callback function
 using EnumerationsCb = std::function<void(Enumerations)>;

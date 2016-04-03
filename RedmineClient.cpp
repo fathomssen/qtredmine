@@ -38,8 +38,7 @@ RedmineClient::RedmineClient( QString url, QString apiKey, bool checkSsl, QObjec
     RETURN();
 }
 
-RedmineClient::RedmineClient( QString url, QString login, QString password, bool checkSsl,
-                  QObject* parent )
+RedmineClient::RedmineClient( QString url, QString login, QString password, bool checkSsl, QObject* parent )
     : QObject( parent )
 {
     ENTER()(url)(login)(password)(checkSsl);
@@ -71,7 +70,6 @@ RedmineClient::getUrl() const
     ENTER();
     RETURN( url_ );
 }
-
 
 void
 RedmineClient::setAuthenticator( QString apiKey )
@@ -126,8 +124,8 @@ RedmineClient::setUserAgent( QByteArray userAgent )
 }
 
 QNetworkReply*
-RedmineClient::sendRequest( QString resource, JsonCb callback, Mode mode, const QString& queryParams,
-                      const QByteArray& postData )
+RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessManager::Operation mode,
+                            const QString& queryParams, const QByteArray& postData )
 {
     ENTER()(resource)(mode)(queryParams)(postData);
 
@@ -141,7 +139,7 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, Mode mode, const 
         RETURN( nullptr );
     }
 
-    if( mode == Mode::GET && !callback )
+    if( mode == QNetworkAccessManager::GetOperation && !callback )
     {
         DEBUG() << "No callback specified for HTTP GET mode";
         RETURN( nullptr );
@@ -159,7 +157,7 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, Mode mode, const 
         RETURN( nullptr );
     }
     else
-      DEBUG() <<  "Using URL:"  << url;
+        DEBUG() <<  "Using URL:"  << url;
 
     //
     // Build the network request
@@ -183,21 +181,24 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, Mode mode, const 
 
     switch( mode )
     {
-    case Mode::GET:
+    case QNetworkAccessManager::GetOperation:
         reply = nma_->get( request );
         break;
 
-    case Mode::ADD:
+    case QNetworkAccessManager::PostOperation:
         reply = nma_->post( request, postData );
         break;
 
-    case Mode::UPD:
+    case QNetworkAccessManager::PutOperation:
         reply = nma_->put( request, postData );
         break;
 
-    case Mode::DEL:
+    case QNetworkAccessManager::DeleteOperation:
         reply = nma_->deleteResource( request );
         break;
+    default:
+        DEBUG() << "Unknown operation";
+        RETURN( nullptr );
     }
 
     if( reply && callback )
@@ -227,112 +228,184 @@ RedmineClient::replyFinished( QNetworkReply* reply )
 }
 
 void
-RedmineClient::createCustomField( const QJsonDocument& data, JsonCb callback, QString parameters )
+getResMode( int id, QString& resource, QNetworkAccessManager::Operation& mode )
 {
-    ENTER()(parameters);
+    ENTER()(id)(resource)(mode);
 
-    sendRequest( "custom_fields", callback, Mode::ADD, parameters, data.toJson() );
+    if( id == NULL_ID )
+        mode = QNetworkAccessManager::PostOperation;
+    else
+    {
+        resource.append("/").append(QString::number(id));
+        mode = QNetworkAccessManager::PutOperation;
+    }
 
     RETURN();
 }
 
 void
-RedmineClient::createEnumeration( QString enumeration, const QJsonDocument& data, JsonCb callback,
-                                  QString parameters )
+RedmineClient::sendCustomField( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+{
+    ENTER()(parameters);
+
+    QString resource = "custom_fields";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
+
+    RETURN();
+}
+
+void
+RedmineClient::sendEnumeration( QString enumeration, const QJsonDocument& data, JsonCb callback, int id,
+                                QString parameters )
 {
     ENTER()(enumeration)(parameters);
 
-    sendRequest( "enumerations/"+enumeration, callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "enumerations/"+enumeration;
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createIssueCategory( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendIssue( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
-    ENTER()(parameters);
+    ENTER()(id)(parameters);
 
-    sendRequest( "issue_categories", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "issues";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createIssuePriority( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendIssueCategory( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    createEnumeration( "issue_priorities", data, callback, parameters );
+    QString resource = "issue_categories";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createIssue( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendIssuePriority( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "issues", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "issue_priorities";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendEnumeration( resource, data, callback, id, parameters );
 
     RETURN();
 }
 
 void
-RedmineClient::createIssueStatus( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendIssueStatus( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "issue_statuses", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "issue_statuses";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createProject( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendProject( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "projects", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "projects";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createTimeEntry( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendTimeEntry( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "time_entries", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "time_entries";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createTimeEntryActivity( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendTimeEntryActivity( const QJsonDocument& data, JsonCb callback, int id,
+                                      QString parameters )
 {
     ENTER()(parameters);
 
-    createEnumeration( "time_entry_activities", data, callback, parameters );
+    QString resource = "time_entry_activities";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendEnumeration( resource, data, callback, id, parameters );
 
     RETURN();
 }
 
 void
-RedmineClient::createTracker( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendTracker( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "trackers", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "trackers";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
 
 void
-RedmineClient::createUser( const QJsonDocument& data, JsonCb callback, QString parameters )
+RedmineClient::sendUser( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "users", callback, Mode::ADD, parameters, data.toJson() );
+    QString resource = "users";
+    QNetworkAccessManager::Operation mode;
+
+    getResMode( id, resource, mode );
+
+    sendRequest( resource, callback, mode, parameters, data.toJson() );
 
     RETURN();
 }
@@ -342,7 +415,7 @@ RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "custom_fields", callback, Mode::GET, parameters );
+    sendRequest( "custom_fields", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -352,7 +425,17 @@ RedmineClient::retrieveEnumerations( QString enumeration, JsonCb callback, QStri
 {
     ENTER()(enumeration)(parameters);
 
-    sendRequest( "enumerations/"+enumeration, callback, Mode::GET, parameters );
+    sendRequest( "enumerations/"+enumeration, callback, QNetworkAccessManager::GetOperation, parameters );
+
+    RETURN();
+}
+
+void
+RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "issues", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -362,7 +445,7 @@ RedmineClient::retrieveIssueCategories( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "issue_categories", callback, Mode::GET, parameters );
+    sendRequest( "issue_categories", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -382,17 +465,7 @@ RedmineClient::retrieveIssue( JsonCb callback, int issueId, QString parameters )
 {
     ENTER()(issueId)(parameters);
 
-    sendRequest( QString("issues/%1").arg(issueId), callback, Mode::GET, parameters );
-
-    RETURN();
-}
-
-void
-RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    sendRequest( "issues", callback, Mode::GET, parameters );
+    sendRequest( QString("issues/%1").arg(issueId), callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -402,7 +475,7 @@ RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "issue_statuses", callback, Mode::GET, parameters );
+    sendRequest( "issue_statuses", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -412,7 +485,7 @@ RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "projects", callback, Mode::GET, parameters );
+    sendRequest( "projects", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -422,7 +495,7 @@ RedmineClient::retrieveTimeEntries( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "time_entries", callback, Mode::GET, parameters );
+    sendRequest( "time_entries", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -442,7 +515,7 @@ RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "trackers", callback, Mode::GET, parameters );
+    sendRequest( "trackers", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -452,7 +525,7 @@ RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "users", callback, Mode::GET, parameters );
+    sendRequest( "users", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -462,7 +535,7 @@ RedmineClient::retrieveVersions( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "versions", callback, Mode::GET, parameters );
+    sendRequest( "versions", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }

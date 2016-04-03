@@ -27,85 +27,99 @@ public:
     // Inherited constructors
     using RedmineClient::RedmineClient;
 
-    /// @name Redmine data creators
+    /// @name Redmine data creators and updaters
     /// @{
 
     /**
-     * @brief Create issue priority in Redmine
+     * @brief Create or update issue in Redmine
      *
      * @param item Data to be stored in Redmine
      * @param callback Success callback function
-     * @param parameters Additional enumeration parameters
-     */
-    void createIssuePriority( Enumeration item,
-                              SuccessCb callback = nullptr,
-                              QString parameters = "" );
-
-    /**
-     * @brief Create issue in Redmine
-     *
-     * @param item Data to be stored in Redmine
-     * @param callback Success callback function
+     * @param id Issue ID to update; if set to \c NULL_ID, create a new issue
      * @param parameters Additional issue parameters
      */
-    void createIssue( Issue item,
-                      SuccessCb callback = nullptr,
-                      QString parameters = "" );
+    void sendIssue( Issue item,
+                    SuccessCb callback = nullptr,
+                    int id = NULL_ID,
+                    QString parameters = "" );
 
     /**
-     * @brief Create issue status in Redmine
+     * @brief Create or update issue priority in Redmine
      *
      * @param item Data to be stored in Redmine
      * @param callback Success callback function
-     * @param parameters Additional issue status parameters
+     * @param id Issue priority ID to update; if set to \c NULL_ID, create a new issue priority
+     * @param parameters Additional enumeration parameters
      */
-    void createIssueStatus( IssueStatus item,
+    void sendIssuePriority( Enumeration item,
                             SuccessCb callback = nullptr,
+                            int id = NULL_ID,
                             QString parameters = "" );
 
     /**
-     * @brief Create project in Redmine
+     * @brief Create or update issue status in Redmine
      *
      * @param item Data to be stored in Redmine
      * @param callback Success callback function
-     * @param parameters Additional project parameters
+     * @param id Issue status ID to update; if set to \c NULL_ID, create a new issue status
+     * @param parameters Additional issue status parameters
      */
-    void createProject( Project item,
-                        SuccessCb callback = nullptr,
-                        QString parameters = "" );
-
-    /**
-     * @brief Create time entry in Redmine
-     *
-     * @param item Data to be stored in Redmine
-     * @param callback Success callback function
-     * @param parameters Additional time entry parameters
-     */
-    void createTimeEntry( TimeEntry item,
+    void sendIssueStatus( IssueStatus item,
                           SuccessCb callback = nullptr,
+                          int id = NULL_ID,
                           QString parameters = "" );
 
     /**
-     * @brief Create time entry activity in Redmine
+     * @brief Create or update project in Redmine
      *
      * @param item Data to be stored in Redmine
      * @param callback Success callback function
-     * @param parameters Additional enumeration parameters
+     * @param id Project ID to update; if set to \c NULL_ID, create a new project
+     * @param parameters Additional project parameters
      */
-    void createTimeEntryActivity( Enumeration item,
-                                  SuccessCb callback = nullptr,
-                                  QString parameters = "" );
+    void sendProject( Project item,
+                      SuccessCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
 
     /**
-     * @brief Create tracker in Redmine
+     * @brief Create or update time entry in Redmine
      *
      * @param item Data to be stored in Redmine
      * @param callback Success callback function
+     * @param id Time entry ID to update; if set to \c NULL_ID, create a new time entry
+     * @param parameters Additional time entry parameters
+     */
+    void sendTimeEntry( TimeEntry item,
+                        SuccessCb callback = nullptr,
+                        int id = NULL_ID,
+                        QString parameters = "" );
+
+    /**
+     * @brief Create or update time entry activity in Redmine
+     *
+     * @param item Data to be stored in Redmine
+     * @param callback Success callback function
+     * @param id Time entry activity ID to update; if set to \c NULL_ID, create a new time entry activity
+     * @param parameters Additional enumeration parameters
+     */
+    void sendTimeEntryActivity( Enumeration item,
+                                SuccessCb callback = nullptr,
+                                int id = NULL_ID,
+                                QString parameters = "" );
+
+    /**
+     * @brief Create or update tracker in Redmine
+     *
+     * @param item Data to be stored in Redmine
+     * @param callback Success callback function
+     * @param id Tracker ID to update; if set to \c NULL_ID, create a new tracker
      * @param parameters Additional tracker parameters
      */
-    void createTracker( Tracker item,
-                        SuccessCb callback = nullptr,
-                        QString parameters = "" );
+    void sendTracker( Tracker item,
+                      SuccessCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
 
     /// @}
 
@@ -189,14 +203,14 @@ public:
 
 protected:
     // Inherited and overloaded methods
-    using RedmineClient::createEnumeration;
-    using RedmineClient::createIssuePriority;
-    using RedmineClient::createIssue;
-    using RedmineClient::createIssueStatus;
-    using RedmineClient::createProject;
-    using RedmineClient::createTimeEntry;
-    using RedmineClient::createTimeEntryActivity;
-    using RedmineClient::createTracker;
+    using RedmineClient::sendEnumeration;
+    using RedmineClient::sendIssuePriority;
+    using RedmineClient::sendIssue;
+    using RedmineClient::sendIssueStatus;
+    using RedmineClient::sendProject;
+    using RedmineClient::sendTimeEntry;
+    using RedmineClient::sendTimeEntryActivity;
+    using RedmineClient::sendTracker;
 
     using RedmineClient::retrieveEnumerations;
     using RedmineClient::retrieveIssuePriorities;

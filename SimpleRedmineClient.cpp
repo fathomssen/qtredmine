@@ -29,21 +29,96 @@ fillDefaultFields( T& item, QJsonObject* obj)
 }
 
 void
-SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QString parameters )
+SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString parameters )
 {
-    ENTER()(parameters);
+    ENTER()(id)(parameters);
+
+    QJsonObject attr;
+
+    if( item.project.id != NULL_ID )
+        attr["project_id"] = item.project.id;
+
+    if( item.tracker.id != NULL_ID )
+        attr["tracker_id"] = item.tracker.id;
+
+    if( item.status.id != NULL_ID )
+        attr["status_id"] = item.status.id;
+
+    if( item.priority.id != NULL_ID )
+        attr["priority_id"] = item.priority.id;
+
+    if( !item.subject.isEmpty() )
+        attr["subject"] = item.subject;
+
+    if( !item.description.isEmpty() )
+        attr["description"] = item.description;
+
+    if( item.category.id != NULL_ID )
+        attr["category_id"] = item.category.id;
+
+//    if( item.fixed_version.id != NULL_ID )
+//        attr["fixed_version_id"] = item.fixed_version.id;
+
+//    if( item.assigned_to.id != NULL_ID )
+//        attr["assigned_to_id"] = item.assigned_to.id;
+
+//    if( item.parent_issue.id != NULL_ID )
+//        attr["parent_issue_id"] = item.parent_issue.id;
+
+//    if( item.custom_fields != NULL_ID )
+//        attr["custom_fields"] = item.custom_fields;
+
+//    if( item.watcher_user_ids != NULL_ID )
+//        attr["watcher_user_ids"] = item.watcher_user_ids;
+
+//    if( item.is_private != NULL_ID )
+//        attr["is_private"] = item.is_private;
+
+    if( item.estimatedHours )
+        attr["estimated_hours"] = item.estimatedHours;
+
+    QJsonObject data;
+    data["issue"] = attr;
+
+    QJsonDocument json;
+    json.setObject( data );
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( false, ERR_NETWORK, reply->error() );
+            RETURN();
+        }
+
+        callback( true, NO_ERROR, reply->error() );
+    };
+
+    sendIssue( json, cb, id, parameters );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, QString parameters )
+{
+    ENTER()(id)(parameters);
 
     if( (item.hours * 60) < 1 )
     {
         DEBUG() << "Time entry has to be at least 1 minute";
-        callback( false, Error::TIME_ENTRY_TOO_SHORT );
+        callback( false, ERR_TIME_ENTRY_TOO_SHORT, QNetworkReply::NoError );
         RETURN();
     }
 
-    if( item.issue.id == 0 && item.project.id == 0 )
+    if( id == NULL_ID && item.issue.id == NULL_ID && item.project.id == NULL_ID )
     {
         DEBUG() << "No issue and no project specified";
-        callback( false, Error::INCOMPLETE_DATA );
+        callback( false, ERR_INCOMPLETE_DATA, QNetworkReply::NoError );
         RETURN();
     }
 
@@ -51,16 +126,16 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
 
     attr["hours"] = item.hours;
 
-    if( item.activity.id )
+    if( item.activity.id != NULL_ID )
         attr["activity_id"] = item.activity.id;
 
     if( !item.comment.isEmpty() )
         attr["comments"] = item.comment;
 
-    if( item.issue.id )
+    if( item.issue.id != NULL_ID )
         attr["issue_id"] = item.issue.id;
 
-    if( item.project.id )
+    if( item.project.id != NULL_ID )
         attr["project_id"] = item.project.id;
 
     if( item.spentOn.isValid() )
@@ -80,14 +155,14 @@ SimpleRedmineClient::createTimeEntry( TimeEntry item, SuccessCb callback, QStrin
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false, Error::NETWORK );
+            callback( false, ERR_NETWORK, reply->error() );
             RETURN();
         }
 
-        callback( true, Error::NO_ERROR );
+        callback( true, NO_ERROR, reply->error() );
     };
 
-    createTimeEntry( json, cb, parameters );
+    sendTimeEntry( json, cb, id, parameters );
 
     RETURN();
 }
@@ -171,7 +246,7 @@ parseIssue( Issue& issue, QJsonObject* obj )
 
   // Dates and times
   issue.dueDate        = obj->value("due_date").toVariant().toDate();
-  issue.estimatedHours = obj->value("estimated_hours").toVariant().toTime();
+  issue.estimatedHours = obj->value("estimated_hours").toDouble();
   issue.startDate      = obj->value("start_date").toVariant().toDate();
 
   // Custom field

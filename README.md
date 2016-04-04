@@ -24,6 +24,8 @@ Example
 Please have a look at the examples in the Doxygen documentation at
 https://fathomssen.github.io/qtredmine/examples.html.
 
+Furthermore, you can find a real-world usage at https://github.com/fathomssen/redtimer.
+
 Todo
 ----
 * Complete the simple API to get more resource types

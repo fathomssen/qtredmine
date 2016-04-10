@@ -1,23 +1,11 @@
+TEMPLATE = lib
+TARGET = qtredmine
+
 QT += network
 QT -= gui
-
 QMAKE_CXXFLAGS += -std=c++11
 
-TARGET = qtredmine
-TEMPLATE = lib
-
 DEFINES += QTREDMINE_LIBRARY
-
-# No debug statements in release
-CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
-CONFIG(debug, debug|release):DEFINES += DEBUG_OUTPUT
-
-SOURCES += \
-    PasswordAuthenticator.cpp \
-    KeyAuthenticator.cpp \
-    Example.cpp \
-    SimpleRedmineClient.cpp \
-    RedmineClient.cpp
 
 HEADERS += \
     KeyAuthenticator.h \
@@ -30,7 +18,17 @@ HEADERS += \
     SimpleRedmineTypes.h \
     SimpleRedmineClient.h
 
+SOURCES += \
+    PasswordAuthenticator.cpp \
+    KeyAuthenticator.cpp \
+    Example.cpp \
+    SimpleRedmineClient.cpp \
+    RedmineClient.cpp
+
 DISTFILES += \
     README.md \
     .travis.yml
 
+# No debug statements in release
+CONFIG(release, debug|release):DEFINES += DEBUG_OUTPUT # QT_NO_DEBUG_OUTPUT
+CONFIG(debug, debug|release):DEFINES += DEBUG_OUTPUT

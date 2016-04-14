@@ -76,6 +76,7 @@ struct Enumeration {
 /// Structure representing an issue
 struct Issue {
     int          id = NULL_ID;        ///< ID
+    int          parentId = NULL_ID;  ///< Parent issue ID
 
     QString      description;    ///< Description
     double       doneRatio = 0;  ///< Done ratio
@@ -167,8 +168,15 @@ using Trackers = QVector<Tracker>;
 /// @name Callbacks
 /// @{
 
-/// Success callback which passes a boolean value and an error code
-using SuccessCb = std::function<void(bool, RedmineError, QNetworkReply::NetworkError)>;
+/**
+ * Success callback
+ *
+ * @param bool True if successful, false otherwise
+ * @param int ID of newly created Redmine item
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using SuccessCb = std::function<void(bool, int, RedmineError, QStringList)>;
 
 /// Typedef for a enumerations callback function
 using EnumerationsCb = std::function<void(Enumerations)>;

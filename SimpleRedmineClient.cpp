@@ -28,6 +28,20 @@ fillDefaultFields( T& item, QJsonObject* obj)
     fillItem( item.user, obj, "user" );
 }
 
+QStringList
+getErrorList( QJsonDocument* json )
+{
+    ENTER()(json->toJson());
+
+    QJsonArray jsonErrors = json->object().find("errors").value().toArray();
+    QStringList errors;
+
+    for( const auto& error : jsonErrors )
+        errors.push_back( error.toString() );
+
+    RETURN( errors );
+}
+
 void
 SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString parameters )
 {
@@ -62,8 +76,8 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
 //    if( item.assigned_to.id != NULL_ID )
 //        attr["assigned_to_id"] = item.assigned_to.id;
 
-//    if( item.parent_issue.id != NULL_ID )
-//        attr["parent_issue_id"] = item.parent_issue.id;
+    if( item.parentId != NULL_ID )
+        attr["parent_issue_id"] = item.parentId;
 
 //    if( item.custom_fields != NULL_ID )
 //        attr["custom_fields"] = item.custom_fields;
@@ -87,15 +101,21 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
     {
         ENTER();
 
+        DEBUG()(json->toJson());
+
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false, ERR_NETWORK, reply->error() );
+            callback( false, NULL_ID, ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
-        callback( true, NO_ERROR, reply->error() );
+        // Iterate over the document
+        QJsonObject jsonIssue = json->object().find("issue").value().toObject();
+        int issueId = jsonIssue.find("id").value().toInt();
+
+        callback( true, issueId, NO_ERROR, QStringList() );
     };
 
     sendIssue( json, cb, id, parameters );
@@ -111,14 +131,14 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
     if( (item.hours * 60) < 1 )
     {
         DEBUG() << "Time entry has to be at least 1 minute";
-        callback( false, ERR_TIME_ENTRY_TOO_SHORT, QNetworkReply::NoError );
+        callback( false, NULL_ID, ERR_TIME_ENTRY_TOO_SHORT, QStringList() );
         RETURN();
     }
 
     if( id == NULL_ID && item.issue.id == NULL_ID && item.project.id == NULL_ID )
     {
         DEBUG() << "No issue and no project specified";
-        callback( false, ERR_INCOMPLETE_DATA, QNetworkReply::NoError );
+        callback( false, NULL_ID, ERR_INCOMPLETE_DATA, QStringList() );
         RETURN();
     }
 
@@ -155,11 +175,11 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false, ERR_NETWORK, reply->error() );
+            callback( false, NULL_ID, ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
-        callback( true, NO_ERROR, reply->error() );
+        callback( true, NULL_ID, NO_ERROR, QStringList() );
     };
 
     sendTimeEntry( json, cb, id, parameters );

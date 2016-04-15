@@ -27,13 +27,20 @@ enum RedmineError {
     ERR_TIMEOUT,
 };
 
+/// Redmine options
+struct RedmineOptions
+{
+    QString parameters;
+    bool getAllItems = false;
+
+    RedmineOptions( QString parameters = "", bool getAllItems = false )
+        : parameters( parameters ),
+          getAllItems( getAllItems )
+    {}
+};
+
 /// @name Redmine data structures
 /// @{
-
-#define DEFAULT_FIELDS \
-    QDateTime createdOn;     /**< @brief Created on */   \
-    QDateTime updatedOn;     /**< @brief Updated on */   \
-    Item      user;          /**< @brief Redmine user */
 
 /// Structure representing a Redmine item
 struct Item {
@@ -53,6 +60,14 @@ struct CustomField {
 /// @name Redmine data containers
 /// @{
 
+/// Redmine resource
+struct RedmineResource
+{
+    QDateTime createdOn; /// @brief Created on
+    QDateTime updatedOn; /// @brief Updated on
+    Item      user;      /// @brief Redmine user
+};
+
 /// Item vector
 using Items = QVector<Item>;
 
@@ -60,12 +75,11 @@ using Items = QVector<Item>;
 using CustomFields = QVector<CustomField>;
 
 /// Structure representing an enumeration
-struct Enumeration {
+struct Enumeration : RedmineResource
+{
     int     id = NULL_ID;   ///< ID
     QString name;      ///< Project name
     bool    isDefault; ///< Default entry
-
-    DEFAULT_FIELDS
 };
 
 /// @}
@@ -74,7 +88,8 @@ struct Enumeration {
 /// @{
 
 /// Structure representing an issue
-struct Issue {
+struct Issue : RedmineResource
+{
     int          id = NULL_ID;        ///< ID
     int          parentId = NULL_ID;  ///< Parent issue ID
 
@@ -94,50 +109,45 @@ struct Issue {
     QDate        startDate;      ///< Start date
 
     CustomFields customFields;   ///< Custom fields vector
-
-    DEFAULT_FIELDS
 };
 
 /// Structure representing an issue status
-struct IssueStatus {
+struct IssueStatus : RedmineResource
+{
     int     id = NULL_ID;   ///< ID
     QString name;      ///< Issue status name
     bool    isClosed;  ///< Closed status
     bool    isDefault; ///< Default entry
-
-    DEFAULT_FIELDS
 };
 
 /// Structure representing a project
-struct Project {
+struct Project : RedmineResource
+{
     int       id = NULL_ID;     ///< ID
 
     QString   description; ///< Description
     QString   identifier;  ///< Internal identifier
     bool      isPublic;    ///< Public project
     QString   name;        ///< Project name
-
-    DEFAULT_FIELDS
 };
 
 /// Structure representing a time entry
-struct TimeEntry {
+struct TimeEntry : RedmineResource
+{
     Item    activity; ///< Activity
     QString comment;  ///< Additional comment
     double  hours = 0;///< Hours spent
     Item    issue;    ///< Issue (required if no project was specified)
     Item    project;  ///< Project (required if no issue was specified)
     QDate   spentOn;  ///< Date of the time spent
-
-    DEFAULT_FIELDS
 };
 
 /// Structure representing a tracker
-struct Tracker {
+struct Tracker : RedmineResource
+{
     int     id = NULL_ID; ///< ID
     QString name;    ///< Project name
 
-    DEFAULT_FIELDS
 };
 
 /// @}
@@ -219,6 +229,8 @@ operator<<( QDebug debug, const Issue& item )
 }
 
 } // qtredmine
+
+Q_DECLARE_METATYPE( qtredmine::RedmineResource )
 
 Q_DECLARE_METATYPE( qtredmine::Item )
 Q_DECLARE_METATYPE( qtredmine::CustomField )

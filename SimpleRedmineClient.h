@@ -23,6 +23,9 @@ namespace qtredmine {
  */
 class QTREDMINESHARED_EXPORT SimpleRedmineClient : public RedmineClient
 {
+private:
+    int limit_ = 100;
+
 public:
     // Inherited constructors
     using RedmineClient::RedmineClient;
@@ -149,10 +152,9 @@ public:
      * @brief Retrieve issues from Redmine
      *
      * @param callback Callback function with an Issue vector
-     * @param parameters Additional issue parameters
+     * @param options Additional options
      */
-    void retrieveIssues( IssuesCb callback,
-                         QString parameters = "" );
+    void retrieveIssues( IssuesCb callback, RedmineOptions options = RedmineOptions() );
 
     /**
      * @brief Retrieve issue statuses from Redmine

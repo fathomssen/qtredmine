@@ -321,13 +321,26 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
 }
 
 void
-SimpleRedmineClient::retrieveIssues( IssuesCb callback, QString parameters )
+SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
 {
-    ENTER()(parameters);
+    ENTER()(options.parameters)(options.getAllItems);
 
-    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    struct Data
     {
-        ENTER();
+        Issues issues;
+        int offset = 0;
+        JsonCb jsonCb;
+    };
+
+    Data* data = new Data();
+
+    data->jsonCb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER()(json->toJson());
+
+        Issues& issues = data->issues;
+        int&    offset = data->offset;
+        JsonCb& cb     = data->jsonCb;
 
         // Quit on network error
         if( reply->error() != QNetworkReply::NoError )
@@ -336,7 +349,7 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, QString parameters )
             RETURN();
         }
 
-        Issues issues;
+        int count = 0;
 
         // Iterate over the document
         for( const auto& j1 : json->object() )
@@ -348,15 +361,32 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, QString parameters )
                 QJsonObject obj = j2.toObject();
                 parseIssue( issue, &obj );
                 issues.push_back( issue );
+                ++count;
+                ++offset;
             }
         }
 
-        callback( issues );
+        if( options.getAllItems && count == limit_ )
+        {
+            // In the last run, as many issues as the limit is were found - so there might be more
+            retrieveIssues( cb,
+                            QString("%1&offset=%2&limit=%3")
+                            .arg(options.parameters)
+                            .arg(offset)
+                            .arg(limit_) );
+        }
+        else
+        {
+            // No more issues to fetch
+            callback( issues );
+            delete data;
+        }
 
         RETURN();
     };
 
-    retrieveIssues( cb, parameters );
+    retrieveIssues( data->jsonCb,
+                    QString("%1&offset=%2&limit=%3").arg(options.parameters).arg(0).arg(limit_) );
 
     RETURN();
 }

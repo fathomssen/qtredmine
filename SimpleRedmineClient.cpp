@@ -73,8 +73,8 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
 //    if( item.fixed_version.id != NULL_ID )
 //        attr["fixed_version_id"] = item.fixed_version.id;
 
-//    if( item.assigned_to.id != NULL_ID )
-//        attr["assigned_to_id"] = item.assigned_to.id;
+    if( item.assignedTo.id != NULL_ID )
+        attr["assigned_to_id"] = item.assignedTo.id;
 
     if( item.parentId != NULL_ID )
         attr["parent_issue_id"] = item.parentId;
@@ -602,6 +602,97 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
     };
 
     retrieveTrackers( cb, parameters );
+
+    RETURN();
+}
+
+void
+parseUser( User& user, QJsonObject* obj )
+{
+  ENTER();
+
+  // Simple fields
+  user.id   = obj->value("id").toInt();
+
+  user.login     = obj->value("login").toString();
+  user.firstname = obj->value("firstname").toString();
+  user.lastname  = obj->value("lastname").toString();
+
+  user.mail        = obj->value("mail").toString();
+  user.lastLoginOn = obj->value("last_login_on").toVariant().toDateTime();
+
+  fillDefaultFields( user, obj );
+
+  RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveCurrentUser( UserCb callback )
+{
+    ENTER();
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            RETURN();
+        }
+
+        User user;
+        QJsonObject obj = json->object().value("user").toObject();
+        parseUser( user, &obj );
+        callback( user );
+
+        RETURN();
+    };
+
+    retrieveCurrentUser( cb );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            RETURN();
+        }
+
+        Users users;
+
+        // Iterate over the document
+        for( const auto& j1 : json->object() )
+        {
+            // Iterate over all users
+            for( const auto& j2 : j1.toArray() )
+            {
+                QJsonObject obj = j2.toObject();
+
+                User user;
+                parseUser( user, &obj );
+                users.push_back( user );
+            }
+        }
+
+        callback( users );
+
+        RETURN();
+    };
+
+    retrieveUsers( cb, parameters );
 
     RETURN();
 }

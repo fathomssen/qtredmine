@@ -378,6 +378,15 @@ public:
                            QString parameters = "" );
 
     /**
+     * @brief Retrieve current user from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional user parameters
+     */
+    void retrieveCurrentUser( JsonCb callback,
+                              QString parameters = "" );
+
+    /**
      * @brief Retrieve users from Redmine
      *
      * @param callback Callback function with a QJsonDocument object

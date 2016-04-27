@@ -63,9 +63,9 @@ struct CustomField {
 /// Redmine resource
 struct RedmineResource
 {
-    QDateTime createdOn; /// @brief Created on
-    QDateTime updatedOn; /// @brief Updated on
-    Item      user;      /// @brief Redmine user
+    QDateTime createdOn; ///< Created on
+    QDateTime updatedOn; ///< Updated on
+    Item      user;      ///< Redmine user
 };
 
 /// Item vector
@@ -97,6 +97,7 @@ struct Issue : RedmineResource
     double       doneRatio = 0;  ///< Done ratio
     QString      subject;        ///< Subject
 
+    Item         assignedTo;     ///< Assigned to
     Item         author;         ///< Author
     Item         category;       ///< Category
     Item         priority;       ///< Priority
@@ -146,8 +147,21 @@ struct TimeEntry : RedmineResource
 struct Tracker : RedmineResource
 {
     int     id = NULL_ID; ///< ID
-    QString name;    ///< Project name
+    QString name;         ///< Tracker name
 
+};
+
+/// Structure representing a user
+struct User : RedmineResource
+{
+    int     id = NULL_ID; ///< ID
+
+    QString login;        ///< Login name
+    QString firstname;    ///< First name
+    QString lastname;     ///< Last name
+
+    QString mail;         ///< E-mail address
+    QDateTime lastLoginOn;///< Last login time and date
 };
 
 /// @}
@@ -172,6 +186,9 @@ using TimeEntries = QVector<TimeEntry>;
 
 /// Tracker vector
 using Trackers = QVector<Tracker>;
+
+/// User vector
+using Users = QVector<User>;
 
 /// @}
 
@@ -209,6 +226,12 @@ using TimeEntriesCb = std::function<void(TimeEntries)>;
 /// Typedef for a Trackers callback function
 using TrackersCb = std::function<void(Trackers)>;
 
+/// Typedef for a User callback function
+using UserCb = std::function<void(User)>;
+
+/// Typedef for a Users callback function
+using UsersCb = std::function<void(Users)>;
+
 /// @}
 
 /**
@@ -241,5 +264,6 @@ Q_DECLARE_METATYPE( qtredmine::IssueStatus )
 Q_DECLARE_METATYPE( qtredmine::Project )
 Q_DECLARE_METATYPE( qtredmine::TimeEntry )
 Q_DECLARE_METATYPE( qtredmine::Tracker )
+Q_DECLARE_METATYPE( qtredmine::User )
 
 #endif // SIMPLEREDMINETYPES_H

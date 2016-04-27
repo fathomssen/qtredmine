@@ -533,6 +533,16 @@ RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
 }
 
 void
+RedmineClient::retrieveCurrentUser( JsonCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    sendRequest( "users/current", callback, QNetworkAccessManager::GetOperation, parameters );
+
+    RETURN();
+}
+
+void
 RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);

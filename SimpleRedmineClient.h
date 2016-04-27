@@ -201,6 +201,21 @@ public:
     void retrieveTrackers( TrackersCb callback,
                            QString parameters = "" );
 
+    /**
+     * @brief Retrieve current user from Redmine
+     *
+     * @param callback Callback function with a User vector
+     */
+    void retrieveCurrentUser( UserCb callback );
+
+    /**
+     * @brief Retrieve users from Redmine
+     *
+     * @param callback Callback function with a User vector
+     * @param parameters Additional user parameters
+     */
+    void retrieveUsers( UsersCb callback,
+                        QString parameters = "" );
     /// @}
 
 protected:
@@ -223,6 +238,8 @@ protected:
     using RedmineClient::retrieveTimeEntries;
     using RedmineClient::retrieveTimeEntryActivities;
     using RedmineClient::retrieveTrackers;
+    using RedmineClient::retrieveCurrentUser;
+    using RedmineClient::retrieveUsers;
 
     /**
      * @brief Retrieve enumerations from Redmine

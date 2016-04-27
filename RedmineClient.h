@@ -501,6 +501,14 @@ private:
 
 private slots:
     /**
+     * @brief Handle SSL errors
+     *
+     * @param reply The QNetworkReply the error occurred in
+     * @param errors List of errors
+     */
+    void handleSslErrors( QNetworkReply* reply, const QList<QSslError>& errors );
+
+    /**
      * @brief Process a reply from the network access manager
      *
      * @param reply Network reply object

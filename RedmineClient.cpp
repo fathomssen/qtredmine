@@ -61,6 +61,10 @@ RedmineClient::init()
     // When a reqest to the network access manager has finished, call this->replyFinished()
     connect( nma_, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)) );
 
+    // Handle SSL errors
+    connect( nma_, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)),
+             this, SLOT(handleSslErrors(QNetworkReply*, const QList<QSslError>&)) );
+
     RETURN();
 }
 
@@ -69,6 +73,17 @@ RedmineClient::getUrl() const
 {
     ENTER();
     RETURN( url_ );
+}
+
+void
+RedmineClient::handleSslErrors( QNetworkReply* reply, const QList<QSslError>& errors )
+{
+    ENTER()(reply)(errors);
+
+    if( !checkSsl_ )
+        reply->ignoreSslErrors();
+
+    RETURN();
 }
 
 void
@@ -175,9 +190,6 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessMan
     //
 
     QNetworkReply* reply;
-
-    if( !checkSsl_ )
-        reply->ignoreSslErrors();
 
     switch( mode )
     {

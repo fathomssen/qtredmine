@@ -70,14 +70,13 @@ RedmineClient::reconnect()
     nma_ = new QNetworkAccessManager( this );
 
     // When a reqest to the network access manager has finished, call this->replyFinished()
-    connect( nma_, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)) );
+    connect( nma_, &QNetworkAccessManager::finished, this, &RedmineClient::replyFinished );
 
     // Handle SSL errors
-    connect( nma_, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)),
-             this, SLOT(handleSslErrors(QNetworkReply*, const QList<QSslError>&)) );
+    connect( nma_, &QNetworkAccessManager::sslErrors, this, &RedmineClient::handleSslErrors );
 
     // Handle network accessibility change
-    connect( nma_, QNetworkAccessManager::networkAccessibleChanged,
+    connect( nma_, &QNetworkAccessManager::networkAccessibleChanged,
              [&](QNetworkAccessManager::NetworkAccessibility accessible)
              { ENTER(); networkAccessibleChanged( accessible ); } );
 

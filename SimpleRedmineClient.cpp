@@ -42,6 +42,102 @@ getErrorList( QJsonDocument* json )
     RETURN( errors );
 }
 
+SimpleRedmineClient::SimpleRedmineClient( QObject* parent )
+    : RedmineClient( parent )
+{
+    ENTER();
+    init();
+    RETURN();
+}
+
+SimpleRedmineClient::SimpleRedmineClient( QString url, QObject* parent )
+    : RedmineClient( url, parent )
+{
+    ENTER()(url);
+    init();
+    RETURN();
+}
+
+SimpleRedmineClient::SimpleRedmineClient( QString url, QString apiKey, bool checkSsl, QObject* parent )
+    : RedmineClient( url, apiKey, checkSsl, parent )
+{
+    ENTER()(url)(apiKey)(checkSsl);
+    init();
+    RETURN();
+}
+
+SimpleRedmineClient::SimpleRedmineClient( QString url, QString login, QString password, bool checkSsl,
+                                          QObject* parent )
+    : RedmineClient( url, login, password, parent )
+{
+    ENTER()(url)(login)(password)(checkSsl);
+    init();
+    RETURN();
+}
+
+void
+SimpleRedmineClient::init()
+{
+    ENTER();
+
+    // Connect the network accessible signal to the isConnected slot
+    connect( this, RedmineClient::networkAccessibleChanged, this, checkConnectionStatus );
+
+    // Connect the initialised signal to the isConnected slot
+    connect( this, SimpleRedmineClient::initialised, [&](){ checkConnectionStatus(); } );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccessibility accessible )
+{
+    ENTER()(accessible);
+
+    auto setConnectionState = [&]( QNetworkAccessManager::NetworkAccessibility connected )
+    {
+        ENTER()(connected);
+
+        if( connected != connected_ )
+        {
+            DEBUG( "Emitting signal connectionChanged()" )(connected);
+            connectionChanged( connected );
+        }
+
+        connected_ = connected;
+
+        RETURN();
+    };
+
+    // If there is no network connection available, there will be no Redmine connection as well
+    if( accessible == QNetworkAccessManager::NotAccessible )
+    {
+        setConnectionState( QNetworkAccessManager::NotAccessible );
+        RETURN();
+    }
+
+    // Otherwise, check the Redmine connection
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER()(reply)(json);
+
+        if( reply->error() == QNetworkReply::NoError )
+            setConnectionState( QNetworkAccessManager::Accessible );
+        else
+        {
+            DEBUG()(reply->errorString());
+            setConnectionState( QNetworkAccessManager::NotAccessible );
+        }
+
+        RETURN();
+    };
+
+    // Try to fetch one issue
+    sendRequest( "issues", cb, QNetworkAccessManager::GetOperation, "limit=1" );
+
+    RETURN();
+  }
+
 void
 SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString parameters )
 {

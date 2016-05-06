@@ -17,7 +17,7 @@ RedmineClient::RedmineClient( QObject* parent )
 }
 
 RedmineClient::RedmineClient( QString url, QObject* parent )
-    : QObject( parent )
+    : RedmineClient( parent )
 {
     ENTER()(url);
 
@@ -27,7 +27,7 @@ RedmineClient::RedmineClient( QString url, QObject* parent )
 }
 
 RedmineClient::RedmineClient( QString url, QString apiKey, bool checkSsl, QObject* parent )
-    : QObject( parent )
+    : RedmineClient( url, parent )
 {
     ENTER()(url)(apiKey)(checkSsl);
 
@@ -39,7 +39,7 @@ RedmineClient::RedmineClient( QString url, QString apiKey, bool checkSsl, QObjec
 }
 
 RedmineClient::RedmineClient( QString url, QString login, QString password, bool checkSsl, QObject* parent )
-    : QObject( parent )
+    : RedmineClient( url, parent )
 {
     ENTER()(url)(login)(password)(checkSsl);
 
@@ -55,6 +55,17 @@ RedmineClient::init()
 {
     ENTER();
 
+    reconnect();
+    initialised();
+
+    RETURN();
+}
+
+void
+RedmineClient::reconnect()
+{
+    ENTER();
+
     // Create QNetworkAccessManager object
     nma_ = new QNetworkAccessManager( this );
 
@@ -64,6 +75,11 @@ RedmineClient::init()
     // Handle SSL errors
     connect( nma_, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)),
              this, SLOT(handleSslErrors(QNetworkReply*, const QList<QSslError>&)) );
+
+    // Handle network accessibility change
+    connect( nma_, QNetworkAccessManager::networkAccessibleChanged,
+             [&](QNetworkAccessManager::NetworkAccessibility accessible)
+             { ENTER(); networkAccessibleChanged( accessible ); } );
 
     RETURN();
 }
@@ -91,8 +107,15 @@ RedmineClient::setAuthenticator( QString apiKey )
 {
     ENTER()(apiKey);
 
+    if( apiKey == authApiKey_ )
+        RETURN();
+
+    authApiKey_ = apiKey;
+
     auth_ = new KeyAuthenticator( apiKey.toLatin1(), this );
-    init();
+
+    if( !url_.isEmpty() )
+        init();
 
     RETURN();
 }
@@ -102,8 +125,16 @@ RedmineClient::setAuthenticator( QString login, QString password )
 {
     ENTER()(login)(password);
 
+    if( login == authLogin_ && password == authPassword_ )
+        RETURN();
+
+    authLogin_ = login;
+    authPassword_ = password;
+
     auth_ = new PasswordAuthenticator( login, password, this );
-    init();
+
+    if( !url_.isEmpty() )
+        init();
 
     RETURN();
 }
@@ -113,7 +144,13 @@ RedmineClient::setCheckSsl( bool checkSsl )
 {
     ENTER()(checkSsl);
 
+    if( checkSsl == checkSsl_ )
+        RETURN();
+
     checkSsl_ = checkSsl;
+
+    if( auth_ && !url_.isEmpty() )
+        init();
 
     RETURN();
 }
@@ -123,7 +160,13 @@ RedmineClient::setUrl( QString url )
 {
     ENTER()(url);
 
+    if( url == url_ )
+        RETURN();
+
     url_ = url;
+
+    if( auth_ )
+        init();
 
     RETURN();
 }

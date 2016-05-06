@@ -82,6 +82,11 @@ public:
                    bool checkSsl   = true,
                    QObject* parent = nullptr );
 
+    /**
+     * @brief (Re-)Connect to Redmine
+     */
+    void reconnect();
+
     /// @name Getters
     /// @{
 
@@ -476,7 +481,16 @@ protected:
 
 private:
     /// Currently configured authenticator for Redmine
-    Authenticator* auth_;
+    Authenticator* auth_ = nullptr;
+
+    /// Currently configured API key
+    QString authApiKey_;
+
+    /// Currently configured login
+    QString authLogin_;
+
+    /// Currently configured password
+    QString authPassword_;
 
     /**
      * @brief Mapping from network reply to callback function
@@ -493,7 +507,7 @@ private:
     bool checkSsl_ = true;
 
     /// Network access manager for networking operations
-    QNetworkAccessManager* nma_;
+    QNetworkAccessManager* nma_ = nullptr;
 
     /// Redmine base URL
     QString url_;
@@ -526,13 +540,25 @@ private slots:
 
 signals:
     /**
-     * @brief Signals that the request has finished
+     * @brief Signal that the request has finished
      *
      * @param callback Callback function that will be called
      * @param reply    Reply that will be passed to the callback function
      * @param json     JSON data that will be passed to the callback function
      */
     void requestFinished( JsonCb callback, QNetworkReply* reply, QJsonDocument* json );
+
+    /**
+     * @brief Signal that the network accessibility has changed
+     *
+     * @param accessible Network accessibility
+     */
+    void networkAccessibleChanged( QNetworkAccessManager::NetworkAccessibility accessible );
+
+    /**
+     * @brief Signal that the connection has been initialised
+     */
+    void initialised();
 };
 
 } // qtredmine

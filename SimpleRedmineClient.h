@@ -23,12 +23,60 @@ namespace qtredmine {
  */
 class QTREDMINESHARED_EXPORT SimpleRedmineClient : public RedmineClient
 {
+    Q_OBJECT
+
 private:
+    /// Maximum number of resources to fetch at once
     int limit_ = 100;
 
+    /// Current connection status to Redmine
+    QNetworkAccessManager::NetworkAccessibility connected_ = QNetworkAccessManager::UnknownAccessibility;
+
 public:
-    // Inherited constructors
-    using RedmineClient::RedmineClient;
+    /**
+     * @brief Constructor for an unconfigured Redmine connection
+     *
+     * @param parent Parent QObject (default: nullptr)
+     */
+    SimpleRedmineClient( QObject* parent = nullptr );
+
+    /**
+     * @brief Constructor for an unconfigured Redmine connection
+     *
+     * @param url    Redmine base URL
+     * @param parent Parent QObject (default: nullptr)
+     */
+    SimpleRedmineClient( QString url, QObject* parent = nullptr );
+
+    /**
+     * @brief Constructor for a Redmine connection using API key authentication
+     *
+     * @param url      Redmine base URL
+     * @param apiKey   Redmine API key
+     * @param checkSsl Check the SSL certificate (default: true)
+     * @param parent   Parent QObject (default: nullptr)
+     */
+    SimpleRedmineClient( QString url, QString apiKey,
+                         bool checkSsl   = true,
+                         QObject* parent = nullptr );
+
+    /**
+     * @brief Constructor for a Redmine connection using basic authentication
+     *
+     * @param url      Redmine base URL
+     * @param login    Redmine login
+     * @param password Redmine password
+     * @param checkSsl Check the SSL certificate (default: true)
+     * @param parent   Parent QObject (default: nullptr)
+     */
+    SimpleRedmineClient( QString url, QString login, QString password,
+                         bool checkSsl   = true,
+                         QObject* parent = nullptr );
+
+    /**
+     * @brief Initialise the Redmine client
+     */
+    void init();
 
     /// @name Redmine data creators and updaters
     /// @{
@@ -252,6 +300,25 @@ protected:
                                EnumerationsCb callback,
                                QString parameters = "" );
 
+public slots:
+    /**
+     * @brief Check whether the connection currently works
+     *
+     * If the status has changed from \c Accessible to \c NotAccessible or vice versa, the
+     * \c connectionChanged signal is emitted.
+     *
+     * @param accessible Specifies whether the network is accessible at all
+     */
+    void checkConnectionStatus( QNetworkAccessManager::NetworkAccessibility accessible =
+                                QNetworkAccessManager::UnknownAccessibility );
+
+signals:
+    /**
+     * @brief Singal that the connection to Redmine has changed
+     *
+     * @param connected true if connection is available, false otherwise
+     */
+    void connectionChanged( QNetworkAccessManager::NetworkAccessibility connected );
 };
 
 } // qtredmine

@@ -81,10 +81,11 @@ SimpleRedmineClient::init()
     ENTER();
 
     // Connect the network accessible signal to the isConnected slot
-    connect( this, RedmineClient::networkAccessibleChanged, this, checkConnectionStatus );
+    connect( this, &RedmineClient::networkAccessibleChanged,
+             this, &SimpleRedmineClient::checkConnectionStatus );
 
     // Connect the initialised signal to the isConnected slot
-    connect( this, SimpleRedmineClient::initialised, [&](){ checkConnectionStatus(); } );
+    connect( this, &SimpleRedmineClient::initialised, [&](){ checkConnectionStatus(); } );
 
     RETURN();
 }

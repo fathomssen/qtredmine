@@ -297,6 +297,7 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Enumerations(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -323,7 +324,7 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
             }
         }
 
-        callback( enumerations );
+        callback( enumerations, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -401,13 +402,14 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Issue(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
         Issue issue;
         QJsonObject obj = json->object().value("issue").toObject();
         parseIssue( issue, &obj );
-        callback( issue );
+        callback( issue, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -443,6 +445,7 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Issues(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -475,7 +478,7 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         else
         {
             // No more issues to fetch
-            callback( issues );
+            callback( issues, NO_ERROR, QStringList() );
             delete data;
         }
 
@@ -501,6 +504,7 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( IssueStatuses(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -527,7 +531,7 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
             }
         }
 
-        callback( issueStatuses );
+        callback( issueStatuses, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -550,6 +554,7 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Projects(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -578,7 +583,7 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
             }
         }
 
-        callback( projects );
+        callback( projects, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -601,6 +606,7 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( TimeEntries(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -635,7 +641,7 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
             }
         }
 
-        callback( timeEntries );
+        callback( timeEntries, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -668,6 +674,7 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Trackers(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -693,7 +700,7 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
             }
         }
 
-        callback( trackers );
+        callback( trackers, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -736,13 +743,14 @@ SimpleRedmineClient::retrieveCurrentUser( UserCb callback )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( User(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
         User user;
         QJsonObject obj = json->object().value("user").toObject();
         parseUser( user, &obj );
-        callback( user );
+        callback( user, NO_ERROR, QStringList() );
 
         RETURN();
     };
@@ -765,6 +773,7 @@ SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
+            callback( Users(), ERR_NETWORK, getErrorList(json) );
             RETURN();
         }
 
@@ -784,7 +793,7 @@ SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
             }
         }
 
-        callback( users );
+        callback( users, NO_ERROR, QStringList() );
 
         RETURN();
     };

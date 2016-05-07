@@ -18,14 +18,29 @@ Example::Example( QObject *parent )
 void
 Example::cacheIssues()
 {
-    redmine_->retrieveIssues( [&]( Issues issues ){ issues_ = issues; } );
+    redmine_->retrieveIssues( [&]( Issues issues, RedmineError redmineError, QStringList errors )
+    {
+        if( redmineError != NO_ERROR )
+        {
+            DEBUG()(errors);
+            return;
+        }
+
+        issues_ = issues;
+    } );
 }
 
 void
 Example::printProjects()
 {
-    redmine_->retrieveProjects( []( Projects projects )
+    redmine_->retrieveProjects( []( Projects projects, RedmineError redmineError, QStringList errors )
     {
+        if( redmineError != NO_ERROR )
+        {
+            DEBUG()(errors);
+            return;
+        }
+
         for( const auto& project : projects )
             DEBUG() << project.name;
     } );

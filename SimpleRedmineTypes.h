@@ -205,32 +205,86 @@ using Users = QVector<User>;
  */
 using SuccessCb = std::function<void(bool, int, RedmineError, QStringList)>;
 
-/// Typedef for a enumerations callback function
-using EnumerationsCb = std::function<void(Enumerations)>;
+/**
+ * Typedef for an enumerations callback function
+ *
+ * @param Enumerations Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using EnumerationsCb = std::function<void(Enumerations, RedmineError, QStringList)>;
 
-/// Typedef for a issue callback function
-using IssueCb = std::function<void(Issue)>;
+/**
+ * Typedef for an issue callback function
+ *
+ * @param Issue Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using IssueCb = std::function<void(Issue, RedmineError, QStringList)>;
 
-/// Typedef for a issues callback function
-using IssuesCb = std::function<void(Issues)>;
+/**
+ * Typedef for an issues callback function
+ *
+ * @param Issues Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using IssuesCb = std::function<void(Issues, RedmineError, QStringList)>;
 
-/// Typedef for a issue statuses callback function
-using IssueStatusesCb = std::function<void(IssueStatuses)>;
+/**
+ * Typedef for an issue statuses callback function
+ *
+ * @param IssueStatuses Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using IssueStatusesCb = std::function<void(IssueStatuses, RedmineError, QStringList)>;
 
-/// Typedef for a projects callback function
-using ProjectsCb = std::function<void(Projects)>;
+/**
+ * Typedef for a projects callback function
+ *
+ * @param Projects Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using ProjectsCb = std::function<void(Projects, RedmineError, QStringList)>;
 
-/// Typedef for a TimeEntry callback function
-using TimeEntriesCb = std::function<void(TimeEntries)>;
+/**
+ * Typedef for a time entry callback function
+ *
+ * @param TimeEntry Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using TimeEntriesCb = std::function<void(TimeEntries, RedmineError, QStringList)>;
 
-/// Typedef for a Trackers callback function
-using TrackersCb = std::function<void(Trackers)>;
+/**
+ * Typedef for a trackers callback function
+ *
+ * @param Trackers Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using TrackersCb = std::function<void(Trackers, RedmineError, QStringList)>;
 
-/// Typedef for a User callback function
-using UserCb = std::function<void(User)>;
+/**
+ * Typedef for a user callback function
+ *
+ * @param User Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using UserCb = std::function<void(User, RedmineError, QStringList)>;
 
-/// Typedef for a Users callback function
-using UsersCb = std::function<void(Users)>;
+/**
+ * Typedef for a users callback function
+ *
+ * @param Users Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using UsersCb = std::function<void(Users, RedmineError, QStringList)>;
 
 /// @}
 

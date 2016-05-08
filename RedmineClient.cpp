@@ -190,15 +190,21 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessMan
     // Initial checks
     //
 
+    if( !nma_ )
+    {
+        DEBUG( "Network manager not yet initialised" );
+        RETURN( nullptr );
+    }
+
     if( resource.isEmpty() )
     {
-        DEBUG() << "No resource specified";
+        DEBUG( "No resource specified" );
         RETURN( nullptr );
     }
 
     if( mode == QNetworkAccessManager::GetOperation && !callback )
     {
-        DEBUG() << "No callback specified for HTTP GET mode";
+        DEBUG( "No callback specified for HTTP GET mode" );
         RETURN( nullptr );
     }
 
@@ -210,11 +216,11 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessMan
 
     if( !url.isValid() )
     {
-        DEBUG() <<  "Invalid URL:"  << url;
+        DEBUG("Invalid URL")(url);
         RETURN( nullptr );
     }
     else
-        DEBUG() <<  "Using URL:"  << url;
+        DEBUG("Using URL")(url);
 
     //
     // Build the network request
@@ -251,7 +257,7 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessMan
         reply = nma_->deleteResource( request );
         break;
     default:
-        DEBUG() << "Unknown operation";
+        DEBUG( "Unknown operation" );
         RETURN( nullptr );
     }
 

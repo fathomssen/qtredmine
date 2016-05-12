@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['_7eauthenticator',['~Authenticator',['../classqtredmine_1_1_authenticator.html#a431d3a4f08849b4e44122e4cfdd79d96',1,'qtredmine::Authenticator']]],
-  ['_7ekeyauthenticator',['~KeyAuthenticator',['../classqtredmine_1_1_key_authenticator.html#ac05ed8c46be4d3af8cd46e4e6d96cf50',1,'qtredmine::KeyAuthenticator']]],
-  ['_7epasswordauthenticator',['~PasswordAuthenticator',['../classqtredmine_1_1_password_authenticator.html#af67d03da54e98f6571305f15df23d70e',1,'qtredmine::PasswordAuthenticator']]]
+  ['updatedon',['updatedOn',['../structqtredmine_1_1_redmine_resource.html#ac6de5130ca100ede4fc5333436522804',1,'qtredmine::RedmineResource']]],
+  ['user',['User',['../structqtredmine_1_1_user.html',1,'qtredmine']]],
+  ['user',['user',['../structqtredmine_1_1_redmine_resource.html#ad6dfb0ffed5a9612b6f9af234df07edb',1,'qtredmine::RedmineResource']]],
+  ['usercb',['UserCb',['../namespaceqtredmine.html#a9183008f79853dc0f5fd08dbe1f31dac',1,'qtredmine']]],
+  ['users',['Users',['../namespaceqtredmine.html#a2737ff11183c0ec4f636c5c97bf61d3c',1,'qtredmine']]],
+  ['userscb',['UsersCb',['../namespaceqtredmine.html#a1842ee142bee9cb82df4ed213eab6400',1,'qtredmine']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['keyauthenticator',['KeyAuthenticator',['../classqtredmine_1_1_key_authenticator.html',1,'qtredmine']]],
-  ['keyauthenticator',['KeyAuthenticator',['../classqtredmine_1_1_key_authenticator.html#a5d6c4cc2a42b870677276ec193ef3526',1,'qtredmine::KeyAuthenticator']]]
+  ['jsoncb',['JsonCb',['../classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4',1,'qtredmine::RedmineClient']]]
 ];

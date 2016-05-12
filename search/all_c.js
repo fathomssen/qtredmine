@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['passwordauthenticator',['PasswordAuthenticator',['../classqtredmine_1_1_password_authenticator.html',1,'qtredmine']]],
-  ['passwordauthenticator',['PasswordAuthenticator',['../classqtredmine_1_1_password_authenticator.html#a6db564b1c4cbcd436ecfec3ff9e5bd4b',1,'qtredmine::PasswordAuthenticator']]],
-  ['priority',['priority',['../structqtredmine_1_1_issue.html#a6bb5a5fc8adedbddcdf43577a96fe717',1,'qtredmine::Issue']]],
-  ['project',['project',['../structqtredmine_1_1_issue.html#a4b9bc46814ecda1eb876fab9fd5cc5a1',1,'qtredmine::Issue::project()'],['../structqtredmine_1_1_time_entry.html#af4739bd96338ff0e142f601068d5824f',1,'qtredmine::TimeEntry::project()']]],
-  ['project',['Project',['../structqtredmine_1_1_project.html',1,'qtredmine']]],
-  ['projects',['Projects',['../namespaceqtredmine.html#ab93b435131a43369b586392c72a58c3a',1,'qtredmine']]],
-  ['projectscb',['ProjectsCb',['../namespaceqtredmine.html#a6ac9c6b7a01b08d5af33cb2017c63dff',1,'qtredmine']]]
+  ['name',['name',['../structqtredmine_1_1_item.html#a1a5482dba077d5ce6dda37570a56f743',1,'qtredmine::Item::name()'],['../structqtredmine_1_1_custom_field.html#a56976a64df3a7cdbe633fd6e625f41d9',1,'qtredmine::CustomField::name()'],['../structqtredmine_1_1_enumeration.html#ad6c6c1c0490072d82aadfa36ece0eead',1,'qtredmine::Enumeration::name()'],['../structqtredmine_1_1_issue_status.html#a701153d4db2fa806a8ac9bdbdeccb433',1,'qtredmine::IssueStatus::name()'],['../structqtredmine_1_1_project.html#a33e5bfe5d3d8bd6f7df5b842c4b3987a',1,'qtredmine::Project::name()'],['../structqtredmine_1_1_tracker.html#a8694387a745950c2899e2489321b1618',1,'qtredmine::Tracker::name()']]],
+  ['networkaccessiblechanged',['networkAccessibleChanged',['../classqtredmine_1_1_redmine_client.html#a1c23dd3851f0f82dda72ae21ab1bc088',1,'qtredmine::RedmineClient']]]
 ];

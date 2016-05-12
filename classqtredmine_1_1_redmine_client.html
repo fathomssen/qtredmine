@@ -122,8 +122,15 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
+<tr class="memitem:a2798d45f7c75a524359beb9ca2d01766"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2798d45f7c75a524359beb9ca2d01766"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a2798d45f7c75a524359beb9ca2d01766">initialised</a> ()</td></tr>
+<tr class="memdesc:a2798d45f7c75a524359beb9ca2d01766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the connection has been initialised. <br /></td></tr>
+<tr class="separator:a2798d45f7c75a524359beb9ca2d01766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c23dd3851f0f82dda72ae21ab1bc088"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a1c23dd3851f0f82dda72ae21ab1bc088">networkAccessibleChanged</a> (QNetworkAccessManager::NetworkAccessibility accessible)</td></tr>
+<tr class="memdesc:a1c23dd3851f0f82dda72ae21ab1bc088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the network accessibility has changed.  <a href="#a1c23dd3851f0f82dda72ae21ab1bc088">More...</a><br /></td></tr>
+<tr class="separator:a1c23dd3851f0f82dda72ae21ab1bc088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa640a4a4b195d15e7eed344a99df89f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#aa640a4a4b195d15e7eed344a99df89f8">requestFinished</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QNetworkReply *reply, QJsonDocument *json)</td></tr>
-<tr class="memdesc:aa640a4a4b195d15e7eed344a99df89f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals that the request has finished.  <a href="#aa640a4a4b195d15e7eed344a99df89f8">More...</a><br /></td></tr>
+<tr class="memdesc:aa640a4a4b195d15e7eed344a99df89f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the request has finished.  <a href="#aa640a4a4b195d15e7eed344a99df89f8">More...</a><br /></td></tr>
 <tr class="separator:aa640a4a4b195d15e7eed344a99df89f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -140,6 +147,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44cd025cd9236d86104175ce11afef65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a44cd025cd9236d86104175ce11afef65">RedmineClient</a> (QString url, QString login, QString password, bool checkSsl=true, QObject *parent=nullptr)</td></tr>
 <tr class="memdesc:a44cd025cd9236d86104175ce11afef65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a Redmine connection using basic authentication.  <a href="#a44cd025cd9236d86104175ce11afef65">More...</a><br /></td></tr>
 <tr class="separator:a44cd025cd9236d86104175ce11afef65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a3538515682a3e40ca99fc4abf5f1c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a3538515682a3e40ca99fc4abf5f1c6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a9a3538515682a3e40ca99fc4abf5f1c6">reconnect</a> ()</td></tr>
+<tr class="memdesc:a9a3538515682a3e40ca99fc4abf5f1c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Re-)Connect to Redmine <br /></td></tr>
+<tr class="separator:a9a3538515682a3e40ca99fc4abf5f1c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Getters</div></td></tr>
 <tr class="memitem:a7c8beacb84bd5e575728af47b421dd4d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a7c8beacb84bd5e575728af47b421dd4d">getUrl</a> () const </td></tr>
 <tr class="memdesc:a7c8beacb84bd5e575728af47b421dd4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Redmine base URL.  <a href="#a7c8beacb84bd5e575728af47b421dd4d">More...</a><br /></td></tr>
@@ -225,6 +236,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5f920872ea90995e694eb7cf14ff2e83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a5f920872ea90995e694eb7cf14ff2e83">retrieveTrackers</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a5f920872ea90995e694eb7cf14ff2e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve trackers from Redmine.  <a href="#a5f920872ea90995e694eb7cf14ff2e83">More...</a><br /></td></tr>
 <tr class="separator:a5f920872ea90995e694eb7cf14ff2e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1e594af07fb2d26f4f510552a31a53a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#ac1e594af07fb2d26f4f510552a31a53a">retrieveCurrentUser</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memdesc:ac1e594af07fb2d26f4f510552a31a53a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve current user from Redmine.  <a href="#ac1e594af07fb2d26f4f510552a31a53a">More...</a><br /></td></tr>
+<tr class="separator:ac1e594af07fb2d26f4f510552a31a53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87c94ce8350b638a01bc98d1e0041f52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a87c94ce8350b638a01bc98d1e0041f52">retrieveUsers</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a87c94ce8350b638a01bc98d1e0041f52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve users from Redmine.  <a href="#a87c94ce8350b638a01bc98d1e0041f52">More...</a><br /></td></tr>
 <tr class="separator:a87c94ce8350b638a01bc98d1e0041f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -432,6 +446,38 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a1c23dd3851f0f82dda72ae21ab1bc088"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::RedmineClient::networkAccessibleChanged </td>
+          <td>(</td>
+          <td class="paramtype">QNetworkAccessManager::NetworkAccessibility&#160;</td>
+          <td class="paramname"><em>accessible</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Signal that the network accessibility has changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">accessible</td><td>Network accessibility </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="aa640a4a4b195d15e7eed344a99df89f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -470,12 +516,47 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Signals that the request has finished. </p>
+<p>Signal that the request has finished. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">callback</td><td>Callback function that will be called </td></tr>
     <tr><td class="paramname">reply</td><td>Reply that will be passed to the callback function </td></tr>
     <tr><td class="paramname">json</td><td>JSON data that will be passed to the callback function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1e594af07fb2d26f4f510552a31a53a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::RedmineClient::retrieveCurrentUser </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>parameters</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve current user from Redmine. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>Callback function with a QJsonDocument object </td></tr>
+    <tr><td class="paramname">parameters</td><td>Additional user parameters </td></tr>
   </table>
   </dd>
 </dl>
@@ -1599,7 +1680,7 @@ Protected Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to store in Redmine </td></tr>
     <tr><td class="paramname">callback</td><td>Callback function with a QJsonDocument object </td></tr>
-    <tr><td class="paramname">id</td><td>User ID to update; if set to <code>NULL_ID</code>, create a new user </td></tr>
+    <tr><td class="paramname">id</td><td><a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a> ID to update; if set to <code>NULL_ID</code>, create a new user </td></tr>
     <tr><td class="paramname">parameters</td><td>Additional user parameters </td></tr>
   </table>
   </dd>
@@ -1780,7 +1861,7 @@ Protected Member Functions</h2></td></tr>
 <p>Set the user agent for the Redmine connection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">userAgent</td><td>User agent </td></tr>
+    <tr><td class="paramname">userAgent</td><td><a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a> agent </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['name',['name',['../structqtredmine_1_1_item.html#a1a5482dba077d5ce6dda37570a56f743',1,'qtredmine::Item::name()'],['../structqtredmine_1_1_custom_field.html#a56976a64df3a7cdbe633fd6e625f41d9',1,'qtredmine::CustomField::name()'],['../structqtredmine_1_1_enumeration.html#ad6c6c1c0490072d82aadfa36ece0eead',1,'qtredmine::Enumeration::name()'],['../structqtredmine_1_1_issue_status.html#a701153d4db2fa806a8ac9bdbdeccb433',1,'qtredmine::IssueStatus::name()'],['../structqtredmine_1_1_project.html#a33e5bfe5d3d8bd6f7df5b842c4b3987a',1,'qtredmine::Project::name()'],['../structqtredmine_1_1_tracker.html#a8694387a745950c2899e2489321b1618',1,'qtredmine::Tracker::name()']]]
+  ['lastloginon',['lastLoginOn',['../structqtredmine_1_1_user.html#a0e1e8e1d7d7c1f3b39a3764106ee04c9',1,'qtredmine::User']]],
+  ['lastname',['lastname',['../structqtredmine_1_1_user.html#ad51f43436fb1ab1684fda3de305faddc',1,'qtredmine::User']]],
+  ['login',['login',['../structqtredmine_1_1_user.html#a698eaa404c19ec6933b2e25e7399a6b6',1,'qtredmine::User']]]
 ];

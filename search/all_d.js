@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['qtredmine',['QtRedmine',['../index.html',1,'']]],
-  ['qtredmine',['qtredmine',['../namespaceqtredmine.html',1,'']]]
+  ['operator_3c_3c',['operator&lt;&lt;',['../namespaceqtredmine.html#a64156c5316b764dc8d0a749cedc7eb8f',1,'qtredmine']]]
 ];

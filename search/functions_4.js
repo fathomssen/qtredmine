@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['passwordauthenticator',['PasswordAuthenticator',['../classqtredmine_1_1_password_authenticator.html#a6db564b1c4cbcd436ecfec3ff9e5bd4b',1,'qtredmine::PasswordAuthenticator']]]
+  ['keyauthenticator',['KeyAuthenticator',['../classqtredmine_1_1_key_authenticator.html#a5d6c4cc2a42b870677276ec193ef3526',1,'qtredmine::KeyAuthenticator']]]
 ];

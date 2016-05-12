@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hours',['hours',['../structqtredmine_1_1_time_entry.html#a76b257ed031b0a21eaf35383a6eeef2f',1,'qtredmine::TimeEntry']]]
+  ['firstname',['firstname',['../structqtredmine_1_1_user.html#a5953786fcfb6a6b99ed3bdfbc11b7243',1,'qtredmine::User']]]
 ];

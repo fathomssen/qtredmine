@@ -126,6 +126,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html">RedmineClient</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine connection class.  <a href="classqtredmine_1_1_redmine_client.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqtredmine_1_1_redmine_options.html">RedmineOptions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine options.  <a href="structqtredmine_1_1_redmine_options.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqtredmine_1_1_redmine_resource.html">RedmineResource</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redmine resource.  <a href="structqtredmine_1_1_redmine_resource.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html">SimpleRedmineClient</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple Redmine connection class.  <a href="classqtredmine_1_1_simple_redmine_client.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,6 +140,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqtredmine_1_1_tracker.html">Tracker</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure representing a tracker.  <a href="structqtredmine_1_1_tracker.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqtredmine_1_1_user.html">User</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure representing a user.  <a href="structqtredmine_1_1_user.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -171,39 +180,31 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nam
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e">Trackers</a> = QVector&lt; <a class="el" href="structqtredmine_1_1_tracker.html">Tracker</a> &gt;</td></tr>
 <tr class="memdesc:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structqtredmine_1_1_tracker.html" title="Structure representing a tracker. ">Tracker</a> vector. <br /></td></tr>
 <tr class="separator:ab9c0bd1e54b2ed7bd5337cf94682c27e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2737ff11183c0ec4f636c5c97bf61d3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2737ff11183c0ec4f636c5c97bf61d3c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a2737ff11183c0ec4f636c5c97bf61d3c">Users</a> = QVector&lt; <a class="el" href="structqtredmine_1_1_user.html">User</a> &gt;</td></tr>
+<tr class="memdesc:a2737ff11183c0ec4f636c5c97bf61d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a> vector. <br /></td></tr>
+<tr class="separator:a2737ff11183c0ec4f636c5c97bf61d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Callbacks</div></td></tr>
-<tr class="memitem:adc186ce3cc6fc2b321995a9d58c7830c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc186ce3cc6fc2b321995a9d58c7830c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> = std::function&lt; void(bool, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QNetworkReply::NetworkError)&gt;</td></tr>
-<tr class="memdesc:adc186ce3cc6fc2b321995a9d58c7830c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success callback which passes a boolean value and an error code. <br /></td></tr>
-<tr class="separator:adc186ce3cc6fc2b321995a9d58c7830c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cb2592646214e2a6c6bcf620dd2809e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cb2592646214e2a6c6bcf620dd2809e"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c">Enumerations</a>)&gt;</td></tr>
-<tr class="memdesc:a6cb2592646214e2a6c6bcf620dd2809e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a enumerations callback function. <br /></td></tr>
-<tr class="separator:a6cb2592646214e2a6c6bcf620dd2809e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d961e7ec92f4e1ee8c2c5ef0194f52f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d961e7ec92f4e1ee8c2c5ef0194f52f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a9d961e7ec92f4e1ee8c2c5ef0194f52f">IssueCb</a> = std::function&lt; void(<a class="el" href="structqtredmine_1_1_issue.html">Issue</a>)&gt;</td></tr>
-<tr class="memdesc:a9d961e7ec92f4e1ee8c2c5ef0194f52f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a issue callback function. <br /></td></tr>
-<tr class="separator:a9d961e7ec92f4e1ee8c2c5ef0194f52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a807caa91ae4dd9e75125fdedcfa706ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a807caa91ae4dd9e75125fdedcfa706ec"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a807caa91ae4dd9e75125fdedcfa706ec">IssuesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#af991ed28e4624f11eac1840aec76a3f2">Issues</a>)&gt;</td></tr>
-<tr class="memdesc:a807caa91ae4dd9e75125fdedcfa706ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a issues callback function. <br /></td></tr>
-<tr class="separator:a807caa91ae4dd9e75125fdedcfa706ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a575aa5f900f903eea2545285bed1d23f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a575aa5f900f903eea2545285bed1d23f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a575aa5f900f903eea2545285bed1d23f">IssueStatusesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#a8868392d9846249b7953b2a918d3cd83">IssueStatuses</a>)&gt;</td></tr>
-<tr class="memdesc:a575aa5f900f903eea2545285bed1d23f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a issue statuses callback function. <br /></td></tr>
-<tr class="separator:a575aa5f900f903eea2545285bed1d23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ac9c6b7a01b08d5af33cb2017c63dff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ac9c6b7a01b08d5af33cb2017c63dff"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a6ac9c6b7a01b08d5af33cb2017c63dff">ProjectsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#ab93b435131a43369b586392c72a58c3a">Projects</a>)&gt;</td></tr>
-<tr class="memdesc:a6ac9c6b7a01b08d5af33cb2017c63dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a projects callback function. <br /></td></tr>
-<tr class="separator:a6ac9c6b7a01b08d5af33cb2017c63dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87b9967d15a855b6e1583878c0f135b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87b9967d15a855b6e1583878c0f135b0"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a87b9967d15a855b6e1583878c0f135b0">TimeEntriesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#a82e91cb7c2a6d1542e6057e0bf0e8963">TimeEntries</a>)&gt;</td></tr>
-<tr class="memdesc:a87b9967d15a855b6e1583878c0f135b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a <a class="el" href="structqtredmine_1_1_time_entry.html" title="Structure representing a time entry. ">TimeEntry</a> callback function. <br /></td></tr>
-<tr class="separator:a87b9967d15a855b6e1583878c0f135b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c33e09354c904df1c7e06207a870d6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c33e09354c904df1c7e06207a870d6c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a7c33e09354c904df1c7e06207a870d6c">TrackersCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e">Trackers</a>)&gt;</td></tr>
-<tr class="memdesc:a7c33e09354c904df1c7e06207a870d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a Trackers callback function. <br /></td></tr>
-<tr class="separator:a7c33e09354c904df1c7e06207a870d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d601188d080eedfa9f4abaa3a63c55"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> = std::function&lt; void(bool, int, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a72d601188d080eedfa9f4abaa3a63c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d0de49a1c34554d5c7f8a21476897f7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c">Enumerations</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a9d0de49a1c34554d5c7f8a21476897f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9e016d9460a773c3ea561e2fc29c50f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#ae9e016d9460a773c3ea561e2fc29c50f">IssueCb</a> = std::function&lt; void(<a class="el" href="structqtredmine_1_1_issue.html">Issue</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:ae9e016d9460a773c3ea561e2fc29c50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d2ea68f5c91c15fecfbba89484a294e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a8d2ea68f5c91c15fecfbba89484a294e">IssuesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#af991ed28e4624f11eac1840aec76a3f2">Issues</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a8d2ea68f5c91c15fecfbba89484a294e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f209fb88043b8948985302af59ef472"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a6f209fb88043b8948985302af59ef472">IssueStatusesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#a8868392d9846249b7953b2a918d3cd83">IssueStatuses</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a6f209fb88043b8948985302af59ef472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a952562ed89e32466602e65712c1bc982"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a952562ed89e32466602e65712c1bc982">ProjectsCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#ab93b435131a43369b586392c72a58c3a">Projects</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a952562ed89e32466602e65712c1bc982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a592575eb4a2d570c2475a16a76edd625"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a592575eb4a2d570c2475a16a76edd625">TimeEntriesCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#a82e91cb7c2a6d1542e6057e0bf0e8963">TimeEntries</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a592575eb4a2d570c2475a16a76edd625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a932ff1520e0860a73bfffc9dec579344"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a932ff1520e0860a73bfffc9dec579344">TrackersCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e">Trackers</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a932ff1520e0860a73bfffc9dec579344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9183008f79853dc0f5fd08dbe1f31dac"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a9183008f79853dc0f5fd08dbe1f31dac">UserCb</a> = std::function&lt; void(<a class="el" href="structqtredmine_1_1_user.html">User</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a9183008f79853dc0f5fd08dbe1f31dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1842ee142bee9cb82df4ed213eab6400"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceqtredmine.html#a1842ee142bee9cb82df4ed213eab6400">UsersCb</a> = std::function&lt; void(<a class="el" href="namespaceqtredmine.html#a2737ff11183c0ec4f636c5c97bf61d3c">Users</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td></tr>
+<tr class="separator:a1842ee142bee9cb82df4ed213eab6400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -228,7 +229,219 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>QtRedmine namespace. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="a9d0de49a1c34554d5c7f8a21476897f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">qtredmine::EnumerationsCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#aee91b7408d2e58eb5222e1a8c2e6448c">Enumerations</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for an enumerations callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Enumerations</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9e016d9460a773c3ea561e2fc29c50f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#ae9e016d9460a773c3ea561e2fc29c50f">qtredmine::IssueCb</a> = typedef std::function&lt;void(<a class="el" href="structqtredmine_1_1_issue.html">Issue</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for an issue callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structqtredmine_1_1_issue.html" title="Structure representing an issue. ">Issue</a></td><td>Redmine resource </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8d2ea68f5c91c15fecfbba89484a294e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a8d2ea68f5c91c15fecfbba89484a294e">qtredmine::IssuesCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#af991ed28e4624f11eac1840aec76a3f2">Issues</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for an issues callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Issues</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6f209fb88043b8948985302af59ef472"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a6f209fb88043b8948985302af59ef472">qtredmine::IssueStatusesCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#a8868392d9846249b7953b2a918d3cd83">IssueStatuses</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for an issue statuses callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IssueStatuses</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a952562ed89e32466602e65712c1bc982"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a952562ed89e32466602e65712c1bc982">qtredmine::ProjectsCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#ab93b435131a43369b586392c72a58c3a">Projects</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for a projects callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Projects</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a72d601188d080eedfa9f4abaa3a63c55"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">qtredmine::SuccessCb</a> = typedef std::function&lt;void(bool, int, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Success callback</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bool</td><td>True if successful, false otherwise </td></tr>
+    <tr><td class="paramname">int</td><td>ID of newly created Redmine item </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a592575eb4a2d570c2475a16a76edd625"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a592575eb4a2d570c2475a16a76edd625">qtredmine::TimeEntriesCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#a82e91cb7c2a6d1542e6057e0bf0e8963">TimeEntries</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for a time entry callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structqtredmine_1_1_time_entry.html" title="Structure representing a time entry. ">TimeEntry</a></td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a932ff1520e0860a73bfffc9dec579344"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a932ff1520e0860a73bfffc9dec579344">qtredmine::TrackersCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#ab9c0bd1e54b2ed7bd5337cf94682c27e">Trackers</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for a trackers callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Trackers</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9183008f79853dc0f5fd08dbe1f31dac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a9183008f79853dc0f5fd08dbe1f31dac">qtredmine::UserCb</a> = typedef std::function&lt;void(<a class="el" href="structqtredmine_1_1_user.html">User</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for a user callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a></td><td>Redmine resource </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1842ee142bee9cb82df4ed213eab6400"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceqtredmine.html#a1842ee142bee9cb82df4ed213eab6400">qtredmine::UsersCb</a> = typedef std::function&lt;void(<a class="el" href="namespaceqtredmine.html#a2737ff11183c0ec4f636c5c97bf61d3c">Users</a>, <a class="el" href="namespaceqtredmine.html#a5bc12287e0e6ea8946e04cda6a93eeab">RedmineError</a>, QStringList)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Typedef for a users callback function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Users</td><td>Vector of Redmine resources </td></tr>
+    <tr><td class="paramname">RedmineError</td><td>Redmine error code </td></tr>
+    <tr><td class="paramname">QStringList</td><td>Errors that Redmine returned </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a64156c5316b764dc8d0a749cedc7eb8f"></a>
 <div class="memitem">
 <div class="memproto">

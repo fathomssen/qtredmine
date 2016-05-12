@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classqtredmine_1_1_simple_redmine_client-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -110,55 +113,100 @@ Inheritance diagram for qtredmine::SimpleRedmineClient:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a6e15d93fe8a7d3d2dca97bb4c2150b0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a6e15d93fe8a7d3d2dca97bb4c2150b0a">checkConnectionStatus</a> (QNetworkAccessManager::NetworkAccessibility accessible=QNetworkAccessManager::UnknownAccessibility)</td></tr>
+<tr class="memdesc:a6e15d93fe8a7d3d2dca97bb4c2150b0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the connection currently works.  <a href="#a6e15d93fe8a7d3d2dca97bb4c2150b0a">More...</a><br /></td></tr>
+<tr class="separator:a6e15d93fe8a7d3d2dca97bb4c2150b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a9b48ceaefd42db80701702ff68cfe9a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a9b48ceaefd42db80701702ff68cfe9a6">connectionChanged</a> (QNetworkAccessManager::NetworkAccessibility connected)</td></tr>
+<tr class="memdesc:a9b48ceaefd42db80701702ff68cfe9a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singal that the connection to Redmine has changed.  <a href="#a9b48ceaefd42db80701702ff68cfe9a6">More...</a><br /></td></tr>
+<tr class="separator:a9b48ceaefd42db80701702ff68cfe9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header signals_classqtredmine_1_1_redmine_client"><td colspan="2" onclick="javascript:toggleInherit('signals_classqtredmine_1_1_redmine_client')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classqtredmine_1_1_redmine_client.html">qtredmine::RedmineClient</a></td></tr>
+<tr class="memitem:a2798d45f7c75a524359beb9ca2d01766 inherit signals_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2798d45f7c75a524359beb9ca2d01766"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a2798d45f7c75a524359beb9ca2d01766">initialised</a> ()</td></tr>
+<tr class="memdesc:a2798d45f7c75a524359beb9ca2d01766 inherit signals_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the connection has been initialised. <br /></td></tr>
+<tr class="separator:a2798d45f7c75a524359beb9ca2d01766 inherit signals_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c23dd3851f0f82dda72ae21ab1bc088 inherit signals_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a1c23dd3851f0f82dda72ae21ab1bc088">networkAccessibleChanged</a> (QNetworkAccessManager::NetworkAccessibility accessible)</td></tr>
+<tr class="memdesc:a1c23dd3851f0f82dda72ae21ab1bc088 inherit signals_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the network accessibility has changed.  <a href="#a1c23dd3851f0f82dda72ae21ab1bc088">More...</a><br /></td></tr>
+<tr class="separator:a1c23dd3851f0f82dda72ae21ab1bc088 inherit signals_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#aa640a4a4b195d15e7eed344a99df89f8">requestFinished</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QNetworkReply *reply, QJsonDocument *json)</td></tr>
+<tr class="memdesc:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the request has finished.  <a href="#aa640a4a4b195d15e7eed344a99df89f8">More...</a><br /></td></tr>
+<tr class="separator:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a4de04b45ab300581689756f628654e6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a4de04b45ab300581689756f628654e6b">SimpleRedmineClient</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a4de04b45ab300581689756f628654e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an unconfigured Redmine connection.  <a href="#a4de04b45ab300581689756f628654e6b">More...</a><br /></td></tr>
+<tr class="separator:a4de04b45ab300581689756f628654e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a325c3f062c8835366e3a0c422ffa0ff5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a325c3f062c8835366e3a0c422ffa0ff5">SimpleRedmineClient</a> (QString url, QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a325c3f062c8835366e3a0c422ffa0ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an unconfigured Redmine connection.  <a href="#a325c3f062c8835366e3a0c422ffa0ff5">More...</a><br /></td></tr>
+<tr class="separator:a325c3f062c8835366e3a0c422ffa0ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9e41beb23cbfb66d03c7ffadb50ef4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#ae9e41beb23cbfb66d03c7ffadb50ef4e">SimpleRedmineClient</a> (QString url, QString apiKey, bool checkSsl=true, QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:ae9e41beb23cbfb66d03c7ffadb50ef4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a Redmine connection using API key authentication.  <a href="#ae9e41beb23cbfb66d03c7ffadb50ef4e">More...</a><br /></td></tr>
+<tr class="separator:ae9e41beb23cbfb66d03c7ffadb50ef4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f20acad0b1caf61cf50373953eb1f7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a8f20acad0b1caf61cf50373953eb1f7a">SimpleRedmineClient</a> (QString url, QString login, QString password, bool checkSsl=true, QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a8f20acad0b1caf61cf50373953eb1f7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a Redmine connection using basic authentication.  <a href="#a8f20acad0b1caf61cf50373953eb1f7a">More...</a><br /></td></tr>
+<tr class="separator:a8f20acad0b1caf61cf50373953eb1f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc436631a6683ecd9b7e6eb1c449a123"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc436631a6683ecd9b7e6eb1c449a123"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#afc436631a6683ecd9b7e6eb1c449a123">init</a> ()</td></tr>
+<tr class="memdesc:afc436631a6683ecd9b7e6eb1c449a123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the Redmine client. <br /></td></tr>
+<tr class="separator:afc436631a6683ecd9b7e6eb1c449a123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Redmine data creators and updaters</div></td></tr>
-<tr class="memitem:ae101de51192d5cceae4f748526159c3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#ae101de51192d5cceae4f748526159c3f">sendIssue</a> (<a class="el" href="structqtredmine_1_1_issue.html">Issue</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:ae101de51192d5cceae4f748526159c3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#ae101de51192d5cceae4f748526159c3f">sendIssue</a> (<a class="el" href="structqtredmine_1_1_issue.html">Issue</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:ae101de51192d5cceae4f748526159c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update issue in Redmine.  <a href="#ae101de51192d5cceae4f748526159c3f">More...</a><br /></td></tr>
 <tr class="separator:ae101de51192d5cceae4f748526159c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abddcfc651bcd4a25ebeed28e1dbe1511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#abddcfc651bcd4a25ebeed28e1dbe1511">sendIssuePriority</a> (<a class="el" href="structqtredmine_1_1_enumeration.html">Enumeration</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:abddcfc651bcd4a25ebeed28e1dbe1511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#abddcfc651bcd4a25ebeed28e1dbe1511">sendIssuePriority</a> (<a class="el" href="structqtredmine_1_1_enumeration.html">Enumeration</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:abddcfc651bcd4a25ebeed28e1dbe1511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update issue priority in Redmine.  <a href="#abddcfc651bcd4a25ebeed28e1dbe1511">More...</a><br /></td></tr>
 <tr class="separator:abddcfc651bcd4a25ebeed28e1dbe1511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a525d478074b95bdff2652b877eb189fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a525d478074b95bdff2652b877eb189fe">sendIssueStatus</a> (<a class="el" href="structqtredmine_1_1_issue_status.html">IssueStatus</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a525d478074b95bdff2652b877eb189fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a525d478074b95bdff2652b877eb189fe">sendIssueStatus</a> (<a class="el" href="structqtredmine_1_1_issue_status.html">IssueStatus</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a525d478074b95bdff2652b877eb189fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update issue status in Redmine.  <a href="#a525d478074b95bdff2652b877eb189fe">More...</a><br /></td></tr>
 <tr class="separator:a525d478074b95bdff2652b877eb189fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a976bc43b30af455040308f24a57bb90c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a976bc43b30af455040308f24a57bb90c">sendProject</a> (<a class="el" href="structqtredmine_1_1_project.html">Project</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a976bc43b30af455040308f24a57bb90c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a976bc43b30af455040308f24a57bb90c">sendProject</a> (<a class="el" href="structqtredmine_1_1_project.html">Project</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a976bc43b30af455040308f24a57bb90c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update project in Redmine.  <a href="#a976bc43b30af455040308f24a57bb90c">More...</a><br /></td></tr>
 <tr class="separator:a976bc43b30af455040308f24a57bb90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1420377301a3fb83795d75609d5c9a1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a1420377301a3fb83795d75609d5c9a1d">sendTimeEntry</a> (<a class="el" href="structqtredmine_1_1_time_entry.html">TimeEntry</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a1420377301a3fb83795d75609d5c9a1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a1420377301a3fb83795d75609d5c9a1d">sendTimeEntry</a> (<a class="el" href="structqtredmine_1_1_time_entry.html">TimeEntry</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a1420377301a3fb83795d75609d5c9a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update time entry in Redmine.  <a href="#a1420377301a3fb83795d75609d5c9a1d">More...</a><br /></td></tr>
 <tr class="separator:a1420377301a3fb83795d75609d5c9a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a119e9f9333d1f5444106befa99bf8807"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a119e9f9333d1f5444106befa99bf8807">sendTimeEntryActivity</a> (<a class="el" href="structqtredmine_1_1_enumeration.html">Enumeration</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a119e9f9333d1f5444106befa99bf8807"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a119e9f9333d1f5444106befa99bf8807">sendTimeEntryActivity</a> (<a class="el" href="structqtredmine_1_1_enumeration.html">Enumeration</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a119e9f9333d1f5444106befa99bf8807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update time entry activity in Redmine.  <a href="#a119e9f9333d1f5444106befa99bf8807">More...</a><br /></td></tr>
 <tr class="separator:a119e9f9333d1f5444106befa99bf8807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf63e737d0b82acce67e8e1f517a4f85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#acf63e737d0b82acce67e8e1f517a4f85">sendTracker</a> (<a class="el" href="structqtredmine_1_1_tracker.html">Tracker</a> item, <a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:acf63e737d0b82acce67e8e1f517a4f85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#acf63e737d0b82acce67e8e1f517a4f85">sendTracker</a> (<a class="el" href="structqtredmine_1_1_tracker.html">Tracker</a> item, <a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a> callback=nullptr, int id=-1, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:acf63e737d0b82acce67e8e1f517a4f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create or update tracker in Redmine.  <a href="#acf63e737d0b82acce67e8e1f517a4f85">More...</a><br /></td></tr>
 <tr class="separator:acf63e737d0b82acce67e8e1f517a4f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Redmine data retrievers</div></td></tr>
-<tr class="memitem:aefe25c37a08e79dc213374acbf1e3a69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#aefe25c37a08e79dc213374acbf1e3a69">retrieveIssuePriorities</a> (<a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:aefe25c37a08e79dc213374acbf1e3a69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#aefe25c37a08e79dc213374acbf1e3a69">retrieveIssuePriorities</a> (<a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:aefe25c37a08e79dc213374acbf1e3a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve issue priorities from Redmine.  <a href="#aefe25c37a08e79dc213374acbf1e3a69">More...</a><br /></td></tr>
 <tr class="separator:aefe25c37a08e79dc213374acbf1e3a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9cc766d1026df30085ae3f3a46c2f24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#ae9cc766d1026df30085ae3f3a46c2f24">retrieveIssue</a> (<a class="el" href="namespaceqtredmine.html#a9d961e7ec92f4e1ee8c2c5ef0194f52f">IssueCb</a> callback, int issueId, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:ae9cc766d1026df30085ae3f3a46c2f24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#ae9cc766d1026df30085ae3f3a46c2f24">retrieveIssue</a> (<a class="el" href="namespaceqtredmine.html#ae9e016d9460a773c3ea561e2fc29c50f">IssueCb</a> callback, int issueId, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:ae9cc766d1026df30085ae3f3a46c2f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve an issue from Redmine.  <a href="#ae9cc766d1026df30085ae3f3a46c2f24">More...</a><br /></td></tr>
 <tr class="separator:ae9cc766d1026df30085ae3f3a46c2f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab646ead01ea43d211362773d62b6310"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#aab646ead01ea43d211362773d62b6310">retrieveIssues</a> (<a class="el" href="namespaceqtredmine.html#a807caa91ae4dd9e75125fdedcfa706ec">IssuesCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
-<tr class="memdesc:aab646ead01ea43d211362773d62b6310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve issues from Redmine.  <a href="#aab646ead01ea43d211362773d62b6310">More...</a><br /></td></tr>
-<tr class="separator:aab646ead01ea43d211362773d62b6310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e3a3c95fbdf666469d80322b451bf2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a1e3a3c95fbdf666469d80322b451bf2b">retrieveIssueStatuses</a> (<a class="el" href="namespaceqtredmine.html#a575aa5f900f903eea2545285bed1d23f">IssueStatusesCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a6d73c5c43b01b0b696f68df4084dfe17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a6d73c5c43b01b0b696f68df4084dfe17">retrieveIssues</a> (<a class="el" href="namespaceqtredmine.html#a8d2ea68f5c91c15fecfbba89484a294e">IssuesCb</a> callback, <a class="el" href="structqtredmine_1_1_redmine_options.html">RedmineOptions</a> options=<a class="el" href="structqtredmine_1_1_redmine_options.html">RedmineOptions</a>())</td></tr>
+<tr class="memdesc:a6d73c5c43b01b0b696f68df4084dfe17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve issues from Redmine.  <a href="#a6d73c5c43b01b0b696f68df4084dfe17">More...</a><br /></td></tr>
+<tr class="separator:a6d73c5c43b01b0b696f68df4084dfe17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e3a3c95fbdf666469d80322b451bf2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a1e3a3c95fbdf666469d80322b451bf2b">retrieveIssueStatuses</a> (<a class="el" href="namespaceqtredmine.html#a6f209fb88043b8948985302af59ef472">IssueStatusesCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a1e3a3c95fbdf666469d80322b451bf2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve issue statuses from Redmine.  <a href="#a1e3a3c95fbdf666469d80322b451bf2b">More...</a><br /></td></tr>
 <tr class="separator:a1e3a3c95fbdf666469d80322b451bf2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a882ef14e0a23ad88939a240f318c76f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a882ef14e0a23ad88939a240f318c76f3">retrieveProjects</a> (<a class="el" href="namespaceqtredmine.html#a6ac9c6b7a01b08d5af33cb2017c63dff">ProjectsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a882ef14e0a23ad88939a240f318c76f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a882ef14e0a23ad88939a240f318c76f3">retrieveProjects</a> (<a class="el" href="namespaceqtredmine.html#a952562ed89e32466602e65712c1bc982">ProjectsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a882ef14e0a23ad88939a240f318c76f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve projects from Redmine.  <a href="#a882ef14e0a23ad88939a240f318c76f3">More...</a><br /></td></tr>
 <tr class="separator:a882ef14e0a23ad88939a240f318c76f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d444100403d803d958b7150f4636dbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a8d444100403d803d958b7150f4636dbc">retrieveTimeEntries</a> (<a class="el" href="namespaceqtredmine.html#a87b9967d15a855b6e1583878c0f135b0">TimeEntriesCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a8d444100403d803d958b7150f4636dbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a8d444100403d803d958b7150f4636dbc">retrieveTimeEntries</a> (<a class="el" href="namespaceqtredmine.html#a592575eb4a2d570c2475a16a76edd625">TimeEntriesCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a8d444100403d803d958b7150f4636dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve time entries from Redmine.  <a href="#a8d444100403d803d958b7150f4636dbc">More...</a><br /></td></tr>
 <tr class="separator:a8d444100403d803d958b7150f4636dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d4d74986623d2fc98a09a0429631245"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a9d4d74986623d2fc98a09a0429631245">retrieveTimeEntryActivities</a> (<a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:a9d4d74986623d2fc98a09a0429631245"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a9d4d74986623d2fc98a09a0429631245">retrieveTimeEntryActivities</a> (<a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a9d4d74986623d2fc98a09a0429631245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve time entry activities from Redmine.  <a href="#a9d4d74986623d2fc98a09a0429631245">More...</a><br /></td></tr>
 <tr class="separator:a9d4d74986623d2fc98a09a0429631245"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af25047c54f150d5d6ef2179856b26bdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#af25047c54f150d5d6ef2179856b26bdd">retrieveTrackers</a> (<a class="el" href="namespaceqtredmine.html#a7c33e09354c904df1c7e06207a870d6c">TrackersCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:af25047c54f150d5d6ef2179856b26bdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#af25047c54f150d5d6ef2179856b26bdd">retrieveTrackers</a> (<a class="el" href="namespaceqtredmine.html#a932ff1520e0860a73bfffc9dec579344">TrackersCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:af25047c54f150d5d6ef2179856b26bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve trackers from Redmine.  <a href="#af25047c54f150d5d6ef2179856b26bdd">More...</a><br /></td></tr>
 <tr class="separator:af25047c54f150d5d6ef2179856b26bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82d08a541ea0ca877bbe49fcb8c83fe2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a82d08a541ea0ca877bbe49fcb8c83fe2">retrieveCurrentUser</a> (<a class="el" href="namespaceqtredmine.html#a9183008f79853dc0f5fd08dbe1f31dac">UserCb</a> callback)</td></tr>
+<tr class="memdesc:a82d08a541ea0ca877bbe49fcb8c83fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve current user from Redmine.  <a href="#a82d08a541ea0ca877bbe49fcb8c83fe2">More...</a><br /></td></tr>
+<tr class="separator:a82d08a541ea0ca877bbe49fcb8c83fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1352e9d5a0ed5aa208c0bb4e004cd2fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#a1352e9d5a0ed5aa208c0bb4e004cd2fa">retrieveUsers</a> (<a class="el" href="namespaceqtredmine.html#a1842ee142bee9cb82df4ed213eab6400">UsersCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memdesc:a1352e9d5a0ed5aa208c0bb4e004cd2fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve users from Redmine.  <a href="#a1352e9d5a0ed5aa208c0bb4e004cd2fa">More...</a><br /></td></tr>
+<tr class="separator:a1352e9d5a0ed5aa208c0bb4e004cd2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classqtredmine_1_1_redmine_client"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classqtredmine_1_1_redmine_client')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classqtredmine_1_1_redmine_client.html">qtredmine::RedmineClient</a></td></tr>
 <tr class="memitem:ac9b424fb3f25d095c6c695d299554694 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#ac9b424fb3f25d095c6c695d299554694">RedmineClient</a> (QObject *parent=nullptr)</td></tr>
 <tr class="memdesc:ac9b424fb3f25d095c6c695d299554694 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an unconfigured Redmine connection.  <a href="#ac9b424fb3f25d095c6c695d299554694">More...</a><br /></td></tr>
@@ -172,6 +220,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44cd025cd9236d86104175ce11afef65 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a44cd025cd9236d86104175ce11afef65">RedmineClient</a> (QString url, QString login, QString password, bool checkSsl=true, QObject *parent=nullptr)</td></tr>
 <tr class="memdesc:a44cd025cd9236d86104175ce11afef65 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a Redmine connection using basic authentication.  <a href="#a44cd025cd9236d86104175ce11afef65">More...</a><br /></td></tr>
 <tr class="separator:a44cd025cd9236d86104175ce11afef65 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a3538515682a3e40ca99fc4abf5f1c6 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a3538515682a3e40ca99fc4abf5f1c6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a9a3538515682a3e40ca99fc4abf5f1c6">reconnect</a> ()</td></tr>
+<tr class="memdesc:a9a3538515682a3e40ca99fc4abf5f1c6 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Re-)Connect to Redmine <br /></td></tr>
+<tr class="separator:a9a3538515682a3e40ca99fc4abf5f1c6 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c8beacb84bd5e575728af47b421dd4d inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a7c8beacb84bd5e575728af47b421dd4d">getUrl</a> () const </td></tr>
 <tr class="memdesc:a7c8beacb84bd5e575728af47b421dd4d inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Redmine base URL.  <a href="#a7c8beacb84bd5e575728af47b421dd4d">More...</a><br /></td></tr>
 <tr class="separator:a7c8beacb84bd5e575728af47b421dd4d inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,6 +305,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5f920872ea90995e694eb7cf14ff2e83 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a5f920872ea90995e694eb7cf14ff2e83">retrieveTrackers</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a5f920872ea90995e694eb7cf14ff2e83 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve trackers from Redmine.  <a href="#a5f920872ea90995e694eb7cf14ff2e83">More...</a><br /></td></tr>
 <tr class="separator:a5f920872ea90995e694eb7cf14ff2e83 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1e594af07fb2d26f4f510552a31a53a inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#ac1e594af07fb2d26f4f510552a31a53a">retrieveCurrentUser</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memdesc:ac1e594af07fb2d26f4f510552a31a53a inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve current user from Redmine.  <a href="#ac1e594af07fb2d26f4f510552a31a53a">More...</a><br /></td></tr>
+<tr class="separator:ac1e594af07fb2d26f4f510552a31a53a inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87c94ce8350b638a01bc98d1e0041f52 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#a87c94ce8350b638a01bc98d1e0041f52">retrieveUsers</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:a87c94ce8350b638a01bc98d1e0041f52 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve users from Redmine.  <a href="#a87c94ce8350b638a01bc98d1e0041f52">More...</a><br /></td></tr>
 <tr class="separator:a87c94ce8350b638a01bc98d1e0041f52 inherit pub_methods_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,7 +317,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:af07b7e14812f40aaaa999daf48e942f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#af07b7e14812f40aaaa999daf48e942f3">retrieveEnumerations</a> (QString enumeration, <a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
+<tr class="memitem:af07b7e14812f40aaaa999daf48e942f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_simple_redmine_client.html#af07b7e14812f40aaaa999daf48e942f3">retrieveEnumerations</a> (QString enumeration, <a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a> callback, QString parameters=&quot;&quot;)</td></tr>
 <tr class="memdesc:af07b7e14812f40aaaa999daf48e942f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve enumerations from Redmine.  <a href="#af07b7e14812f40aaaa999daf48e942f3">More...</a><br /></td></tr>
 <tr class="separator:af07b7e14812f40aaaa999daf48e942f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classqtredmine_1_1_redmine_client"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classqtredmine_1_1_redmine_client')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classqtredmine_1_1_redmine_client.html">qtredmine::RedmineClient</a></td></tr>
@@ -283,10 +338,6 @@ Additional Inherited Members</h2></td></tr>
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> = std::function&lt; void(QNetworkReply *, QJsonDocument *)&gt;</td></tr>
 <tr class="memdesc:ac3962530c1c805abb853ae0cb917c3b4 inherit pub_types_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for a JSON callback function. <br /></td></tr>
 <tr class="separator:ac3962530c1c805abb853ae0cb917c3b4 inherit pub_types_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_classqtredmine_1_1_redmine_client"><td colspan="2" onclick="javascript:toggleInherit('signals_classqtredmine_1_1_redmine_client')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classqtredmine_1_1_redmine_client.html">qtredmine::RedmineClient</a></td></tr>
-<tr class="memitem:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqtredmine_1_1_redmine_client.html#aa640a4a4b195d15e7eed344a99df89f8">requestFinished</a> (<a class="el" href="classqtredmine_1_1_redmine_client.html#ac3962530c1c805abb853ae0cb917c3b4">JsonCb</a> callback, QNetworkReply *reply, QJsonDocument *json)</td></tr>
-<tr class="memdesc:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals that the request has finished.  <a href="#aa640a4a4b195d15e7eed344a99df89f8">More...</a><br /></td></tr>
-<tr class="separator:aa640a4a4b195d15e7eed344a99df89f8 inherit signals_classqtredmine_1_1_redmine_client"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple Redmine connection class. </p>
@@ -294,7 +345,261 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <p>It provides a simple API for accessing Redmine.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="http://www.redmine.org/projects/redmine/wiki/Rest_api">http://www.redmine.org/projects/redmine/wiki/Rest_api</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="_example_8cpp-example.html#_a0">Example.cpp</a>, and <a class="el" href="_example_8h-example.html#_a0">Example.h</a>.</dd>
-</dl></div><h2 class="groupheader">Member Function Documentation</h2>
+</dl></div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a4de04b45ab300581689756f628654e6b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qtredmine::SimpleRedmineClient::SimpleRedmineClient </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for an unconfigured Redmine connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Parent QObject (default: nullptr) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a325c3f062c8835366e3a0c422ffa0ff5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qtredmine::SimpleRedmineClient::SimpleRedmineClient </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for an unconfigured Redmine connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Redmine base URL </td></tr>
+    <tr><td class="paramname">parent</td><td>Parent QObject (default: nullptr) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9e41beb23cbfb66d03c7ffadb50ef4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qtredmine::SimpleRedmineClient::SimpleRedmineClient </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>apiKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>checkSsl</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a Redmine connection using API key authentication. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Redmine base URL </td></tr>
+    <tr><td class="paramname">apiKey</td><td>Redmine API key </td></tr>
+    <tr><td class="paramname">checkSsl</td><td>Check the SSL certificate (default: true) </td></tr>
+    <tr><td class="paramname">parent</td><td>Parent QObject (default: nullptr) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8f20acad0b1caf61cf50373953eb1f7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qtredmine::SimpleRedmineClient::SimpleRedmineClient </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>login</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>password</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>checkSsl</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a Redmine connection using basic authentication. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Redmine base URL </td></tr>
+    <tr><td class="paramname">login</td><td>Redmine login </td></tr>
+    <tr><td class="paramname">password</td><td>Redmine password </td></tr>
+    <tr><td class="paramname">checkSsl</td><td>Check the SSL certificate (default: true) </td></tr>
+    <tr><td class="paramname">parent</td><td>Parent QObject (default: nullptr) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6e15d93fe8a7d3d2dca97bb4c2150b0a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::SimpleRedmineClient::checkConnectionStatus </td>
+          <td>(</td>
+          <td class="paramtype">QNetworkAccessManager::NetworkAccessibility&#160;</td>
+          <td class="paramname"><em>accessible</em> = <code>QNetworkAccessManager::UnknownAccessibility</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check whether the connection currently works. </p>
+<p>If the status has changed from <code>Accessible</code> to <code>NotAccessible</code> or vice versa, the <code>connectionChanged</code> signal is emitted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">accessible</td><td>Specifies whether the network is accessible at all </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b48ceaefd42db80701702ff68cfe9a6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::SimpleRedmineClient::connectionChanged </td>
+          <td>(</td>
+          <td class="paramtype">QNetworkAccessManager::NetworkAccessibility&#160;</td>
+          <td class="paramname"><em>connected</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Singal that the connection to Redmine has changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">connected</td><td>true if connection is available, false otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a82d08a541ea0ca877bbe49fcb8c83fe2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::SimpleRedmineClient::retrieveCurrentUser </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a9183008f79853dc0f5fd08dbe1f31dac">UserCb</a>&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve current user from Redmine. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>Callback function with a <a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a> vector </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af07b7e14812f40aaaa999daf48e942f3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +616,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -352,7 +657,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveIssue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a9d961e7ec92f4e1ee8c2c5ef0194f52f">IssueCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#ae9e016d9460a773c3ea561e2fc29c50f">IssueCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -394,7 +699,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveIssuePriorities </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -422,21 +727,21 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a class="anchor" id="aab646ead01ea43d211362773d62b6310"></a>
+<a class="anchor" id="a6d73c5c43b01b0b696f68df4084dfe17"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveIssues </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a807caa91ae4dd9e75125fdedcfa706ec">IssuesCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a8d2ea68f5c91c15fecfbba89484a294e">IssuesCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>parameters</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramtype"><a class="el" href="structqtredmine_1_1_redmine_options.html">RedmineOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em> = <code><a class="el" href="structqtredmine_1_1_redmine_options.html">RedmineOptions</a>()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -450,7 +755,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">callback</td><td>Callback function with an <a class="el" href="structqtredmine_1_1_issue.html" title="Structure representing an issue. ">Issue</a> vector </td></tr>
-    <tr><td class="paramname">parameters</td><td>Additional issue parameters </td></tr>
+    <tr><td class="paramname">options</td><td>Additional options </td></tr>
   </table>
   </dd>
 </dl>
@@ -464,7 +769,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveIssueStatuses </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a575aa5f900f903eea2545285bed1d23f">IssueStatusesCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a6f209fb88043b8948985302af59ef472">IssueStatusesCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -499,7 +804,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveProjects </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a6ac9c6b7a01b08d5af33cb2017c63dff">ProjectsCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a952562ed89e32466602e65712c1bc982">ProjectsCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -534,7 +839,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveTimeEntries </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a87b9967d15a855b6e1583878c0f135b0">TimeEntriesCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a592575eb4a2d570c2475a16a76edd625">TimeEntriesCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -569,7 +874,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveTimeEntryActivities </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a6cb2592646214e2a6c6bcf620dd2809e">EnumerationsCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a9d0de49a1c34554d5c7f8a21476897f7">EnumerationsCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -604,7 +909,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void qtredmine::SimpleRedmineClient::retrieveTrackers </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a7c33e09354c904df1c7e06207a870d6c">TrackersCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a932ff1520e0860a73bfffc9dec579344">TrackersCb</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -632,6 +937,41 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
+<a class="anchor" id="a1352e9d5a0ed5aa208c0bb4e004cd2fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void qtredmine::SimpleRedmineClient::retrieveUsers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a1842ee142bee9cb82df4ed213eab6400">UsersCb</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>parameters</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve users from Redmine. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>Callback function with a <a class="el" href="structqtredmine_1_1_user.html" title="Structure representing a user. ">User</a> vector </td></tr>
+    <tr><td class="paramname">parameters</td><td>Additional user parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ae101de51192d5cceae4f748526159c3f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -645,7 +985,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -694,7 +1034,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -743,7 +1083,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -792,7 +1132,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -841,7 +1181,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -890,7 +1230,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
@@ -939,7 +1279,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#adc186ce3cc6fc2b321995a9d58c7830c">SuccessCb</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceqtredmine.html#a72d601188d080eedfa9f4abaa3a63c55">SuccessCb</a>&#160;</td>
           <td class="paramname"><em>callback</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>

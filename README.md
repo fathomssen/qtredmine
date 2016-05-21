@@ -14,6 +14,9 @@ Features
 * Simple methods to get serveral resources (issues, projects etc.) from a Redmine instance
 * Simple methods to update serveral resources (issues and time entries at the moment) in a Redmine instance
 
+To use Redmine custom fields with qtredmine, please install the `redmine_shared_api` plugin from
+https://github.com/anovitsky/redmine_shared_api.
+
 Documentation
 -------------
 Please have a look at the Doxygen documentation at

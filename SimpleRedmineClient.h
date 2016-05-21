@@ -178,45 +178,77 @@ public:
     /// @{
 
     /**
+     * @brief Retrieve custom fields from Redmine
+     *
+     * @param callback Callback function with a custom field vector
+     * @param filter Additional custom field parameters
+     */
+    void retrieveCustomFields( CustomFieldsCb callback,
+                               CustomFieldFilter filter );
+
+    /**
+     * @brief Retrieve an issue from Redmine
+     *
+     * @param callback Callback function with an issue object
+     * @param issueId Issue ID
+     * @param parameters Additional issue parameters
+     */
+    void retrieveIssue( IssueCb callback,
+                        int issueId,
+                        QString parameters = "" );
+
+    /**
+     * @brief Retrieve issues from Redmine
+     *
+     * @param callback Callback function with an issue vector
+     * @param options Additional options
+     */
+    void retrieveIssues( IssuesCb callback, RedmineOptions options = RedmineOptions() );
+
+    /**
+     * @brief Retrieve issue categories for a project
+     *
+     * @param callback Callback function with a issue category vector
+     * @param projectId Project ID
+     * @param parameters Additional issue category parameters
+     */
+    void retrieveIssueCategories( IssueCategoriesCb callback,
+                                  int projectId,
+                                  QString parameters = "" );
+
+    /**
      * @brief Retrieve issue priorities from Redmine
      *
-     * @param callback Callback function with an Enumeration vector
+     * @param callback Callback function with an enumeration vector
      * @param parameters Additional enumeration parameters
      */
     void retrieveIssuePriorities( EnumerationsCb callback,
                                   QString parameters = "" );
 
     /**
-     * @brief Retrieve an issue from Redmine
-     *
-     * @param callback Callback function with an Issue object
-     * @param issueId Issue ID
-     * @param parameters Additional issue parameters
-     */
-    void retrieveIssue( IssueCb callback, int issueId,
-                        QString parameters = "" );
-
-    /**
-     * @brief Retrieve issues from Redmine
-     *
-     * @param callback Callback function with an Issue vector
-     * @param options Additional options
-     */
-    void retrieveIssues( IssuesCb callback, RedmineOptions options = RedmineOptions() );
-
-    /**
      * @brief Retrieve issue statuses from Redmine
      *
-     * @param callback Callback function with a IssueStatus vector
+     * @param callback Callback function with a issue status vector
      * @param parameters Additional issue status parameters
      */
     void retrieveIssueStatuses( IssueStatusesCb callback,
                                 QString parameters = "" );
 
     /**
+     * @brief Retrieve an project from Redmine
+     *
+     * @param callback Callback function with an project object
+     * @param projectId Project ID
+     * @param parameters Additional project parameters
+     */
+    void retrieveProject( ProjectCb callback,
+                          int projectId,
+                          QString parameters = "" );
+
+    /**
      * @brief Retrieve projects from Redmine
      *
-     * @param callback Callback function with a Project vector
+     * @param callback Callback function with a project vector
      * @param parameters Additional project parameters
      */
     void retrieveProjects( ProjectsCb callback,
@@ -225,7 +257,7 @@ public:
     /**
      * @brief Retrieve time entries from Redmine
      *
-     * @param callback Callback function with a TimeEntries vector
+     * @param callback Callback function with a time entries vector
      * @param parameters Additional time entry parameters
      */
     void retrieveTimeEntries( TimeEntriesCb callback,
@@ -234,7 +266,7 @@ public:
     /**
      * @brief Retrieve time entry activities from Redmine
      *
-     * @param callback Callback function with an Enumeration vector
+     * @param callback Callback function with an enumeration vector
      * @param parameters Additional enumeration parameters
      */
     void retrieveTimeEntryActivities( EnumerationsCb callback,
@@ -243,7 +275,7 @@ public:
     /**
      * @brief Retrieve trackers from Redmine
      *
-     * @param callback Callback function with a Tracker vector
+     * @param callback Callback function with a tracker vector
      * @param parameters Additional tracker parameters
      */
     void retrieveTrackers( TrackersCb callback,
@@ -252,14 +284,14 @@ public:
     /**
      * @brief Retrieve current user from Redmine
      *
-     * @param callback Callback function with a User vector
+     * @param callback Callback function with a user object
      */
     void retrieveCurrentUser( UserCb callback );
 
     /**
      * @brief Retrieve users from Redmine
      *
-     * @param callback Callback function with a User vector
+     * @param callback Callback function with a user vector
      * @param parameters Additional user parameters
      */
     void retrieveUsers( UsersCb callback,
@@ -277,11 +309,14 @@ protected:
     using RedmineClient::sendTimeEntryActivity;
     using RedmineClient::sendTracker;
 
+    using RedmineClient::retrieveCustomFields;
     using RedmineClient::retrieveEnumerations;
-    using RedmineClient::retrieveIssuePriorities;
     using RedmineClient::retrieveIssue;
     using RedmineClient::retrieveIssues;
+    using RedmineClient::retrieveIssueCategories;
+    using RedmineClient::retrieveIssuePriorities;
     using RedmineClient::retrieveIssueStatuses;
+    using RedmineClient::retrieveProject;
     using RedmineClient::retrieveProjects;
     using RedmineClient::retrieveTimeEntries;
     using RedmineClient::retrieveTimeEntryActivities;

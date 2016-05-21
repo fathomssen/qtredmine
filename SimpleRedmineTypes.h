@@ -39,20 +39,21 @@ struct RedmineOptions
     {}
 };
 
+/// Custom field filter
+struct CustomFieldFilter
+{
+    int projectId = NULL_ID; ///< Project
+    int trackerId = NULL_ID; ///< Tracker
+    QString type; ///< Customised type
+};
+
 /// @name Redmine data structures
 /// @{
 
 /// Structure representing a Redmine item
 struct Item {
     int     id = NULL_ID; ///< ID
-    QString name;    ///< Name
-};
-
-/// Structure representing a Redmine custom field
-struct CustomField {
-    int                  id = NULL_ID; ///< ID
-    QString              name;    ///< Name
-    std::vector<QString> value;   ///< Value
+    QString name;         ///< Name
 };
 
 /// @}
@@ -71,16 +72,53 @@ struct RedmineResource
 /// Item vector
 using Items = QVector<Item>;
 
-/// Custom field vector
-using CustomFields = QVector<CustomField>;
-
 /// Structure representing an enumeration
 struct Enumeration : RedmineResource
 {
     int     id = NULL_ID;   ///< ID
-    QString name;      ///< Project name
-    bool    isDefault; ///< Default entry
+    QString name;           ///< Project name
+    bool    isDefault;      ///< Default entry
 };
+
+/// @}
+
+/// @name Redmine data structures
+/// @{
+
+/// Structure representing a custom field
+struct CustomField // no RedmineResource
+{
+    int                  id = NULL_ID; ///< ID
+    QString              name;         ///< Name
+
+    std::vector<QString> values;         ///< Value(s)
+    std::vector<QString> possibleValues; ///< Possible
+    QString              defaultValue;   ///< Default value
+
+    QString type;   ///< Customised type
+    QString format; ///< Field format
+    QString regex;  ///< Regular expression
+    int minLength;  ///< Minimum length
+    int maxLength;  ///< Maximum length
+
+    bool allProjects; ///< Custom field may be used by all projects
+    bool isRequired;  ///< Custom field is required
+    bool isFilter;    ///< Custom field may be used as filter
+    bool searchable;  ///< Custom field is searchable
+    bool multiple;    ///< Custom field may contain multiple values
+    bool visible;     ///< Custom field is visible
+
+    Items projects; ///< Custom field is allowed in these projects
+    Items trackers; ///< Custom field is allowed in these trackers
+};
+
+/// @}
+
+/// @name Redmine data containers
+/// @{
+
+/// Custom field vector
+using CustomFields = QVector<CustomField>;
 
 /// @}
 
@@ -97,7 +135,7 @@ struct Issue : RedmineResource
     double       doneRatio = 0;  ///< Done ratio
     QString      subject;        ///< Subject
 
-    Item         assignedTo;     ///< Assigned to
+    Item         assignedTo;     ///< Assigned to user
     Item         author;         ///< Author
     Item         category;       ///< Category
     Item         priority;       ///< Priority
@@ -112,24 +150,36 @@ struct Issue : RedmineResource
     CustomFields customFields;   ///< Custom fields vector
 };
 
+/// Structure representing an issue category
+struct IssueCategory // no RedmineResource
+{
+    int     id = NULL_ID;   ///< ID
+    QString name;           ///< Issue category name
+    Item    project;        ///< Associated project
+    Item    assignedTo;     ///< Assigned to user
+};
+
 /// Structure representing an issue status
 struct IssueStatus : RedmineResource
 {
     int     id = NULL_ID;   ///< ID
-    QString name;      ///< Issue status name
-    bool    isClosed;  ///< Closed status
-    bool    isDefault; ///< Default entry
+    QString name;           ///< Issue status name
+    bool    isClosed;       ///< Closed status
+    bool    isDefault;      ///< Default entry
 };
 
 /// Structure representing a project
 struct Project : RedmineResource
 {
-    int       id = NULL_ID;     ///< ID
+    int       id = NULL_ID; ///< ID
 
     QString   description; ///< Description
     QString   identifier;  ///< Internal identifier
     bool      isPublic;    ///< Public project
     QString   name;        ///< Project name
+
+    Items trackers;   ///< Trackers
+    Items categories; ///< Issue categories
 };
 
 /// Structure representing a time entry
@@ -169,11 +219,17 @@ struct User : RedmineResource
 /// @name Redmine data containers
 /// @{
 
+/// Custom fields vector
+using CustomFields = QVector<CustomField>;
+
 /// Enumeration vector
 using Enumerations = QVector<Enumeration>;
 
 /// Issue vector
 using Issues = QVector<Issue>;
+
+/// Issue category vector
+using IssueCategories = QVector<IssueCategory>;
 
 /// Issue statuses vector
 using IssueStatuses = QVector<IssueStatus>;
@@ -206,6 +262,15 @@ using Users = QVector<User>;
 using SuccessCb = std::function<void(bool, int, RedmineError, QStringList)>;
 
 /**
+ * Typedef for an custom fields callback function
+ *
+ * @param CustomFields Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using CustomFieldsCb = std::function<void(CustomFields, RedmineError, QStringList)>;
+
+/**
  * Typedef for an enumerations callback function
  *
  * @param Enumerations Vector of Redmine resources
@@ -233,6 +298,15 @@ using IssueCb = std::function<void(Issue, RedmineError, QStringList)>;
 using IssuesCb = std::function<void(Issues, RedmineError, QStringList)>;
 
 /**
+ * Typedef for an issue categories callback function
+ *
+ * @param IssueCategories Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using IssueCategoriesCb = std::function<void(IssueCategories, RedmineError, QStringList)>;
+
+/**
  * Typedef for an issue statuses callback function
  *
  * @param IssueStatuses Vector of Redmine resources
@@ -240,6 +314,15 @@ using IssuesCb = std::function<void(Issues, RedmineError, QStringList)>;
  * @param QStringList Errors that Redmine returned
  */
 using IssueStatusesCb = std::function<void(IssueStatuses, RedmineError, QStringList)>;
+
+/**
+ * Typedef for an project callback function
+ *
+ * @param Project Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using ProjectCb = std::function<void(Project, RedmineError, QStringList)>;
 
 /**
  * Typedef for a projects callback function
@@ -310,10 +393,11 @@ operator<<( QDebug debug, const Issue& item )
 Q_DECLARE_METATYPE( qtredmine::RedmineResource )
 
 Q_DECLARE_METATYPE( qtredmine::Item )
-Q_DECLARE_METATYPE( qtredmine::CustomField )
 Q_DECLARE_METATYPE( qtredmine::Enumeration )
 
+Q_DECLARE_METATYPE( qtredmine::CustomField )
 Q_DECLARE_METATYPE( qtredmine::Issue )
+Q_DECLARE_METATYPE( qtredmine::IssueCategory )
 Q_DECLARE_METATYPE( qtredmine::IssueStatus )
 Q_DECLARE_METATYPE( qtredmine::Project )
 Q_DECLARE_METATYPE( qtredmine::TimeEntry )

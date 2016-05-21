@@ -311,12 +311,23 @@ public:
                         QString parameters = "" );
 
     /**
+     * @brief Retrieve issues from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param parameters  Additional issue parameters
+     */
+    void retrieveIssues( JsonCb callback,
+                         QString parameters = "" );
+
+    /**
      * @brief Retrieve issue categories from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional issue category parameters
+     * @param projectId Project ID
+     * @param parameters Additional issue category parameters
      */
     void retrieveIssueCategories( JsonCb callback,
+                                  int projectId,
                                   QString parameters = "" );
 
     /**
@@ -329,15 +340,6 @@ public:
                                   QString parameters = "" );
 
     /**
-     * @brief Retrieve issues from Redmine
-     *
-     * @param callback Callback function with a QJsonDocument object
-     * @param parameters  Additional issue parameters
-     */
-    void retrieveIssues( JsonCb callback,
-                         QString parameters = "" );
-
-    /**
      * @brief Retrieve issue statuses from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
@@ -345,6 +347,16 @@ public:
      */
     void retrieveIssueStatuses( JsonCb callback,
                                 QString parameters = "" );
+
+    /**
+     * @brief Retrieve a project from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param projectId Project ID
+     * @param parameters  Additional project parameters
+     */
+    void retrieveProject( JsonCb callback, int projectId,
+                          QString parameters = "" );
 
     /**
      * @brief Retrieve projects from Redmine

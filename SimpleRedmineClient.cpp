@@ -29,12 +29,13 @@ fillDefaultFields( T& item, QJsonObject* obj)
 }
 
 QStringList
-getErrorList( QJsonDocument* json )
+getErrorList( QNetworkReply* reply, QJsonDocument* json )
 {
-    ENTER()(json->toJson());
+    ENTER()(reply->error())(json->toJson());
 
     QJsonArray jsonErrors = json->object().find("errors").value().toArray();
     QStringList errors;
+    errors.push_back( reply->errorString() );
 
     for( const auto& error : jsonErrors )
         errors.push_back( error.toString() );
@@ -204,7 +205,7 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false, NULL_ID, ERR_NETWORK, getErrorList(json) );
+            callback( false, NULL_ID, ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -272,7 +273,7 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( false, NULL_ID, ERR_NETWORK, getErrorList(json) );
+            callback( false, NULL_ID, ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -280,6 +281,116 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
     };
 
     sendTimeEntry( json, cb, id, parameters );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveCustomFields( CustomFieldsCb callback, CustomFieldFilter filter )
+{
+    ENTER();
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( CustomFields(), ERR_NETWORK, getErrorList(reply, json) );
+            RETURN();
+        }
+
+        CustomFields customFields;
+
+        // Iterate over the document
+        for( const auto& j1 : json->object() )
+        {
+            // Iterate over all customFields
+            for( const auto& j2 : j1.toArray() )
+            {
+                QJsonObject obj = j2.toObject();
+
+                CustomField customField;
+
+                // Simple fields
+                customField.id   = obj.value("id").toInt();
+                customField.name = obj.value("name").toString();
+
+                customField.defaultValue = obj.value("default_value").toString();
+
+                customField.type = obj.value("customized_type").toString();
+                if( !filter.type.isEmpty() && filter.type != customField.type )
+                {
+                    DEBUG("Skipping custom field without type")(filter.type);
+                    continue;
+                }
+
+                customField.format    = obj.value("field_format").toString();
+                customField.regex     = obj.value("regex").toString();
+                customField.minLength = obj.value("min_length").toInt();
+                customField.maxLength = obj.value("max_length").toInt();
+
+                customField.allProjects = obj.value("is_for_all").toBool();
+                customField.isRequired  = obj.value("is_required").toBool();
+                customField.isFilter    = obj.value("is_filter").toBool();
+                customField.searchable  = obj.value("searchable").toBool();
+                customField.multiple    = obj.value("multiple").toBool();
+                customField.visible     = obj.value("visible").toBool();
+
+                // Iterate over all possible values
+                for( const auto& j3 : obj.value("possible_values").toArray() )
+                    customField.possibleValues.push_back( j3.toObject().value("value").toString() );
+
+                // Iterate over all projects
+                bool foundProject = false;
+                for( const auto& j3 : obj.value("projects").toArray() )
+                {
+                    Item project;
+                    project.id = j3.toObject().value("id").toInt();
+                    project.name = j3.toObject().value("name").toString();
+                    customField.projects.push_back( project );
+
+                    if( project.id == filter.projectId )
+                        foundProject = true;
+                }
+
+                if( !customField.allProjects && filter.projectId != NULL_ID && !foundProject )
+                {
+                    DEBUG("Skipping custom field without project")(filter.projectId);
+                    continue;
+                }
+
+                // Iterate over all trackers
+                bool foundTracker = false;
+                for( const auto& j3 : obj.value("trackers").toArray() )
+                {
+                    Item tracker;
+                    tracker.id = j3.toObject().value("id").toInt();
+                    tracker.name = j3.toObject().value("name").toString();
+                    customField.trackers.push_back( tracker );
+
+                    if( tracker.id == filter.trackerId )
+                        foundTracker = true;
+                }
+
+                if( filter.trackerId != NULL_ID && !foundTracker )
+                {
+                    DEBUG("Skipping custom field without tracker")(filter.trackerId);
+                    continue;
+                }
+
+                customFields.push_back( customField );
+            }
+        }
+
+        callback( customFields, NO_ERROR, QStringList() );
+
+        RETURN();
+    };
+
+    retrieveCustomFields( cb );
 
     RETURN();
 }
@@ -297,7 +408,7 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Enumerations(), ERR_NETWORK, getErrorList(json) );
+            callback( Enumerations(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -335,59 +446,51 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
 }
 
 void
-SimpleRedmineClient::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
-{
-    ENTER()(parameters);
-
-    retrieveEnumerations( "issue_priorities", callback, parameters );
-
-    RETURN();
-}
-
-void
 parseIssue( Issue& issue, QJsonObject* obj )
 {
-  ENTER();
+    ENTER();
 
-  // Simple fields
-  issue.id          = obj->value("id").toInt();
-  issue.description = obj->value("description").toString();
-  issue.doneRatio   = obj->value("done_ratio").toInt();
-  issue.subject     = obj->value("subject").toString();
+    // Simple fields
+    issue.id          = obj->value("id").toInt();
+    issue.description = obj->value("description").toString();
+    issue.doneRatio   = obj->value("done_ratio").toInt();
+    issue.subject     = obj->value("subject").toString();
 
-  fillItem( issue.author,   obj, "author" );
-  fillItem( issue.category, obj, "category" );
-  fillItem( issue.priority, obj, "priority" );
-  fillItem( issue.project,  obj, "project" );
-  fillItem( issue.status,   obj, "status" );
-  fillItem( issue.tracker,  obj, "tracker" );
+    fillItem( issue.author,   obj, "author" );
+    fillItem( issue.category, obj, "category" );
+    fillItem( issue.priority, obj, "priority" );
+    fillItem( issue.project,  obj, "project" );
+    fillItem( issue.status,   obj, "status" );
+    fillItem( issue.tracker,  obj, "tracker" );
 
-  // Dates and times
-  issue.dueDate        = obj->value("due_date").toVariant().toDate();
-  issue.estimatedHours = obj->value("estimated_hours").toDouble();
-  issue.startDate      = obj->value("start_date").toVariant().toDate();
+    // Dates and times
+    issue.dueDate        = obj->value("due_date").toVariant().toDate();
+    issue.estimatedHours = obj->value("estimated_hours").toDouble();
+    issue.startDate      = obj->value("start_date").toVariant().toDate();
 
-  // Custom field
-  auto addCustomField = [&](QJsonObject cfObj)
-  {
-      CustomField customField;
-      customField.id   = cfObj.value("id").toInt();
-      customField.name = cfObj.value("name").toString();
+    // Custom field
+    auto addCustomField = [&](QJsonObject cfObj)
+    {
+        CustomField customField;
+        customField.id   = cfObj.value("id").toInt();
+        customField.name = cfObj.value("name").toString();
 
-      for( const auto& v : cfObj.value("value").toArray() )
-        customField.value.push_back( v.toString() );
+        for( const auto& v : cfObj.value("value").toArray() )
+          customField.values.push_back( v.toString() );
 
-      issue.customFields.push_back( customField );
-  };
+        customField.multiple = cfObj.value("multiple").toBool();
+        customField.type     = "issue";
 
-  for( const auto& cf : obj->value("custom_fields").toArray() )
-      addCustomField( cf.toObject() );
+        issue.customFields.push_back( customField );
+    };
 
-  fillDefaultFields( issue, obj );
+    for( const auto& cf : obj->value("custom_fields").toArray() )
+        addCustomField( cf.toObject() );
 
-  RETURN();
-}
+    fillDefaultFields( issue, obj );
 
+    RETURN();
+  }
 
 void
 SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString parameters )
@@ -402,7 +505,7 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Issue(), ERR_NETWORK, getErrorList(json) );
+            callback( Issue(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -445,7 +548,7 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Issues(), ERR_NETWORK, getErrorList(json) );
+            callback( Issues(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -492,6 +595,66 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
 }
 
 void
+SimpleRedmineClient::retrieveIssueCategories( IssueCategoriesCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( IssueCategories(), ERR_NETWORK, getErrorList(reply, json) );
+            RETURN();
+        }
+
+        IssueCategories issueCategories;
+
+        // Iterate over the document
+        for( const auto& j1 : json->object() )
+        {
+            // Iterate over all issueStatuss
+            for( const auto& j2 : j1.toArray() )
+            {
+                QJsonObject obj = j2.toObject();
+
+                IssueCategory issueCategory;
+
+                // Simple fields
+                issueCategory.id   = obj.value("id").toInt();
+                issueCategory.name = obj.value("name").toString();
+
+                fillItem( issueCategory.project, &obj, "project" );
+                fillItem( issueCategory.assignedTo, &obj, "assigned_to" );
+
+                issueCategories.push_back( issueCategory );
+            }
+        }
+
+        callback( issueCategories, NO_ERROR, QStringList() );
+
+        RETURN();
+    };
+
+    retrieveIssueCategories( cb, projectId, parameters );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveIssuePriorities( EnumerationsCb callback, QString parameters )
+{
+    ENTER()(parameters);
+
+    retrieveEnumerations( "issue_priorities", callback, parameters );
+
+    RETURN();
+}
+
+void
 SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString parameters )
 {
     ENTER()(parameters);
@@ -504,7 +667,7 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( IssueStatuses(), ERR_NETWORK, getErrorList(json) );
+            callback( IssueStatuses(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -542,6 +705,73 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
 }
 
 void
+parseProject( Project& project, QJsonObject* obj )
+{
+    ENTER();
+
+    // Simple fields
+    project.id          = obj->value("id").toInt();
+    project.description = obj->value("description").toString();
+    project.identifier  = obj->value("identifier").toString();
+    project.isPublic    = obj->value("is_public").toBool();
+    project.name        = obj->value("name").toString();
+
+    // Iterate over all issue categories
+    for( const auto& j3 : obj->value("issue_categories").toArray() )
+    {
+        Item category;
+        category.id = j3.toObject().value("id").toInt();
+        category.name = j3.toObject().value("name").toString();
+
+        project.categories.push_back( category );
+    }
+
+    // Iterate over all trackers
+    for( const auto& j3 : obj->value("trackers").toArray() )
+    {
+        Item tracker;
+        tracker.id = j3.toObject().value("id").toInt();
+        tracker.name = j3.toObject().value("name").toString();
+
+        project.trackers.push_back( tracker );
+    }
+
+    fillDefaultFields( project, obj );
+
+    RETURN();
+  }
+
+void
+SimpleRedmineClient::retrieveProject( ProjectCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( Project(), ERR_NETWORK, getErrorList(reply, json) );
+            RETURN();
+        }
+
+        Project project;
+        QJsonObject obj = json->object().value("project").toObject();
+        parseProject( project, &obj );
+        callback( project, NO_ERROR, QStringList() );
+
+        RETURN();
+    };
+
+    retrieveProject( cb, projectId, parameters );
+
+    RETURN();
+}
+
+void
 SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
 {
     ENTER()(parameters);
@@ -554,7 +784,7 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Projects(), ERR_NETWORK, getErrorList(json) );
+            callback( Projects(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -566,19 +796,9 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
             // Iterate over all projects
             for( const auto& j2 : j1.toArray() )
             {
-                QJsonObject obj = j2.toObject();
-
                 Project project;
-
-                // Simple fields
-                project.id          = obj.value("id").toInt();
-                project.description = obj.value("description").toString();
-                project.identifier  = obj.value("identifier").toString();
-                project.isPublic    = obj.value("is_public").toBool();
-                project.name        = obj.value("name").toString();
-
-                fillDefaultFields( project, &obj );
-
+                QJsonObject obj = j2.toObject();
+                parseProject( project, &obj );
                 projects.push_back( project );
             }
         }
@@ -606,7 +826,7 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( TimeEntries(), ERR_NETWORK, getErrorList(json) );
+            callback( TimeEntries(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -634,8 +854,6 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
                 fillItem( timeEntry.project,  &obj, "project" );
 
                 fillDefaultFields( timeEntry, &obj );
-
-                DEBUG()(timeEntry.issue.id)(timeEntry.project.id)(timeEntry.hours);
 
                 timeEntries.push_back( timeEntry );
             }
@@ -674,7 +892,7 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Trackers(), ERR_NETWORK, getErrorList(json) );
+            callback( Trackers(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -743,7 +961,7 @@ SimpleRedmineClient::retrieveCurrentUser( UserCb callback )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( User(), ERR_NETWORK, getErrorList(json) );
+            callback( User(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 
@@ -773,7 +991,7 @@ SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
         if( reply->error() != QNetworkReply::NoError )
         {
             DEBUG() << "Network error:" << reply->errorString();
-            callback( Users(), ERR_NETWORK, getErrorList(json) );
+            callback( Users(), ERR_NETWORK, getErrorList(reply, json) );
             RETURN();
         }
 

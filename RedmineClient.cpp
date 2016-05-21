@@ -475,7 +475,7 @@ RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "custom_fields", callback, QNetworkAccessManager::GetOperation, parameters );
+    sendRequest( "shared/custom_fields", callback, QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -501,11 +501,12 @@ RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveIssueCategories( JsonCb callback, QString parameters )
+RedmineClient::retrieveIssueCategories( JsonCb callback, int projectId, QString parameters )
 {
-    ENTER()(parameters);
+    ENTER()(projectId)(parameters);
 
-    sendRequest( "issue_categories", callback, QNetworkAccessManager::GetOperation, parameters );
+    sendRequest( QString("projects/%1/issue_categories").arg(projectId), callback,
+                 QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }
@@ -525,7 +526,8 @@ RedmineClient::retrieveIssue( JsonCb callback, int issueId, QString parameters )
 {
     ENTER()(issueId)(parameters);
 
-    sendRequest( QString("issues/%1").arg(issueId), callback, QNetworkAccessManager::GetOperation, parameters );
+    sendRequest( QString("issues/%1").arg(issueId), callback, QNetworkAccessManager::GetOperation,
+                 parameters );
 
     RETURN();
 }
@@ -541,11 +543,23 @@ RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
 }
 
 void
+RedmineClient::retrieveProject( JsonCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    sendRequest( QString("projects/%1").arg(projectId), callback, QNetworkAccessManager::GetOperation,
+                 QString("%1&include=%2").arg(parameters).arg("enabled_modules,issue_categories,trackers") );
+
+    RETURN();
+}
+
+void
 RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
 {
     ENTER()(parameters);
 
-    sendRequest( "projects", callback, QNetworkAccessManager::GetOperation, parameters );
+    sendRequest( "projects", callback, QNetworkAccessManager::GetOperation,
+                 QString("%1&include=%2").arg(parameters).arg("enabled_modules,issue_categories,trackers") );
 
     RETURN();
 }

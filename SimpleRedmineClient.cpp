@@ -177,8 +177,20 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
     if( item.parentId != NULL_ID )
         attr["parent_issue_id"] = item.parentId;
 
-//    if( item.custom_fields != NULL_ID )
-//        attr["custom_fields"] = item.custom_fields;
+    if( item.customFields.size() )
+    {
+        QJsonArray customFields;
+
+        for( const auto& customField : item.customFields )
+        {
+            QJsonObject cf;
+            cf["id"] = customField.id;
+            cf["value"] = customField.values.at( 0 );
+            customFields.append( cf );
+        }
+
+        attr["custom_fields"] = customFields;
+    }
 
 //    if( item.watcher_user_ids != NULL_ID )
 //        attr["watcher_user_ids"] = item.watcher_user_ids;
@@ -194,6 +206,8 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
 
     QJsonDocument json;
     json.setObject( data );
+
+    DEBUG()(json.toJson());
 
     auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
     {

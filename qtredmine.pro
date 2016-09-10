@@ -1,22 +1,24 @@
 TEMPLATE = lib
 TARGET = qtredmine
 
+DEFINES += QTREDMINE_LIBRARY
+
 QT += network
 QT -= gui
 QMAKE_CXXFLAGS += -std=c++11
 
-DEFINES += QTREDMINE_LIBRARY
+INCLUDEPATH += $$PWD/include/qtredmine
 
 HEADERS += \
-    KeyAuthenticator.h \
-    PasswordAuthenticator.h \
-    Authenticator.h \
-    logging.h \
     Example.h \
-    qtredmine_global.h \
-    RedmineClient.h \
-    SimpleRedmineTypes.h \
-    SimpleRedmineClient.h
+    include/qtredmine/logging.h \
+    include/qtredmine/qtredmine_global.h \
+    include/qtredmine/Authenticator.h \
+    include/qtredmine/KeyAuthenticator.h \
+    include/qtredmine/PasswordAuthenticator.h \
+    include/qtredmine/RedmineClient.h \
+    include/qtredmine/SimpleRedmineClient.h \
+    include/qtredmine/SimpleRedmineTypes.h \
 
 SOURCES += \
     PasswordAuthenticator.cpp \
@@ -27,8 +29,16 @@ SOURCES += \
 
 DISTFILES += \
     README.md \
-    .travis.yml
+    .travis.yml \
+    qtredmine.pri \
 
 # No debug statements in release
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 CONFIG(debug, debug|release):DEFINES += DEBUG_OUTPUT
+
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+}
+
+include($$PWD/qtredmine.pri)

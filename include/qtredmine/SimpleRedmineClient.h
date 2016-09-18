@@ -172,6 +172,19 @@ public:
                       int id = NULL_ID,
                       QString parameters = "" );
 
+    /**
+     * @brief Create or update version in Redmine
+     *
+     * @param item Data to be stored in Redmine
+     * @param callback Success callback function
+     * @param id Version ID to update; if set to \c NULL_ID, create a new version
+     * @param parameters Additional version parameters
+     */
+    void sendTracker( Version item,
+                      SuccessCb callback = nullptr,
+                      int id = NULL_ID,
+                      QString parameters = "" );
+
     /// @}
 
     /// @name Redmine data retrievers
@@ -296,6 +309,16 @@ public:
      */
     void retrieveUsers( UsersCb callback,
                         QString parameters = "" );
+
+    /**
+     * @brief Retrieve versions from Redmine
+     *
+     * @param callback Callback function with a version vector
+     * @param parameters Additional version parameters
+     */
+    void retrieveVersions( VersionsCb callback,
+                           QString parameters = "" );
+
     /// @}
 
 protected:
@@ -308,6 +331,7 @@ protected:
     using RedmineClient::sendTimeEntry;
     using RedmineClient::sendTimeEntryActivity;
     using RedmineClient::sendTracker;
+    using RedmineClient::sendVersion;
 
     using RedmineClient::retrieveCustomFields;
     using RedmineClient::retrieveEnumerations;
@@ -323,6 +347,8 @@ protected:
     using RedmineClient::retrieveTrackers;
     using RedmineClient::retrieveCurrentUser;
     using RedmineClient::retrieveUsers;
+    using RedmineClient::retrieveVersion;
+    using RedmineClient::retrieveVersions;
 
     /**
      * @brief Retrieve enumerations from Redmine

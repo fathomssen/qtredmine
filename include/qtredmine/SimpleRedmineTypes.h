@@ -142,6 +142,7 @@ struct Issue : RedmineResource
     Item         project;        ///< Project
     Item         status;         ///< Status
     Item         tracker;        ///< Tracker
+    Item         version;        ///< Version
 
     QDate        dueDate;        ///< Due date
     double       estimatedHours = 0; ///< Estimated hours
@@ -214,6 +215,17 @@ struct User : RedmineResource
     QDateTime lastLoginOn;///< Last login time and date
 };
 
+/// Structure representing a version
+struct Version : RedmineResource
+{
+    int     id = NULL_ID;   ///< ID
+    QString name;           ///< Version name
+    ///< Status (missing)
+    ///< Sharing (missing)
+    QDate   dueDate;        ///< Due date
+    QString description;    ///< Description
+};
+
 /// @}
 
 /// @name Redmine data containers
@@ -245,6 +257,9 @@ using Trackers = QVector<Tracker>;
 
 /// User vector
 using Users = QVector<User>;
+
+/// Versions vector
+using Versions = QVector<Version>;
 
 /// @}
 
@@ -369,6 +384,24 @@ using UserCb = std::function<void(User, RedmineError, QStringList)>;
  */
 using UsersCb = std::function<void(Users, RedmineError, QStringList)>;
 
+/**
+ * Typedef for a version callback function
+ *
+ * @param Version Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using VersionCb = std::function<void(Version, RedmineError, QStringList)>;
+
+/**
+ * Typedef for a versions callback function
+ *
+ * @param Versions Vector of Redmine resources
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using VersionsCb = std::function<void(Versions, RedmineError, QStringList)>;
+
 /// @}
 
 /**
@@ -403,5 +436,6 @@ Q_DECLARE_METATYPE( qtredmine::Project )
 Q_DECLARE_METATYPE( qtredmine::TimeEntry )
 Q_DECLARE_METATYPE( qtredmine::Tracker )
 Q_DECLARE_METATYPE( qtredmine::User )
+Q_DECLARE_METATYPE( qtredmine::Version )
 
 #endif // SIMPLEREDMINETYPES_H

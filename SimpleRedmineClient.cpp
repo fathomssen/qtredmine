@@ -476,6 +476,7 @@ parseIssue( Issue& issue, QJsonObject* obj )
     fillItem( issue.project,  obj, "project" );
     fillItem( issue.status,   obj, "status" );
     fillItem( issue.tracker,  obj, "tracker" );
+    fillItem( issue.version,  obj, "fixed_version" );
 
     // Dates and times
     issue.dueDate        = obj->value("due_date").toVariant().toDate();

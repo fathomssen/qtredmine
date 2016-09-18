@@ -413,6 +413,16 @@ public:
                         QString parameters = "" );
 
     /**
+     * @brief Retrieve a version from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param versionId Version ID
+     * @param parameters  Additional version parameters
+     */
+    void retrieveVersion( JsonCb callback, int versionId,
+                          QString parameters = "" );
+
+    /**
      * @brief Retrieve versions from Redmine
      *
      * @param callback Callback function with a QJsonDocument object

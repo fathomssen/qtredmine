@@ -497,8 +497,11 @@ parseIssue( Issue& issue, QJsonObject* obj )
         customField.id   = cfObj.value("id").toInt();
         customField.name = cfObj.value("name").toString();
 
-        for( const auto& v : cfObj.value("value").toArray() )
-          customField.values.push_back( v.toString() );
+        if( cfObj.value("value").isString() )
+            customField.values.push_back( cfObj.value("value").toString() );
+        else if( cfObj.value("value").isArray() )
+            for( const auto& v : cfObj.value("value").toArray() )
+                customField.values.push_back( v.toString() );
 
         customField.multiple = cfObj.value("multiple").toBool();
         customField.type     = "issue";

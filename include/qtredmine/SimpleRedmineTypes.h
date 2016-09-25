@@ -91,8 +91,8 @@ struct CustomField // no RedmineResource
     int                  id = NULL_ID; ///< ID
     QString              name;         ///< Name
 
-    std::vector<QString> values;         ///< Value(s)
-    std::vector<QString> possibleValues; ///< Possible
+    QVector<QString>     values;         ///< Value(s)
+    QVector<QString>     possibleValues; ///< Possible
     QString              defaultValue;   ///< Default value
 
     QString type;   ///< Customised type

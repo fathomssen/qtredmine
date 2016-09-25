@@ -32,10 +32,6 @@ DISTFILES += \
     .travis.yml \
     qtredmine.pri \
 
-# No debug statements in release
-CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
-CONFIG(debug, debug|release):DEFINES += DEBUG_OUTPUT
-
 unix {
     target.path = /usr/lib
     INSTALLS += target

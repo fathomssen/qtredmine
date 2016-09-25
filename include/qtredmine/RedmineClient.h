@@ -349,6 +349,17 @@ public:
                                 QString parameters = "" );
 
     /**
+     * @brief Retrieve memberships from Redmine
+     *
+     * @param callback Callback function with a QJsonDocument object
+     * @param projectId Project ID
+     * @param parameters Additional membership parameters
+     */
+    void retrieveMemberships( JsonCb callback,
+                              int projectId,
+                              QString parameters = "" );
+
+    /**
      * @brief Retrieve a project from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
@@ -426,9 +437,11 @@ public:
      * @brief Retrieve versions from Redmine
      *
      * @param callback Callback function with a QJsonDocument object
+     * @param projectId Project ID
      * @param parameters  Additional version parameters
      */
     void retrieveVersions( JsonCb callback,
+                           int projectId,
                            QString parameters = "" );
 
     /// @}

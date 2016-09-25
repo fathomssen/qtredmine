@@ -216,7 +216,8 @@ public:
      * @param callback Callback function with an issue vector
      * @param options Additional options
      */
-    void retrieveIssues( IssuesCb callback, RedmineOptions options = RedmineOptions() );
+    void retrieveIssues( IssuesCb callback,
+                         RedmineOptions options = RedmineOptions() );
 
     /**
      * @brief Retrieve issue categories for a project
@@ -246,6 +247,17 @@ public:
      */
     void retrieveIssueStatuses( IssueStatusesCb callback,
                                 QString parameters = "" );
+
+    /**
+     * @brief Retrieve memberships for a project
+     *
+     * @param callback Callback function with an membership vector
+     * @param projectId Project ID to get the memberships of
+     * @param options Additional options
+     */
+    void retrieveMemberships( MembershipsCb callback,
+                              int projectId,
+                              QString parameters = "" );
 
     /**
      * @brief Retrieve an project from Redmine
@@ -311,45 +323,19 @@ public:
                         QString parameters = "" );
 
     /**
-     * @brief Retrieve versions from Redmine
+     * @brief Retrieve versions for a project
      *
      * @param callback Callback function with a version vector
+     * @param projectId Project ID to get the memberships of
      * @param parameters Additional version parameters
      */
     void retrieveVersions( VersionsCb callback,
+                           int projectId,
                            QString parameters = "" );
 
     /// @}
 
 protected:
-    // Inherited and overloaded methods
-    using RedmineClient::sendEnumeration;
-    using RedmineClient::sendIssuePriority;
-    using RedmineClient::sendIssue;
-    using RedmineClient::sendIssueStatus;
-    using RedmineClient::sendProject;
-    using RedmineClient::sendTimeEntry;
-    using RedmineClient::sendTimeEntryActivity;
-    using RedmineClient::sendTracker;
-    using RedmineClient::sendVersion;
-
-    using RedmineClient::retrieveCustomFields;
-    using RedmineClient::retrieveEnumerations;
-    using RedmineClient::retrieveIssue;
-    using RedmineClient::retrieveIssues;
-    using RedmineClient::retrieveIssueCategories;
-    using RedmineClient::retrieveIssuePriorities;
-    using RedmineClient::retrieveIssueStatuses;
-    using RedmineClient::retrieveProject;
-    using RedmineClient::retrieveProjects;
-    using RedmineClient::retrieveTimeEntries;
-    using RedmineClient::retrieveTimeEntryActivities;
-    using RedmineClient::retrieveTrackers;
-    using RedmineClient::retrieveCurrentUser;
-    using RedmineClient::retrieveUsers;
-    using RedmineClient::retrieveVersion;
-    using RedmineClient::retrieveVersions;
-
     /**
      * @brief Retrieve enumerations from Redmine
      *

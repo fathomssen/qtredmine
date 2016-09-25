@@ -125,6 +125,14 @@ using CustomFields = QVector<CustomField>;
 /// @name Redmine data structures
 /// @{
 
+/// Structure representing a group
+struct Group : RedmineResource
+{
+    int     id = NULL_ID; ///< ID
+    QString name;         ///< Group name
+    Items   members;      ///< Group members
+};
+
 /// Structure representing an issue
 struct Issue : RedmineResource
 {
@@ -169,6 +177,16 @@ struct IssueStatus : RedmineResource
     bool    isDefault;      ///< Default entry
 };
 
+/// Structure representing a membership
+struct Membership : RedmineResource
+{
+    int     id = NULL_ID;   ///< ID
+    Item    project;        ///< Project this membership is related to
+    Item    user;           ///< User within the project (exclusive with group)
+    Item    group;          ///< Group within the project (exclusive with user)
+    Items   roles;          ///< Roles of the user or group
+};
+
 /// Structure representing a project
 struct Project : RedmineResource
 {
@@ -178,6 +196,7 @@ struct Project : RedmineResource
     QString   identifier;  ///< Internal identifier
     bool      isPublic;    ///< Public project
     QString   name;        ///< Project name
+    Item      parent;      ///< Parent project
 
     Items trackers;   ///< Trackers
     Items categories; ///< Issue categories
@@ -237,6 +256,9 @@ using CustomFields = QVector<CustomField>;
 /// Enumeration vector
 using Enumerations = QVector<Enumeration>;
 
+/// Group vector
+using Groups = QVector<Group>;
+
 /// Issue vector
 using Issues = QVector<Issue>;
 
@@ -245,6 +267,9 @@ using IssueCategories = QVector<IssueCategory>;
 
 /// Issue statuses vector
 using IssueStatuses = QVector<IssueStatus>;
+
+/// Membership vector
+using Memberships = QVector<Membership>;
 
 /// Project vector
 using Projects = QVector<Project>;
@@ -295,6 +320,15 @@ using CustomFieldsCb = std::function<void(CustomFields, RedmineError, QStringLis
 using EnumerationsCb = std::function<void(Enumerations, RedmineError, QStringList)>;
 
 /**
+ * Typedef for an group callback function
+ *
+ * @param Group Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using GroupCb = std::function<void(Group, RedmineError, QStringList)>;
+
+/**
  * Typedef for an issue callback function
  *
  * @param Issue Redmine resource
@@ -329,6 +363,15 @@ using IssueCategoriesCb = std::function<void(IssueCategories, RedmineError, QStr
  * @param QStringList Errors that Redmine returned
  */
 using IssueStatusesCb = std::function<void(IssueStatuses, RedmineError, QStringList)>;
+
+/**
+ * Typedef for an membership callback function
+ *
+ * @param Memberships Vector of Redmine resource
+ * @param RedmineError Redmine error code
+ * @param QStringList Errors that Redmine returned
+ */
+using MembershipsCb = std::function<void(Memberships, RedmineError, QStringList)>;
 
 /**
  * Typedef for an project callback function
@@ -421,6 +464,23 @@ operator<<( QDebug debug, const Issue& item )
     return debug;
 }
 
+/**
+ * @brief QDebug stream operator for RedmineOptions
+ *
+ * @param debug QDebug object
+ * @param options RedmineOptions
+ *
+ * @return QDebug object
+ */
+inline QDebug
+operator<<( QDebug debug, const RedmineOptions& options )
+{
+    QDebugStateSaver saver( debug );
+    debug.nospace() << "[" << options.parameters << ", " << options.getAllItems << "]";
+
+    return debug;
+}
+
 } // qtredmine
 
 Q_DECLARE_METATYPE( qtredmine::RedmineResource )
@@ -429,9 +489,11 @@ Q_DECLARE_METATYPE( qtredmine::Item )
 Q_DECLARE_METATYPE( qtredmine::Enumeration )
 
 Q_DECLARE_METATYPE( qtredmine::CustomField )
+Q_DECLARE_METATYPE( qtredmine::Group )
 Q_DECLARE_METATYPE( qtredmine::Issue )
 Q_DECLARE_METATYPE( qtredmine::IssueCategory )
 Q_DECLARE_METATYPE( qtredmine::IssueStatus )
+Q_DECLARE_METATYPE( qtredmine::Membership )
 Q_DECLARE_METATYPE( qtredmine::Project )
 Q_DECLARE_METATYPE( qtredmine::TimeEntry )
 Q_DECLARE_METATYPE( qtredmine::Tracker )

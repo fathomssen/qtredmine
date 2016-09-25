@@ -13,8 +13,11 @@ fillItem( Item& item, QJsonObject* obj, QString value)
 {
     QJsonObject itemObj = obj->value(value).toObject();
 
-    item.id   = itemObj.value("id").toInt();
-    item.name = itemObj.value("name").toString();
+    if( !itemObj.isEmpty() )
+    {
+        item.id   = itemObj.value("id").toInt();
+        item.name = itemObj.value("name").toString();
+    }
 }
 
 // Fill default fields
@@ -230,7 +233,7 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
         callback( true, issueId, NO_ERROR, QStringList() );
     };
 
-    sendIssue( json, cb, id, parameters );
+    RedmineClient::sendIssue( json, cb, id, parameters );
 
     RETURN();
 }
@@ -294,7 +297,7 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
         callback( true, NULL_ID, NO_ERROR, QStringList() );
     };
 
-    sendTimeEntry( json, cb, id, parameters );
+    RedmineClient::sendTimeEntry( json, cb, id, parameters );
 
     RETURN();
 }
@@ -404,7 +407,7 @@ SimpleRedmineClient::retrieveCustomFields( CustomFieldsCb callback, CustomFieldF
         RETURN();
     };
 
-    retrieveCustomFields( cb );
+    RedmineClient::retrieveCustomFields( cb );
 
     RETURN();
 }
@@ -454,7 +457,7 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
         RETURN();
     };
 
-    retrieveEnumerations( enumeration, cb, parameters );
+    RedmineClient::retrieveEnumerations( enumeration, cb, parameters );
 
     RETURN();
 }
@@ -532,7 +535,7 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
         RETURN();
     };
 
-    retrieveIssue( cb, issueId, parameters );
+    RedmineClient::retrieveIssue( cb, issueId, parameters );
 
     RETURN();
 }
@@ -540,7 +543,7 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
 void
 SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
 {
-    ENTER()(options.parameters)(options.getAllItems);
+    ENTER()(options);
 
     struct Data
     {
@@ -587,8 +590,9 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         if( options.getAllItems && count == limit_ )
         {
             // In the last run, as many issues as the limit is were found - so there might be more
-            retrieveIssues( cb,
-                            QString("%1&offset=%2&limit=%3")
+            RedmineClient::retrieveIssues(
+                        cb,
+                        QString("%1&offset=%2&limit=%3")
                             .arg(options.parameters)
                             .arg(offset)
                             .arg(limit_) );
@@ -603,8 +607,8 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         RETURN();
     };
 
-    retrieveIssues( data->jsonCb,
-                    QString("%1&offset=%2&limit=%3").arg(options.parameters).arg(0).arg(limit_) );
+    RedmineClient::retrieveIssues( data->jsonCb,
+                                   QString("%1&offset=%2&limit=%3").arg(options.parameters).arg(0).arg(limit_) );
 
     RETURN();
 }
@@ -654,7 +658,7 @@ SimpleRedmineClient::retrieveIssueCategories( IssueCategoriesCb callback, int pr
         RETURN();
     };
 
-    retrieveIssueCategories( cb, projectId, parameters );
+    RedmineClient::retrieveIssueCategories( cb, projectId, parameters );
 
     RETURN();
 }
@@ -714,7 +718,57 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
         RETURN();
     };
 
-    retrieveIssueStatuses( cb, parameters );
+    RedmineClient::retrieveIssueStatuses( cb, parameters );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveMemberships( MembershipsCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( Memberships(), ERR_NETWORK, getErrorList(reply, json) );
+            RETURN();
+        }
+
+        Memberships memberships;
+
+        // Iterate over the document
+        for( const auto& j1 : json->object() )
+        {
+            // Iterate over all issueStatuss
+            for( const auto& j2 : j1.toArray() )
+            {
+                QJsonObject obj = j2.toObject();
+
+                Membership membership;
+
+                // Simple fields
+                membership.id = obj.value("id").toInt();
+
+                fillItem( membership.project, &obj, "project" );
+                fillItem( membership.user, &obj, "user" );
+                fillItem( membership.group, &obj, "group" );
+
+                memberships.push_back( membership );
+            }
+        }
+
+        callback( memberships, NO_ERROR, QStringList() );
+
+        RETURN();
+    };
+
+    RedmineClient::retrieveMemberships( cb, projectId, parameters );
 
     RETURN();
 }
@@ -730,6 +784,8 @@ parseProject( Project& project, QJsonObject* obj )
     project.identifier  = obj->value("identifier").toString();
     project.isPublic    = obj->value("is_public").toBool();
     project.name        = obj->value("name").toString();
+
+    fillItem( project.parent, obj, "parent" );
 
     // Iterate over all issue categories
     for( const auto& j3 : obj->value("issue_categories").toArray() )
@@ -781,7 +837,7 @@ SimpleRedmineClient::retrieveProject( ProjectCb callback, int projectId, QString
         RETURN();
     };
 
-    retrieveProject( cb, projectId, parameters );
+    RedmineClient::retrieveProject( cb, projectId, parameters );
 
     RETURN();
 }
@@ -823,7 +879,7 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
         RETURN();
     };
 
-    retrieveProjects( cb, parameters );
+    RedmineClient::retrieveProjects( cb, parameters );
 
     RETURN();
 }
@@ -879,7 +935,7 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
         RETURN();
     };
 
-    retrieveTimeEntries( cb, parameters );
+    RedmineClient::retrieveTimeEntries( cb, parameters );
 
     RETURN();
 }
@@ -938,7 +994,7 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
         RETURN();
     };
 
-    retrieveTrackers( cb, parameters );
+    RedmineClient::retrieveTrackers( cb, parameters );
 
     RETURN();
 }
@@ -988,7 +1044,7 @@ SimpleRedmineClient::retrieveCurrentUser( UserCb callback )
         RETURN();
     };
 
-    retrieveCurrentUser( cb );
+    RedmineClient::retrieveCurrentUser( cb );
 
     RETURN();
 }
@@ -1031,7 +1087,56 @@ SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
         RETURN();
     };
 
-    retrieveUsers( cb, parameters );
+    RedmineClient::retrieveUsers( cb, parameters );
+
+    RETURN();
+}
+
+void
+SimpleRedmineClient::retrieveVersions( VersionsCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    {
+        ENTER();
+
+        // Quit on network error
+        if( reply->error() != QNetworkReply::NoError )
+        {
+            DEBUG() << "Network error:" << reply->errorString();
+            callback( Versions(), ERR_NETWORK, getErrorList(reply, json) );
+            RETURN();
+        }
+
+        Versions versions;
+
+        // Iterate over the document
+        for( const auto& j1 : json->object() )
+        {
+            // Iterate over all issueStatuss
+            for( const auto& j2 : j1.toArray() )
+            {
+                QJsonObject obj = j2.toObject();
+
+                Version version;
+
+                // Simple fields
+                version.id = obj.value("id").toInt();
+                version.name = obj.value("name").toString();
+                version.description = obj.value("description").toString();
+                version.dueDate = obj.value("due_date").toVariant().toDate();
+
+                versions.push_back( version );
+            }
+        }
+
+        callback( versions, NO_ERROR, QStringList() );
+
+        RETURN();
+    };
+
+    RedmineClient::retrieveVersions( cb, projectId, parameters );
 
     RETURN();
 }

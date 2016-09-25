@@ -543,6 +543,17 @@ RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
 }
 
 void
+RedmineClient::retrieveMemberships( JsonCb callback, int projectId, QString parameters )
+{
+    ENTER()(projectId)(parameters);
+
+    sendRequest( QString("projects/%1/memberships").arg(projectId), callback,
+                 QNetworkAccessManager::GetOperation, parameters );
+
+    RETURN();
+}
+
+void
 RedmineClient::retrieveProject( JsonCb callback, int projectId, QString parameters )
 {
     ENTER()(projectId)(parameters);
@@ -615,11 +626,12 @@ RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveVersions( JsonCb callback, QString parameters )
+RedmineClient::retrieveVersions(JsonCb callback, int projectId, QString parameters )
 {
-    ENTER()(parameters);
+    ENTER()(projectId)(parameters);
 
-    sendRequest( "versions", callback, QNetworkAccessManager::GetOperation, parameters );
+    sendRequest( QString("projects/%1/versions").arg(projectId), callback,
+                 QNetworkAccessManager::GetOperation, parameters );
 
     RETURN();
 }

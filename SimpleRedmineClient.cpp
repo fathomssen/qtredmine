@@ -171,8 +171,8 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
     if( item.category.id != NULL_ID )
         attr["category_id"] = item.category.id;
 
-//    if( item.fixed_version.id != NULL_ID )
-//        attr["fixed_version_id"] = item.fixed_version.id;
+    if( item.version.id != NULL_ID )
+        attr["fixed_version_id"] = item.version.id;
 
     if( item.assignedTo.id != NULL_ID )
         attr["assigned_to_id"] = item.assignedTo.id;
@@ -472,6 +472,10 @@ parseIssue( Issue& issue, QJsonObject* obj )
     issue.description = obj->value("description").toString();
     issue.doneRatio   = obj->value("done_ratio").toInt();
     issue.subject     = obj->value("subject").toString();
+
+    QJsonObject parent = obj->value("parent").toObject();
+    if( !parent.isEmpty() )
+        issue.parentId = parent.value("id").toInt();
 
     fillItem( issue.author,   obj, "author" );
     fillItem( issue.category, obj, "category" );

@@ -276,6 +276,21 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
     if( item.spentOn.isValid() )
         attr["spent_on"] = item.spentOn.toString( Qt::ISODate );
 
+    if( item.customFields.size() )
+    {
+        QJsonArray customFields;
+
+        for( const auto& customField : item.customFields )
+        {
+            QJsonObject cf;
+            cf["id"] = customField.id;
+            cf["value"] = customField.values.at( 0 );
+            customFields.append( cf );
+        }
+
+        attr["custom_fields"] = customFields;
+    }
+
     QJsonObject data;
     data["time_entry"] = attr;
 
@@ -344,7 +359,13 @@ SimpleRedmineClient::retrieveCustomFields( CustomFieldsCb callback, CustomFieldF
                     continue;
                 }
 
-                customField.format    = obj.value("field_format").toString();
+                customField.format = obj.value("field_format").toString();
+                if( !filter.format.isEmpty() && filter.format != customField.format )
+                {
+                    DEBUG("Skipping custom field without format")(filter.format);
+                    continue;
+                }
+
                 customField.regex     = obj.value("regex").toString();
                 customField.minLength = obj.value("min_length").toInt();
                 customField.maxLength = obj.value("max_length").toInt();

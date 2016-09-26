@@ -44,7 +44,8 @@ struct CustomFieldFilter
 {
     int projectId = NULL_ID; ///< Project
     int trackerId = NULL_ID; ///< Tracker
-    QString type; ///< Customised type
+    QString type;   ///< Customised type
+    QString format; ///< Format
 };
 
 /// @name Redmine data structures
@@ -211,6 +212,8 @@ struct TimeEntry : RedmineResource
     Item    issue;    ///< Issue (required if no project was specified)
     Item    project;  ///< Project (required if no issue was specified)
     QDate   spentOn;  ///< Date of the time spent
+
+    CustomFields customFields;   ///< Custom fields vector
 };
 
 /// Structure representing a tracker

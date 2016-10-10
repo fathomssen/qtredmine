@@ -1,6 +1,5 @@
+#include "Logging.h"
 #include "PasswordAuthenticator.h"
-
-#include "logging.h"
 
 #include <QNetworkRequest>
 

@@ -1,5 +1,5 @@
+#include "Logging.h"
 #include "SimpleRedmineClient.h"
-#include "logging.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -124,7 +124,7 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
     // Otherwise, check the Redmine connection
     auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
     {
-        ENTER()(reply)(json);
+        ENTER()(reply->errorString())(json->toJson());
 
         if( reply->error() == QNetworkReply::NoError )
             setConnectionState( QNetworkAccessManager::Accessible );

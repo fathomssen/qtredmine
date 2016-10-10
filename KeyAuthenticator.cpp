@@ -1,6 +1,5 @@
 #include "KeyAuthenticator.h"
-
-#include "logging.h"
+#include "Logging.h"
 
 #include <QNetworkRequest>
 

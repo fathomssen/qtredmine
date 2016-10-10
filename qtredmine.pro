@@ -10,27 +10,28 @@ QMAKE_CXXFLAGS += -std=c++11
 INCLUDEPATH += $$PWD/include/qtredmine
 
 HEADERS += \
-    Example.h \
-    include/qtredmine/logging.h \
     include/qtredmine/qtredmine_global.h \
     include/qtredmine/Authenticator.h \
     include/qtredmine/KeyAuthenticator.h \
+    include/qtredmine/Logging.h \
     include/qtredmine/PasswordAuthenticator.h \
     include/qtredmine/RedmineClient.h \
     include/qtredmine/SimpleRedmineClient.h \
     include/qtredmine/SimpleRedmineTypes.h \
 
 SOURCES += \
-    PasswordAuthenticator.cpp \
     KeyAuthenticator.cpp \
-    Example.cpp \
+    Logging.cpp \
+    PasswordAuthenticator.cpp \
+    RedmineClient.cpp \
     SimpleRedmineClient.cpp \
-    RedmineClient.cpp
 
 DISTFILES += \
-    README.md \
     .travis.yml \
     qtredmine.pri \
+    Example.h \
+    Example.cpp \
+    README.md \
 
 unix {
     target.path = /usr/lib

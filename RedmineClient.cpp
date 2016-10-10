@@ -1,7 +1,7 @@
 #include "KeyAuthenticator.h"
+#include "Logging.h"
 #include "PasswordAuthenticator.h"
 #include "RedmineClient.h"
-#include "logging.h"
 
 #include <QJsonArray>
 #include <QJsonObject>

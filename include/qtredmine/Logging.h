@@ -58,7 +58,10 @@ void decreaseLoggingIndent();
 
 // Function name
 #define FUNC \
-    QString(Q_FUNC_INFO).replace(QRegularExpression("^[^ ]+ *\\*?"), "")\
+    QString(Q_FUNC_INFO)\
+    .replace(QRegularExpression("^[a-zA-Z:<>]+ "), "")\
+    .replace(QRegularExpression("^\\*"), "")\
+    .replace(QRegularExpression("^[a-z]*::"), "")\
     .replace(QRegularExpression(" +const$"), "")\
     .replace(QRegularExpression("\\([^)]*\\)$"), "()")\
     .replace(QRegularExpression("\\([^)]*\\)::\\(anonymous class\\)::operator\\(\\)\\(\\)$"), "()::auto()")\
@@ -91,7 +94,7 @@ inline QDebug operator<<( QDebug debug, fieldArgLast )
 #define DEBUGFIELDS debug.nospace() << FIELDARGS
 
 #define ENTER() \
-    if( getLoggingNewline() ) { qDebug().noquote().nospace() << "\n"; }\
+    if( getLoggingNewline() ) { qDebug().noquote().nospace() << " "; }\
     DBG() << FUNC << " { (" << POS << ")";\
     increaseLoggingIndent();\
     DBG() << ARGS

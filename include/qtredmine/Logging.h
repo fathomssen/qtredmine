@@ -57,14 +57,18 @@ void decreaseLoggingIndent();
 #define TOS(i) std::to_string(i)
 
 // Function name
+// - Remove the return type name
+// - Remove the namespace name (expected to be lower-case letters only)
+// - Remove the const indicator
+// - Replace the signature by '()'
+// - Replace the default lambda expression by 'lambda()'
 #define FUNC \
     QString(Q_FUNC_INFO)\
     .replace(QRegularExpression("^[a-zA-Z:<>]+ "), "")\
-    .replace(QRegularExpression("^\\*"), "")\
-    .replace(QRegularExpression("^[a-z]*::"), "")\
+    .replace(QRegularExpression("^(\\*?)[a-z]*::"), "\\1")\
     .replace(QRegularExpression(" +const$"), "")\
     .replace(QRegularExpression("\\([^)]*\\)$"), "()")\
-    .replace(QRegularExpression("\\([^)]*\\)::\\(anonymous class\\)::operator\\(\\)\\(\\)$"), "()::auto()")\
+    .replace(QRegularExpression("\\([^)]*\\)::\\(anonymous class\\)::operator\\(\\)\\(\\)$"), "()::lambda()")\
 
 // Filename and position
 #define POS C( QFileInfo(__FILE__).fileName().toStdString().append(":").append(TOS(__LINE__)) )
@@ -101,16 +105,17 @@ inline QDebug operator<<( QDebug debug, fieldArgLast )
 
 #define RETURN_0()  DBG() << "} (" << POS << ")"; return;
 #define RETURN_1(A) DBG() << "} -> '" << A << "' (" << POS << ")"; return A;
-#define RETURN_X( x, A, FCT, ... ) FCT
+#define RETURN_2(A,B) DBG() << "} -> '" << B << "' (" << POS << ")"; return A;
+#define RETURN_X( x, A, B, FCT, ... ) FCT
 #define RETURN(...) do{\
         decreaseLoggingIndent();\
-        RETURN_X( , ##__VA_ARGS__, RETURN_1(__VA_ARGS__), RETURN_0(__VA_ARGS__) )\
+        RETURN_X( , ##__VA_ARGS__, RETURN_2(__VA_ARGS__), RETURN_1(__VA_ARGS__), RETURN_0(__VA_ARGS__) )\
     }while(0)
 
-#define CBENTER() do{\
-        ENTER();\
-        if( deleteLater_ ) CBRETURN();\
-    }while(0)
+#define CBENTER() \
+    ENTER();\
+    if( deleteLater_ ) CBRETURN();\
+    DBG() << ARGS
 
 #define CBRETURN(x) do{\
         --callbackCounter_;\
@@ -126,9 +131,9 @@ inline QDebug operator<<( QDebug debug, fieldArgLast )
 #define RETURN(x) do{ return x; }while(0)
 
 // Callbacks
-#define CBENTER(...) do{\
-        if( deleteLater_ ) CBRETURN();\
-    }while(0)
+#define CBENTER(...)
+    if( deleteLater_ ) CBRETURN();\
+    QNoDebug() << ARGS
 
 #define CBRETURN(x) do{\
         --callbackCounter_;\

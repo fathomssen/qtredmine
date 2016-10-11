@@ -42,6 +42,24 @@ inline QDebug operator<<( QDebug debug, argLast )
 #define ARG2(x) ", " #x "=" << x << ARG1
 #define ARGS ARG0
 
+enum fieldArgNone{ FIELDARG0 };
+enum fieldArgLast{ FIELDARG1, FIELDARG2 };
+
+inline QDebug operator<<( QDebug debug, fieldArgNone )
+{
+    return debug;
+}
+
+inline QDebug operator<<( QDebug debug, fieldArgLast )
+{
+    return debug << ")";
+}
+
+#define FIELDARG0(x)  "(" << #x << "=" << data.x << FIELDARG1
+#define FIELDARG1(x) ", " << #x << "=" << data.x << FIELDARG2
+#define FIELDARG2(x) ", " << #x << "=" << data.x << FIELDARG1
+#define FIELDARGS FIELDARG0
+
 #ifdef DEBUG_OUTPUT
 
 #include <QFileInfo>
@@ -76,24 +94,6 @@ void decreaseLoggingIndent();
 // Enter and return helpers with filename and position
 #define DBG(...) qDebug().noquote().nospace() << QString("  ").repeated(getLoggingIndent())
 
-enum fieldArgNone{ FIELDARG0 };
-enum fieldArgLast{ FIELDARG1, FIELDARG2 };
-
-inline QDebug operator<<( QDebug debug, fieldArgNone )
-{
-    return debug;
-}
-
-inline QDebug operator<<( QDebug debug, fieldArgLast )
-{
-    return debug << ")";
-}
-
-#define FIELDARG0(x)  "(" << #x << "=" << data.x << FIELDARG1
-#define FIELDARG1(x) ", " << #x << "=" << data.x << FIELDARG2
-#define FIELDARG2(x) ", " << #x << "=" << data.x << FIELDARG1
-#define FIELDARGS FIELDARG0
-
 #define DEBUG(...) DBG(__VA_ARGS__) << POS << ": " << ARGS
 #define DEBUGFIELDS debug.nospace() << FIELDARGS
 
@@ -126,12 +126,19 @@ inline QDebug operator<<( QDebug debug, fieldArgLast )
 #else
 
 #define DEBUG(...) QNoDebug() << ARGS
-#define DEBUGADD QNoDebug() << ARGS
+#define DEBUGFIELDS QNoDebug() << FIELDARGS
 #define ENTER() QNoDebug() << ARGS
-#define RETURN(x) do{ return x; }while(0)
+
+#define RETURN_0()  return;
+#define RETURN_1(A) return A;
+#define RETURN_2(A,B) return A;
+#define RETURN_X( x, A, B, FCT, ... ) FCT
+#define RETURN(...) do{\
+        RETURN_X( , ##__VA_ARGS__, RETURN_2(__VA_ARGS__), RETURN_1(__VA_ARGS__), RETURN_0(__VA_ARGS__) )\
+    }while(0)
 
 // Callbacks
-#define CBENTER(...)
+#define CBENTER(...) \
     if( deleteLater_ ) CBRETURN();\
     QNoDebug() << ARGS
 

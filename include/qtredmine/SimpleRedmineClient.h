@@ -8,6 +8,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QTime>
 
 namespace qtredmine {
 
@@ -77,6 +78,15 @@ public:
      * @brief Initialise the Redmine client
      */
     void init();
+
+    /**
+     * @brief Get a QTime object from a time string
+     *
+     * @param stime Time string from which the time will be parsed
+     *
+     * @return A valid QTime object if the time string could be parsed, an invalid QTime object otherwise
+     */
+    static QTime getTime( const QString& stime );
 
     /// @name Redmine data creators and updaters
     /// @{

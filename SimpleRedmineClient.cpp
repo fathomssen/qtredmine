@@ -141,7 +141,47 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
     sendRequest( "issues", cb, QNetworkAccessManager::GetOperation, "limit=1" );
 
     RETURN();
-  }
+}
+
+QTime
+SimpleRedmineClient::getTime( const QString& stime )
+{
+    ENTER();
+
+    QTime time;
+
+    if( stime.isNull() || stime.isEmpty() )
+        RETURN( time );
+
+    // Try to find valid time string format
+    time = QTime::fromString( stime, "hh:mm:ss" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh:mm:s" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh:m:ss" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh:m:s" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h:mm:s" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h:m:ss" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h:m:s" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh:mm" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh:m" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h:mm" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h:m" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "hh" );
+    if( !time.isValid() )
+        time = QTime::fromString( stime, "h" );
+
+    RETURN( time );
+}
 
 void
 SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString parameters )

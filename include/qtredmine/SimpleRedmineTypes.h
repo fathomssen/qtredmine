@@ -454,6 +454,18 @@ using VersionsCb = std::function<void(Versions, RedmineError, QStringList)>;
 } // qtredmine
 
 /**
+ * @brief QDebug stream operator for items
+ * @return QDebug object
+ */
+inline QDebug
+operator<<( QDebug debug, const qtredmine::Item& data )
+{
+    QDebugStateSaver saver( debug );
+    DEBUGFIELDS(id)(name);
+    return debug;
+}
+
+/**
  * @brief QDebug stream operator for custom fields
  * @return QDebug object
  */
@@ -474,19 +486,20 @@ inline QDebug
 operator<<( QDebug debug, const qtredmine::Issue& data )
 {
     QDebugStateSaver saver( debug );
-    DEBUGFIELDS(id)(subject);
+    DEBUGFIELDS(id)(parentId)(description)(doneRatio)(subject)(assignedTo)(author)(category)(priority)
+            (project)(status)(tracker)(version)(dueDate)(estimatedHours)(startDate)(customFields);
     return debug;
 }
 
 /**
- * @brief QDebug stream operator for items
+ * @brief QDebug stream operator for memberships
  * @return QDebug object
  */
 inline QDebug
-operator<<( QDebug debug, const qtredmine::Item& data )
+operator<<( QDebug debug, const qtredmine::Membership& data )
 {
     QDebugStateSaver saver( debug );
-    DEBUGFIELDS(id)(name);
+    DEBUGFIELDS(id)(project)(user)(group)(roles);
     return debug;
 }
 

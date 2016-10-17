@@ -186,7 +186,7 @@ SimpleRedmineClient::getTime( const QString& stime )
 void
 SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString parameters )
 {
-    ENTER()(id)(parameters);
+    ENTER()(item)(id)(parameters);
 
     QJsonObject attr;
 
@@ -219,6 +219,12 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
 
     if( item.parentId != NULL_ID )
         attr["parent_issue_id"] = item.parentId;
+
+    if( item.startDate.isValid() )
+        attr["start_date"] = item.startDate.toString( "yyyy-MM-dd" );
+
+    if( item.dueDate.isValid() )
+        attr["due_date"] = item.dueDate.toString( "yyyy-MM-dd" );
 
     if( item.customFields.size() )
     {
@@ -538,13 +544,14 @@ parseIssue( Issue& issue, QJsonObject* obj )
     if( !parent.isEmpty() )
         issue.parentId = parent.value("id").toInt();
 
-    fillItem( issue.author,   obj, "author" );
-    fillItem( issue.category, obj, "category" );
-    fillItem( issue.priority, obj, "priority" );
-    fillItem( issue.project,  obj, "project" );
-    fillItem( issue.status,   obj, "status" );
-    fillItem( issue.tracker,  obj, "tracker" );
-    fillItem( issue.version,  obj, "fixed_version" );
+    fillItem( issue.assignedTo, obj, "assigned_to" );
+    fillItem( issue.author,     obj, "author" );
+    fillItem( issue.category,   obj, "category" );
+    fillItem( issue.priority,   obj, "priority" );
+    fillItem( issue.project,    obj, "project" );
+    fillItem( issue.status,     obj, "status" );
+    fillItem( issue.tracker,    obj, "tracker" );
+    fillItem( issue.version,    obj, "fixed_version" );
 
     // Dates and times
     issue.dueDate        = obj->value("due_date").toVariant().toDate();

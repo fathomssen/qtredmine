@@ -87,6 +87,7 @@ void decreaseLoggingIndent();
     .replace(QRegularExpression(" +const$"), "")\
     .replace(QRegularExpression("\\([^)]*\\)$"), "()")\
     .replace(QRegularExpression("\\([^)]*\\)::\\(anonymous class\\)::operator\\(\\)\\(\\)$"), "()::lambda()")\
+    .replace(QRegularExpression("\\([^)]*\\)::\\(anonymous class\\)::operator\\(\\)\\(\\)$"), "()::lambda()")\
 
 // Filename and position
 #define POS C( QFileInfo(__FILE__).fileName().toStdString().append(":").append(TOS(__LINE__)) )

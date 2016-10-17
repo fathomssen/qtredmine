@@ -1,6 +1,7 @@
 #ifndef SIMPLEREDMINETYPES_H
 #define SIMPLEREDMINETYPES_H
 
+#include "Logging.h"
 #include "RedmineClient.h"
 
 #include <QDebug>
@@ -450,41 +451,57 @@ using VersionsCb = std::function<void(Versions, RedmineError, QStringList)>;
 
 /// @}
 
+} // qtredmine
+
 /**
- * @brief QDebug stream operator for issues
- *
- * @param debug QDebug object
- * @param item Issue item
- *
+ * @brief QDebug stream operator for custom fields
  * @return QDebug object
  */
 inline QDebug
-operator<<( QDebug debug, const Issue& item )
+operator<<( QDebug debug, const qtredmine::CustomField& data )
 {
     QDebugStateSaver saver( debug );
-    debug.nospace() << "[" << item.id << ", " << item.subject << "]";
+    DEBUGFIELDS(id)(name)(values)(possibleValues)(defaultValue)(type)(format)(regex)(minLength)(maxLength)
+            (allProjects)(isRequired)(isFilter)(searchable)(multiple)(visible)(projects)(trackers);
+    return debug;
+}
 
+/**
+ * @brief QDebug stream operator for issues
+ * @return QDebug object
+ */
+inline QDebug
+operator<<( QDebug debug, const qtredmine::Issue& data )
+{
+    QDebugStateSaver saver( debug );
+    DEBUGFIELDS(id)(subject);
+    return debug;
+}
+
+/**
+ * @brief QDebug stream operator for items
+ * @return QDebug object
+ */
+inline QDebug
+operator<<( QDebug debug, const qtredmine::Item& data )
+{
+    QDebugStateSaver saver( debug );
+    DEBUGFIELDS(id)(name);
     return debug;
 }
 
 /**
  * @brief QDebug stream operator for RedmineOptions
- *
- * @param debug QDebug object
- * @param options RedmineOptions
- *
  * @return QDebug object
  */
 inline QDebug
-operator<<( QDebug debug, const RedmineOptions& options )
+operator<<( QDebug debug, const qtredmine::RedmineOptions& options )
 {
     QDebugStateSaver saver( debug );
     debug.nospace() << "[" << options.parameters << ", " << options.getAllItems << "]";
 
     return debug;
 }
-
-} // qtredmine
 
 Q_DECLARE_METATYPE( qtredmine::RedmineResource )
 

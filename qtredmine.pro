@@ -36,6 +36,7 @@ DISTFILES += \
 unix {
     target.path = /usr/lib
     INSTALLS += target
+    CONFIG += staticlib
 }
 
 include($$PWD/qtredmine.pri)

@@ -238,13 +238,29 @@ struct User : RedmineResource
     QDateTime lastLoginOn;///< Last login time and date
 };
 
+enum class VersionStatus
+{
+    open,
+    locked,
+    closed,
+};
+
+enum class VersionSharing
+{
+    none,
+    descendants,
+    hierarchy,
+    tree,
+    system,
+};
+
 /// Structure representing a version
 struct Version : RedmineResource
 {
     int     id = NULL_ID;   ///< ID
     QString name;           ///< Version name
-    ///< Status (missing)
-    ///< Sharing (missing)
+    VersionStatus status;   ///< Version open/close status
+    VersionSharing sharing; ///< Version sharing type
     QDate   dueDate;        ///< Due date
     QString description;    ///< Description
 };

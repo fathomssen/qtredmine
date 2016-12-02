@@ -1202,6 +1202,26 @@ SimpleRedmineClient::retrieveVersions( VersionsCb callback, int projectId, QStri
                 version.description = obj.value("description").toString();
                 version.dueDate = obj.value("due_date").toVariant().toDate();
 
+                QString sharing = obj.value("sharing").toString();
+                if( sharing == "none" )
+                    version.sharing = VersionSharing::none;
+                else if( sharing == "descendants" )
+                    version.sharing = VersionSharing::descendants;
+                else if( sharing == "hierarchy" )
+                    version.sharing = VersionSharing::hierarchy;
+                else if( sharing == "tree" )
+                    version.sharing = VersionSharing::tree;
+                else if( sharing == "system" )
+                    version.sharing = VersionSharing::system;
+
+                QString status = obj.value("status").toString();
+                if( status == "open" )
+                    version.status = VersionStatus::open;
+                else if( status == "locked" )
+                    version.status = VersionStatus::locked;
+                else if( status == "closed" )
+                    version.status = VersionStatus::closed;
+
                 versions.push_back( version );
             }
         }

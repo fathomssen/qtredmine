@@ -33,6 +33,9 @@ private:
     /// Current connection status to Redmine
     QNetworkAccessManager::NetworkAccessibility connected_ = QNetworkAccessManager::UnknownAccessibility;
 
+    /// Currently checking the connection
+    bool checkingConnection_;
+
 public:
     /**
      * @brief Constructor for an unconfigured Redmine connection

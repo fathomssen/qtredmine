@@ -84,6 +84,8 @@ SimpleRedmineClient::init()
 {
     ENTER();
 
+    checkingConnection_ = false;
+
     // Connect the network accessible signal to the isConnected slot
     connect( this, &RedmineClient::networkAccessibleChanged,
              this, &SimpleRedmineClient::checkConnectionStatus );
@@ -99,6 +101,11 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
 {
     ENTER()(accessible);
 
+    if( checkingConnection_ )
+        RETURN();
+
+    checkingConnection_ = true;
+
     auto setConnectionState = [&]( QNetworkAccessManager::NetworkAccessibility connected )
     {
         ENTER()(connected);
@@ -106,11 +113,12 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
         if( connected != connected_ )
         {
             DEBUG( "Emitting signal connectionChanged()" )(connected);
-            connectionChanged( connected );
+            emit connectionChanged( connected );
         }
 
         connected_ = connected;
 
+        checkingConnection_ = false;
         RETURN();
     };
 
@@ -138,7 +146,10 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
     };
 
     // Try to fetch one issue
-    sendRequest( "issues", cb, QNetworkAccessManager::GetOperation, "limit=1" );
+    QNetworkReply* reply = sendRequest( "issues", cb, QNetworkAccessManager::GetOperation, "limit=1" );
+
+    if( reply )
+        checkingConnection_ = false;
 
     RETURN();
 }

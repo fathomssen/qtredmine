@@ -56,7 +56,7 @@ RedmineClient::init()
     ENTER();
 
     reconnect();
-    initialised();
+    emit initialised();
 
     RETURN();
 }
@@ -78,7 +78,11 @@ RedmineClient::reconnect()
     // Handle network accessibility change
     connect( nma_, &QNetworkAccessManager::networkAccessibleChanged,
              [&](QNetworkAccessManager::NetworkAccessibility accessible)
-             { ENTER(); networkAccessibleChanged( accessible ); } );
+    {
+        ENTER();
+        emit networkAccessibleChanged( accessible );
+        RETURN();
+    } );
 
     RETURN();
 }

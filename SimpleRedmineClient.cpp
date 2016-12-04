@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QTimer>
 
 using namespace qtredmine;
 
@@ -97,18 +98,18 @@ SimpleRedmineClient::init()
 }
 
 void
-SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccessibility accessible )
+SimpleRedmineClient::checkConnectionStatus()
 {
-    ENTER()(accessible);
+    ENTER()(checkingConnection_)(connected_);
 
     if( checkingConnection_ )
         RETURN();
 
     checkingConnection_ = true;
 
-    auto setConnectionState = [&]( QNetworkAccessManager::NetworkAccessibility connected )
+    auto setConnectionState = [=]( QNetworkAccessManager::NetworkAccessibility connected )
     {
-        ENTER()(connected);
+        ENTER()(connected)(connected_);
 
         if( connected != connected_ )
         {
@@ -117,30 +118,23 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
         }
 
         connected_ = connected;
-
         checkingConnection_ = false;
+
         RETURN();
     };
 
-    // If there is no network connection available, there will be no Redmine connection as well
-    if( accessible == QNetworkAccessManager::NotAccessible )
-    {
-        setConnectionState( QNetworkAccessManager::NotAccessible );
-        RETURN();
-    }
-
     // Otherwise, check the Redmine connection
-    auto cb = [=]( QNetworkReply* reply, QJsonDocument* json )
+    auto cb = [=]( QNetworkReply* reply = nullptr, QJsonDocument* json = nullptr )
     {
-        ENTER()(reply->errorString())(json->toJson());
+        ENTER()(reply)(json);
 
-        if( reply->error() == QNetworkReply::NoError )
+        if( reply )
+            DEBUG()(reply->errorString());
+
+        if( reply && reply->error() == QNetworkReply::NoError )
             setConnectionState( QNetworkAccessManager::Accessible );
         else
-        {
-            DEBUG()(reply->errorString());
             setConnectionState( QNetworkAccessManager::NotAccessible );
-        }
 
         RETURN();
     };
@@ -149,7 +143,15 @@ SimpleRedmineClient::checkConnectionStatus( QNetworkAccessManager::NetworkAccess
     QNetworkReply* reply = sendRequest( "issues", cb, QNetworkAccessManager::GetOperation, "limit=1" );
 
     if( reply )
-        checkingConnection_ = false;
+        QTimer::singleShot( 1000, [=](){
+            if( !checkingConnection_ )
+                RETURN();
+
+            checkingConnection_ = false;
+            checkConnectionStatus();
+        } );
+    else
+        cb();
 
     RETURN();
 }
@@ -192,6 +194,17 @@ SimpleRedmineClient::getTime( const QString& stime )
         time = QTime::fromString( stime, "h" );
 
     RETURN( time );
+}
+
+void
+SimpleRedmineClient::reconnect()
+{
+    ENTER();
+
+    RedmineClient::reconnect();
+    checkConnectionStatus();
+
+    RETURN();
 }
 
 void

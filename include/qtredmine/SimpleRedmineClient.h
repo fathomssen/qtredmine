@@ -91,6 +91,11 @@ public:
      */
     static QTime getTime( const QString& stime );
 
+    /**
+     * @brief Reconnect to Redmine
+     */
+    void reconnect();
+
     /// @name Redmine data creators and updaters
     /// @{
 
@@ -366,11 +371,8 @@ public slots:
      *
      * If the status has changed from \c Accessible to \c NotAccessible or vice versa, the
      * \c connectionChanged signal is emitted.
-     *
-     * @param accessible Specifies whether the network is accessible at all
      */
-    void checkConnectionStatus( QNetworkAccessManager::NetworkAccessibility accessible =
-                                QNetworkAccessManager::UnknownAccessibility );
+    void checkConnectionStatus();
 
 signals:
     /**

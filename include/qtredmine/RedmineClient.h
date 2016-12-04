@@ -55,7 +55,7 @@ public:
      * @param url    Redmine base URL
      * @param parent Parent QObject (default: nullptr)
      */
-    RedmineClient( QString url, QObject* parent = nullptr );
+    RedmineClient( const QString& url, QObject* parent = nullptr );
 
     /**
      * @brief Constructor for a Redmine connection using API key authentication
@@ -65,8 +65,8 @@ public:
      * @param checkSsl Check the SSL certificate (default: true)
      * @param parent   Parent QObject (default: nullptr)
      */
-    RedmineClient( QString url, QString apiKey,
-                   bool checkSsl   = true,
+    RedmineClient( const QString& url, const QString& apiKey,
+                   const bool checkSsl = true,
                    QObject* parent = nullptr );
 
     /**
@@ -78,8 +78,8 @@ public:
      * @param checkSsl Check the SSL certificate (default: true)
      * @param parent   Parent QObject (default: nullptr)
      */
-    RedmineClient( QString url, QString login, QString password,
-                   bool checkSsl   = true,
+    RedmineClient( const QString& url, const QString& login, const QString& password,
+                   const bool checkSsl = true,
                    QObject* parent = nullptr );
 
     /**
@@ -107,14 +107,14 @@ public:
      *
      * @param url Redmine base URL
      */
-    void setUrl( QString url );
+    void setUrl( const QString& url );
 
     /**
      * @brief Set the Redmine authentification parameters
      *
      * @param apiKey Redmine API key
      */
-    void setAuthenticator( QString apiKey );
+    void setAuthenticator( const QString& apiKey );
 
     /**
      * @brief Set the Redmine authentification parameters
@@ -122,21 +122,21 @@ public:
      * @param login    Redmine login name
      * @param password Redmine login password
      */
-    void setAuthenticator( QString login, QString password );
+    void setAuthenticator( const QString& login, const QString& password );
 
     /**
      * @brief Set the user agent for the Redmine connection
      *
      * @param userAgent User agent
      */
-    void setUserAgent( QByteArray userAgent );
+    void setUserAgent( const QByteArray& userAgent );
 
     /**
      * @brief Set the SSL check data (e.g. certificate validity)
      *
      * @param checkSsl Check SSL data
      */
-    void setCheckSsl( bool checkSsl );
+    void setCheckSsl( const bool checkSsl );
 
     /// @}
 
@@ -153,8 +153,8 @@ public:
      */
     void sendCustomField( const QJsonDocument& data,
                           JsonCb callback = nullptr,
-                          int id = NULL_ID,
-                          QString parameters = "" );
+                          const int id = NULL_ID,
+                          const QString& parameters = "" );
 
     /**
      * @brief Create or update issue in Redmine
@@ -166,8 +166,8 @@ public:
      */
     void sendIssue( const QJsonDocument& data,
                     JsonCb callback = nullptr,
-                    int id = NULL_ID,
-                    QString parameters = "" );
+                    const int id = NULL_ID,
+                    const QString& parameters = "" );
 
     /**
      * @brief Create or update issue category in Redmine
@@ -179,8 +179,8 @@ public:
      */
     void sendIssueCategory( const QJsonDocument& data,
                             JsonCb callback = nullptr,
-                            int id = NULL_ID,
-                            QString parameters = "" );
+                            const int id = NULL_ID,
+                            const QString& parameters = "" );
 
     /**
      * @brief Create or update issue priority in Redmine
@@ -192,8 +192,8 @@ public:
      */
     void sendIssuePriority( const QJsonDocument& data,
                             JsonCb callback = nullptr,
-                            int id = NULL_ID,
-                            QString parameters = "" );
+                            const int id = NULL_ID,
+                            const QString& parameters = "" );
 
     /**
      * @brief Create or update issue status in Redmine
@@ -205,8 +205,8 @@ public:
      */
     void sendIssueStatus( const QJsonDocument& data,
                           JsonCb callback = nullptr,
-                          int id = NULL_ID,
-                          QString parameters = "" );
+                          const int id = NULL_ID,
+                          const QString& parameters = "" );
 
     /**
      * @brief Create or update project in Redmine
@@ -218,8 +218,8 @@ public:
      */
     void sendProject( const QJsonDocument& data,
                       JsonCb callback = nullptr,
-                      int id = NULL_ID,
-                      QString parameters = "" );
+                      const int id = NULL_ID,
+                      const QString& parameters = "" );
 
     /**
      * @brief Create or update time entry in Redmine
@@ -231,8 +231,8 @@ public:
      */
     void sendTimeEntry( const QJsonDocument& data,
                         JsonCb callback = nullptr,
-                        int id = NULL_ID,
-                        QString parameters = "" );
+                        const int id = NULL_ID,
+                        const QString& parameters = "" );
 
     /**
      * @brief Create or update time entry activity in Redmine
@@ -244,8 +244,8 @@ public:
      */
     void sendTimeEntryActivity( const QJsonDocument& data,
                                 JsonCb callback = nullptr,
-                                int id = NULL_ID,
-                                QString parameters = "" );
+                                const int id = NULL_ID,
+                                const QString& parameters = "" );
 
     /**
      * @brief Create or update tracker in Redmine
@@ -257,8 +257,8 @@ public:
      */
     void sendTracker( const QJsonDocument& data,
                       JsonCb callback = nullptr,
-                      int id = NULL_ID,
-                      QString parameters = "" );
+                      const int id = NULL_ID,
+                      const QString& parameters = "" );
 
     /**
      * @brief Create or update user in Redmine
@@ -270,8 +270,8 @@ public:
      */
     void sendUser( const QJsonDocument& data,
                    JsonCb callback = nullptr,
-                   int id = NULL_ID,
-                   QString parameters = "" );
+                   const int id = NULL_ID,
+                   const QString& parameters = "" );
 
     /**
      * @brief Create or update version in Redmine
@@ -283,8 +283,8 @@ public:
      */
     void sendVersion( const QJsonDocument& data,
                       JsonCb callback = nullptr,
-                      int id = NULL_ID,
-                      QString parameters = "" );
+                      const int id = NULL_ID,
+                      const QString& parameters = "" );
 
     /// @}
 
@@ -298,7 +298,7 @@ public:
      * @param parameters  Additional custom field parameters
      */
     void retrieveCustomFields( JsonCb callback,
-                               QString parameters = "" );
+                               const QString& parameters = "" );
 
     /**
      * @brief Retrieve an issue from Redmine
@@ -307,8 +307,8 @@ public:
      * @param issueId Issue ID
      * @param parameters  Additional issue parameters
      */
-    void retrieveIssue( JsonCb callback, int issueId,
-                        QString parameters = "" );
+    void retrieveIssue( JsonCb callback, const int issueId,
+                        const QString& parameters = "" );
 
     /**
      * @brief Retrieve issues from Redmine
@@ -317,7 +317,7 @@ public:
      * @param parameters  Additional issue parameters
      */
     void retrieveIssues( JsonCb callback,
-                         QString parameters = "" );
+                         const QString& parameters = "" );
 
     /**
      * @brief Retrieve issue categories from Redmine
@@ -327,8 +327,8 @@ public:
      * @param parameters Additional issue category parameters
      */
     void retrieveIssueCategories( JsonCb callback,
-                                  int projectId,
-                                  QString parameters = "" );
+                                  const int projectId,
+                                  const QString& parameters = "" );
 
     /**
      * @brief Retrieve issue priorities from Redmine
@@ -337,7 +337,7 @@ public:
      * @param parameters  Additional enumeration parameters
      */
     void retrieveIssuePriorities( JsonCb callback,
-                                  QString parameters = "" );
+                                  const QString& parameters = "" );
 
     /**
      * @brief Retrieve issue statuses from Redmine
@@ -346,7 +346,7 @@ public:
      * @param parameters  Additional issue status parameters
      */
     void retrieveIssueStatuses( JsonCb callback,
-                                QString parameters = "" );
+                                const QString& parameters = "" );
 
     /**
      * @brief Retrieve memberships from Redmine
@@ -356,8 +356,8 @@ public:
      * @param parameters Additional membership parameters
      */
     void retrieveMemberships( JsonCb callback,
-                              int projectId,
-                              QString parameters = "" );
+                              const int projectId,
+                              const QString& parameters = "" );
 
     /**
      * @brief Retrieve a project from Redmine
@@ -366,8 +366,8 @@ public:
      * @param projectId Project ID
      * @param parameters  Additional project parameters
      */
-    void retrieveProject( JsonCb callback, int projectId,
-                          QString parameters = "" );
+    void retrieveProject( JsonCb callback, const int projectId,
+                          const QString& parameters = "" );
 
     /**
      * @brief Retrieve projects from Redmine
@@ -376,7 +376,7 @@ public:
      * @param parameters  Additional project parameters
      */
     void retrieveProjects( JsonCb callback,
-                           QString parameters = "" );
+                           const QString& parameters = "" );
 
     /**
      * @brief Retrieve time entries from Redmine
@@ -385,7 +385,7 @@ public:
      * @param parameters  Additional time entry parameters
      */
     void retrieveTimeEntries( JsonCb callback,
-                              QString parameters = "" );
+                              const QString& parameters = "" );
 
     /**
      * @brief Retrieve time entry activities from Redmine
@@ -394,7 +394,7 @@ public:
      * @param parameters  Additional enumeration parameters
      */
     void retrieveTimeEntryActivities( JsonCb callback,
-                                      QString parameters = "" );
+                                      const QString& parameters = "" );
 
     /**
      * @brief Retrieve trackers from Redmine
@@ -403,7 +403,7 @@ public:
      * @param parameters  Additional tracker parameters
      */
     void retrieveTrackers( JsonCb callback,
-                           QString parameters = "" );
+                           const QString& parameters = "" );
 
     /**
      * @brief Retrieve current user from Redmine
@@ -412,7 +412,7 @@ public:
      * @param parameters  Additional user parameters
      */
     void retrieveCurrentUser( JsonCb callback,
-                              QString parameters = "" );
+                              const QString& parameters = "" );
 
     /**
      * @brief Retrieve users from Redmine
@@ -421,7 +421,7 @@ public:
      * @param parameters  Additional user parameters
      */
     void retrieveUsers( JsonCb callback,
-                        QString parameters = "" );
+                        const QString& parameters = "" );
 
     /**
      * @brief Retrieve a version from Redmine
@@ -430,8 +430,8 @@ public:
      * @param versionId Version ID
      * @param parameters  Additional version parameters
      */
-    void retrieveVersion( JsonCb callback, int versionId,
-                          QString parameters = "" );
+    void retrieveVersion( JsonCb callback, const int versionId,
+                          const QString& parameters = "" );
 
     /**
      * @brief Retrieve versions from Redmine
@@ -441,8 +441,8 @@ public:
      * @param parameters  Additional version parameters
      */
     void retrieveVersions( JsonCb callback,
-                           int projectId,
-                           QString parameters = "" );
+                           const int projectId,
+                           const QString& parameters = "" );
 
     /// @}
 
@@ -482,9 +482,10 @@ protected:
      *
      * @return The network reply for this request
      */
-    QNetworkReply* sendRequest( QString resource,
+    QNetworkReply* sendRequest( const QString& resource,
                                 JsonCb callback = nullptr,
-                                QNetworkAccessManager::Operation mode = QNetworkAccessManager::GetOperation,
+                                const QNetworkAccessManager::Operation mode
+                                    = QNetworkAccessManager::GetOperation,
                                 const QString& queryParams = "",
                                 const QByteArray& postData = "" );
 
@@ -497,11 +498,11 @@ protected:
      * @param id Enumeration to update; if set to \c NULL_ID, create a enumeration
      * @param parameters Additional enumeration parameters
      */
-    void sendEnumeration( QString enumeration,
+    void sendEnumeration( const QString& enumeration,
                           const QJsonDocument& data,
                           JsonCb callback = nullptr,
-                          int id = NULL_ID,
-                          QString parameters = "" );
+                          const int id = NULL_ID,
+                          const QString& parameters = "" );
 
     /**
      * @brief Retrieve enumerations from Redmine
@@ -510,9 +511,9 @@ protected:
      * @param callback    Callback function with a QJsonDocument object
      * @param parameters  Additional enumeration parameters
      */
-    void retrieveEnumerations( QString enumeration,
+    void retrieveEnumerations( const QString& enumeration,
                                JsonCb  callback,
-                               QString parameters = "" );
+                               const QString& parameters = "" );
 
 private:
     /// Currently configured authenticator for Redmine

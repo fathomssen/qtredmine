@@ -16,7 +16,7 @@ RedmineClient::RedmineClient( QObject* parent )
     RETURN();
 }
 
-RedmineClient::RedmineClient( QString url, QObject* parent )
+RedmineClient::RedmineClient( const QString& url, QObject* parent )
     : RedmineClient( parent )
 {
     ENTER()(url);
@@ -26,7 +26,8 @@ RedmineClient::RedmineClient( QString url, QObject* parent )
     RETURN();
 }
 
-RedmineClient::RedmineClient( QString url, QString apiKey, bool checkSsl, QObject* parent )
+RedmineClient::RedmineClient( const QString& url, const QString& apiKey, const bool checkSsl,
+                              QObject* parent )
     : RedmineClient( url, parent )
 {
     ENTER()(url)(apiKey)(checkSsl);
@@ -38,7 +39,8 @@ RedmineClient::RedmineClient( QString url, QString apiKey, bool checkSsl, QObjec
     RETURN();
 }
 
-RedmineClient::RedmineClient( QString url, QString login, QString password, bool checkSsl, QObject* parent )
+RedmineClient::RedmineClient( const QString& url, const QString& login, const QString& password,
+                              const bool checkSsl, QObject* parent )
     : RedmineClient( url, parent )
 {
     ENTER()(url)(login)(password)(checkSsl);
@@ -65,6 +67,10 @@ void
 RedmineClient::reconnect()
 {
     ENTER();
+
+    // Possibly delete old QNetworkAccessManager object
+    if( nma_ )
+        nma_->deleteLater();
 
     // Create QNetworkAccessManager object
     nma_ = new QNetworkAccessManager( this );
@@ -106,7 +112,7 @@ RedmineClient::handleSslErrors( QNetworkReply* reply, const QList<QSslError>& er
 }
 
 void
-RedmineClient::setAuthenticator( QString apiKey )
+RedmineClient::setAuthenticator( const QString& apiKey )
 {
     ENTER()(apiKey);
 
@@ -124,7 +130,7 @@ RedmineClient::setAuthenticator( QString apiKey )
 }
 
 void
-RedmineClient::setAuthenticator( QString login, QString password )
+RedmineClient::setAuthenticator( const QString& login, const QString& password )
 {
     ENTER()(login)(password);
 
@@ -143,7 +149,7 @@ RedmineClient::setAuthenticator( QString login, QString password )
 }
 
 void
-RedmineClient::setCheckSsl( bool checkSsl )
+RedmineClient::setCheckSsl( const bool checkSsl )
 {
     ENTER()(checkSsl);
 
@@ -159,7 +165,7 @@ RedmineClient::setCheckSsl( bool checkSsl )
 }
 
 void
-RedmineClient::setUrl( QString url )
+RedmineClient::setUrl( const QString& url )
 {
     ENTER()(url);
 
@@ -175,7 +181,7 @@ RedmineClient::setUrl( QString url )
 }
 
 void
-RedmineClient::setUserAgent( QByteArray userAgent )
+RedmineClient::setUserAgent( const QByteArray& userAgent )
 {
     ENTER()(userAgent);
 
@@ -185,7 +191,8 @@ RedmineClient::setUserAgent( QByteArray userAgent )
 }
 
 QNetworkReply*
-RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessManager::Operation mode,
+RedmineClient::sendRequest( const QString& resource, JsonCb callback,
+                            const QNetworkAccessManager::Operation mode,
                             const QString& queryParams, const QByteArray& postData )
 {
     ENTER()(resource)(mode)(queryParams)(postData);
@@ -274,10 +281,10 @@ RedmineClient::sendRequest( QString resource, JsonCb callback, QNetworkAccessMan
 void
 RedmineClient::replyFinished( QNetworkReply* reply )
 {
-    ENTER();
+    ENTER()(reply);
 
     // Search for callback function
-    if( callbacks_.contains(reply) )
+    if( reply && callbacks_.contains(reply) )
     {
         QByteArray data_raw = reply->readAll();
         QJsonDocument data_json = QJsonDocument::fromJson( data_raw );
@@ -288,11 +295,13 @@ RedmineClient::replyFinished( QNetworkReply* reply )
         callbacks_.remove( reply );
     }
 
+    reply->deleteLater();
+
     RETURN();
 }
 
 void
-getResMode( int id, QString& resource, QNetworkAccessManager::Operation& mode )
+getResMode( const int id, QString& resource, QNetworkAccessManager::Operation& mode )
 {
     ENTER()(id)(resource)(mode);
 
@@ -308,7 +317,8 @@ getResMode( int id, QString& resource, QNetworkAccessManager::Operation& mode )
 }
 
 void
-RedmineClient::sendCustomField( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendCustomField( const QJsonDocument& data, JsonCb callback, const int id,
+                                const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -323,8 +333,8 @@ RedmineClient::sendCustomField( const QJsonDocument& data, JsonCb callback, int 
 }
 
 void
-RedmineClient::sendEnumeration( QString enumeration, const QJsonDocument& data, JsonCb callback, int id,
-                                QString parameters )
+RedmineClient::sendEnumeration( const QString& enumeration, const QJsonDocument& data, JsonCb callback,
+                                const int id, const QString& parameters )
 {
     ENTER()(enumeration)(parameters);
 
@@ -339,7 +349,8 @@ RedmineClient::sendEnumeration( QString enumeration, const QJsonDocument& data, 
 }
 
 void
-RedmineClient::sendIssue( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendIssue( const QJsonDocument& data, JsonCb callback, const int id,
+                          const QString& parameters )
 {
     ENTER()(id)(parameters);
 
@@ -354,7 +365,8 @@ RedmineClient::sendIssue( const QJsonDocument& data, JsonCb callback, int id, QS
 }
 
 void
-RedmineClient::sendIssueCategory( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendIssueCategory( const QJsonDocument& data, JsonCb callback, const int id,
+                                  const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -369,7 +381,8 @@ RedmineClient::sendIssueCategory( const QJsonDocument& data, JsonCb callback, in
 }
 
 void
-RedmineClient::sendIssuePriority( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendIssuePriority( const QJsonDocument& data, JsonCb callback, const int id,
+                                  const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -384,7 +397,8 @@ RedmineClient::sendIssuePriority( const QJsonDocument& data, JsonCb callback, in
 }
 
 void
-RedmineClient::sendIssueStatus( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendIssueStatus( const QJsonDocument& data, JsonCb callback, const int id,
+                                const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -399,7 +413,8 @@ RedmineClient::sendIssueStatus( const QJsonDocument& data, JsonCb callback, int 
 }
 
 void
-RedmineClient::sendProject( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendProject( const QJsonDocument& data, JsonCb callback, const int id,
+                            const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -414,7 +429,8 @@ RedmineClient::sendProject( const QJsonDocument& data, JsonCb callback, int id, 
 }
 
 void
-RedmineClient::sendTimeEntry( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendTimeEntry( const QJsonDocument& data, JsonCb callback, const int id,
+                              const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -429,8 +445,8 @@ RedmineClient::sendTimeEntry( const QJsonDocument& data, JsonCb callback, int id
 }
 
 void
-RedmineClient::sendTimeEntryActivity( const QJsonDocument& data, JsonCb callback, int id,
-                                      QString parameters )
+RedmineClient::sendTimeEntryActivity( const QJsonDocument& data, JsonCb callback, const int id,
+                                      const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -445,7 +461,8 @@ RedmineClient::sendTimeEntryActivity( const QJsonDocument& data, JsonCb callback
 }
 
 void
-RedmineClient::sendTracker( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendTracker( const QJsonDocument& data, JsonCb callback, const int id,
+                            const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -460,7 +477,7 @@ RedmineClient::sendTracker( const QJsonDocument& data, JsonCb callback, int id, 
 }
 
 void
-RedmineClient::sendUser( const QJsonDocument& data, JsonCb callback, int id, QString parameters )
+RedmineClient::sendUser( const QJsonDocument& data, JsonCb callback, const int id, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -475,7 +492,7 @@ RedmineClient::sendUser( const QJsonDocument& data, JsonCb callback, int id, QSt
 }
 
 void
-RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
+RedmineClient::retrieveCustomFields( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -485,7 +502,7 @@ RedmineClient::retrieveCustomFields( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveEnumerations( QString enumeration, JsonCb callback, QString parameters )
+RedmineClient::retrieveEnumerations( const QString& enumeration, JsonCb callback, const QString& parameters )
 {
     ENTER()(enumeration)(parameters);
 
@@ -495,7 +512,7 @@ RedmineClient::retrieveEnumerations( QString enumeration, JsonCb callback, QStri
 }
 
 void
-RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
+RedmineClient::retrieveIssues( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -505,7 +522,7 @@ RedmineClient::retrieveIssues( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveIssueCategories( JsonCb callback, int projectId, QString parameters )
+RedmineClient::retrieveIssueCategories( JsonCb callback, const int projectId, const QString& parameters )
 {
     ENTER()(projectId)(parameters);
 
@@ -516,7 +533,7 @@ RedmineClient::retrieveIssueCategories( JsonCb callback, int projectId, QString 
 }
 
 void
-RedmineClient::retrieveIssuePriorities( JsonCb callback, QString parameters )
+RedmineClient::retrieveIssuePriorities( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -526,7 +543,7 @@ RedmineClient::retrieveIssuePriorities( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveIssue( JsonCb callback, int issueId, QString parameters )
+RedmineClient::retrieveIssue( JsonCb callback, const int issueId, const QString& parameters )
 {
     ENTER()(issueId)(parameters);
 
@@ -537,7 +554,7 @@ RedmineClient::retrieveIssue( JsonCb callback, int issueId, QString parameters )
 }
 
 void
-RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
+RedmineClient::retrieveIssueStatuses( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -547,7 +564,7 @@ RedmineClient::retrieveIssueStatuses( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveMemberships( JsonCb callback, int projectId, QString parameters )
+RedmineClient::retrieveMemberships( JsonCb callback, const int projectId, const QString& parameters )
 {
     ENTER()(projectId)(parameters);
 
@@ -558,7 +575,7 @@ RedmineClient::retrieveMemberships( JsonCb callback, int projectId, QString para
 }
 
 void
-RedmineClient::retrieveProject( JsonCb callback, int projectId, QString parameters )
+RedmineClient::retrieveProject( JsonCb callback, const int projectId, const QString& parameters )
 {
     ENTER()(projectId)(parameters);
 
@@ -569,7 +586,7 @@ RedmineClient::retrieveProject( JsonCb callback, int projectId, QString paramete
 }
 
 void
-RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
+RedmineClient::retrieveProjects( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -580,7 +597,7 @@ RedmineClient::retrieveProjects( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveTimeEntries( JsonCb callback, QString parameters )
+RedmineClient::retrieveTimeEntries( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -590,7 +607,7 @@ RedmineClient::retrieveTimeEntries( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveTimeEntryActivities( JsonCb callback, QString parameters )
+RedmineClient::retrieveTimeEntryActivities( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -600,7 +617,7 @@ RedmineClient::retrieveTimeEntryActivities( JsonCb callback, QString parameters 
 }
 
 void
-RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
+RedmineClient::retrieveTrackers( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -610,7 +627,7 @@ RedmineClient::retrieveTrackers( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveCurrentUser( JsonCb callback, QString parameters )
+RedmineClient::retrieveCurrentUser( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -620,7 +637,7 @@ RedmineClient::retrieveCurrentUser( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
+RedmineClient::retrieveUsers( JsonCb callback, const QString& parameters )
 {
     ENTER()(parameters);
 
@@ -630,7 +647,7 @@ RedmineClient::retrieveUsers( JsonCb callback, QString parameters )
 }
 
 void
-RedmineClient::retrieveVersions(JsonCb callback, int projectId, QString parameters )
+RedmineClient::retrieveVersions( JsonCb callback, const int projectId, const QString& parameters )
 {
     ENTER()(projectId)(parameters);
 

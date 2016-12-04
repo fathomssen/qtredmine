@@ -313,9 +313,9 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
 {
     ENTER()(id)(parameters);
 
-    if( (item.hours * 60) < 1 )
+    if( item.hours < 0.01 )
     {
-        DEBUG() << "Time entry has to be at least 1 minute";
+        DEBUG() << "Time entry has to be at least 0.1 hours (36 seconds)";
         callback( false, NULL_ID, RedmineError::ERR_TIME_ENTRY_TOO_SHORT, QStringList() );
         RETURN();
     }

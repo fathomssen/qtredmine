@@ -19,7 +19,7 @@
 namespace qtredmine {
 
 /// Redmine error codes
-enum RedmineError {
+enum class RedmineError {
     NO_ERROR,
     ERR_INCOMPLETE_DATA,
     ERR_NETWORK,
@@ -468,6 +468,29 @@ using VersionsCb = std::function<void(Versions, RedmineError, QStringList)>;
 /// @}
 
 } // qtredmine
+
+/**
+ * @brief QDebug stream operator for items
+ * @return QDebug object
+ */
+inline QDebug
+operator<<( QDebug debug, const qtredmine::RedmineError& data )
+{
+    QDebugStateSaver saver( debug );
+    if( data == qtredmine::RedmineError::NO_ERROR )
+        debug << "NO_ERROR";
+    else if( data == qtredmine::RedmineError::ERR_INCOMPLETE_DATA )
+        debug << "ERR_INCOMPLETE_DATA";
+    else if( data == qtredmine::RedmineError::ERR_NETWORK )
+        debug << "ERR_NETWORK";
+    else if( data == qtredmine::RedmineError::ERR_NOT_SAVED )
+        debug << "ERR_NOT_SAVED";
+    else if( data == qtredmine::RedmineError::ERR_TIME_ENTRY_TOO_SHORT )
+        debug << "ERR_TIME_ENTRY_TOO_SHORT";
+    else if( data == qtredmine::RedmineError::ERR_TIMEOUT )
+        debug << "ERR_TIMEOUT";
+    return debug;
+}
 
 /**
  * @brief QDebug stream operator for items

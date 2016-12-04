@@ -20,7 +20,7 @@ namespace qtredmine {
 
 /// Redmine error codes
 enum class RedmineError {
-    NO_ERROR,
+    NO_ERR,
     ERR_INCOMPLETE_DATA,
     ERR_NETWORK,
     ERR_NOT_SAVED,
@@ -477,8 +477,8 @@ inline QDebug
 operator<<( QDebug debug, const qtredmine::RedmineError& data )
 {
     QDebugStateSaver saver( debug );
-    if( data == qtredmine::RedmineError::NO_ERROR )
-        debug << "NO_ERROR";
+    if( data == qtredmine::RedmineError::NO_ERR )
+        debug << "NO_ERR";
     else if( data == qtredmine::RedmineError::ERR_INCOMPLETE_DATA )
         debug << "ERR_INCOMPLETE_DATA";
     else if( data == qtredmine::RedmineError::ERR_NETWORK )

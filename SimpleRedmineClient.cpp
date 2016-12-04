@@ -300,7 +300,7 @@ SimpleRedmineClient::sendIssue( Issue item, SuccessCb callback, int id, QString 
         QJsonObject jsonIssue = json->object().find("issue").value().toObject();
         int issueId = jsonIssue.find("id").value().toInt();
 
-        callback( true, issueId, RedmineError::NO_ERROR, QStringList() );
+        callback( true, issueId, RedmineError::NO_ERR, QStringList() );
     };
 
     RedmineClient::sendIssue( json, cb, id, parameters );
@@ -379,7 +379,7 @@ SimpleRedmineClient::sendTimeEntry( TimeEntry item, SuccessCb callback, int id, 
             RETURN();
         }
 
-        callback( true, NULL_ID, RedmineError::NO_ERROR, QStringList() );
+        callback( true, NULL_ID, RedmineError::NO_ERR, QStringList() );
     };
 
     RedmineClient::sendTimeEntry( json, cb, id, parameters );
@@ -493,7 +493,7 @@ SimpleRedmineClient::retrieveCustomFields( CustomFieldsCb callback, CustomFieldF
             }
         }
 
-        callback( customFields, RedmineError::NO_ERROR, QStringList() );
+        callback( customFields, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -543,7 +543,7 @@ SimpleRedmineClient::retrieveEnumerations(QString enumeration, EnumerationsCb ca
             }
         }
 
-        callback( enumerations, RedmineError::NO_ERROR, QStringList() );
+        callback( enumerations, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -629,7 +629,7 @@ SimpleRedmineClient::retrieveIssue( IssueCb callback, int issueId, QString param
         Issue issue;
         QJsonObject obj = json->object().value("issue").toObject();
         parseIssue( issue, &obj );
-        callback( issue, RedmineError::NO_ERROR, QStringList() );
+        callback( issue, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -699,7 +699,7 @@ SimpleRedmineClient::retrieveIssues( IssuesCb callback, RedmineOptions options )
         else
         {
             // No more issues to fetch
-            callback( issues, RedmineError::NO_ERROR, QStringList() );
+            callback( issues, RedmineError::NO_ERR, QStringList() );
             delete data;
         }
 
@@ -752,7 +752,7 @@ SimpleRedmineClient::retrieveIssueCategories( IssueCategoriesCb callback, int pr
             }
         }
 
-        callback( issueCategories, RedmineError::NO_ERROR, QStringList() );
+        callback( issueCategories, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -812,7 +812,7 @@ SimpleRedmineClient::retrieveIssueStatuses( IssueStatusesCb callback, QString pa
             }
         }
 
-        callback( issueStatuses, RedmineError::NO_ERROR, QStringList() );
+        callback( issueStatuses, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -862,7 +862,7 @@ SimpleRedmineClient::retrieveMemberships( MembershipsCb callback, int projectId,
             }
         }
 
-        callback( memberships, RedmineError::NO_ERROR, QStringList() );
+        callback( memberships, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -931,7 +931,7 @@ SimpleRedmineClient::retrieveProject( ProjectCb callback, int projectId, QString
         Project project;
         QJsonObject obj = json->object().value("project").toObject();
         parseProject( project, &obj );
-        callback( project, RedmineError::NO_ERROR, QStringList() );
+        callback( project, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -973,7 +973,7 @@ SimpleRedmineClient::retrieveProjects( ProjectsCb callback, QString parameters )
             }
         }
 
-        callback( projects, RedmineError::NO_ERROR, QStringList() );
+        callback( projects, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -1029,7 +1029,7 @@ SimpleRedmineClient::retrieveTimeEntries( TimeEntriesCb callback, QString parame
             }
         }
 
-        callback( timeEntries, RedmineError::NO_ERROR, QStringList() );
+        callback( timeEntries, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -1088,7 +1088,7 @@ SimpleRedmineClient::retrieveTrackers( TrackersCb callback, QString parameters )
             }
         }
 
-        callback( trackers, RedmineError::NO_ERROR, QStringList() );
+        callback( trackers, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -1138,7 +1138,7 @@ SimpleRedmineClient::retrieveCurrentUser( UserCb callback )
         User user;
         QJsonObject obj = json->object().value("user").toObject();
         parseUser( user, &obj );
-        callback( user, RedmineError::NO_ERROR, QStringList() );
+        callback( user, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -1181,7 +1181,7 @@ SimpleRedmineClient::retrieveUsers( UsersCb callback, QString parameters )
             }
         }
 
-        callback( users, RedmineError::NO_ERROR, QStringList() );
+        callback( users, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };
@@ -1250,7 +1250,7 @@ SimpleRedmineClient::retrieveVersions( VersionsCb callback, int projectId, QStri
             }
         }
 
-        callback( versions, RedmineError::NO_ERROR, QStringList() );
+        callback( versions, RedmineError::NO_ERR, QStringList() );
 
         RETURN();
     };

@@ -20,7 +20,7 @@ Example::cacheIssues()
 {
     redmine_->retrieveIssues( [&]( Issues issues, RedmineError redmineError, QStringList errors )
     {
-        if( redmineError != RedmineError::NO_ERROR )
+        if( redmineError != RedmineError::NO_ERR )
         {
             DEBUG()(errors);
             return;
@@ -35,7 +35,7 @@ Example::printProjects()
 {
     redmine_->retrieveProjects( []( Projects projects, RedmineError redmineError, QStringList errors )
     {
-        if( redmineError != RedmineError::NO_ERROR )
+        if( redmineError != RedmineError::NO_ERR )
         {
             DEBUG()(errors);
             return;

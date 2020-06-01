@@ -8,7 +8,7 @@ environment:
 
 install:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - '%QTDIR%\bin\qtenv2.bat''
+  - '%QTDIR%\bin\qtenv2.bat'
 
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
